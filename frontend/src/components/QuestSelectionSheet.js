@@ -252,22 +252,22 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(210, 187, 255, 0.25)',
     paddingHorizontal: 16,
     paddingTop: 12,
-    // Shadow/glow trên Web
-    ...(Platform.OS === 'web' && {
-      boxShadow: '0 -8px 40px rgba(124, 58, 237, 0.25)',
-      maxWidth: 480,
-      left: '50%',
-      right: 'auto',
-      transform: [{ translateX: '-50%' }],
-    }),
-    // Shadow trên native
-    ...(Platform.OS !== 'web' && {
-      shadowColor: '#7c3aed',
-      shadowOffset: { width: 0, height: -6 },
-      shadowOpacity: 0.3,
-      shadowRadius: 20,
-      elevation: 12,
-    }),
+    ...Platform.select({
+      web: {
+        boxShadow: '0 -8px 40px rgba(124, 58, 237, 0.25)',
+        maxWidth: 480,
+        left: '50%',
+        right: 'auto',
+        transform: [{ translateX: -240 }],
+      },
+      default: {
+        shadowColor: '#7c3aed',
+        shadowOffset: { width: 0, height: -6 },
+        shadowOpacity: 0.3,
+        shadowRadius: 20,
+        elevation: 12,
+      }
+    })
   },
 
   // Drag handle
