@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node backend/src/server.js",
     "dev": "expo start",
     "test": "jest"
   },
