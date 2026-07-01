@@ -52,7 +52,7 @@ if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
   }
 }
 
-const BACKEND_URL = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000'; // Default API Host
+import { BACKEND_URL } from '../config'; // Default API Host
 
 export default function PlacementTestScreen({ navigation }) {
   const [questions, setQuestions] = useState([]);

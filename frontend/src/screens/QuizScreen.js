@@ -63,7 +63,7 @@ if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
   }
 }
 
-const BACKEND_URL = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+import { BACKEND_URL } from '../config';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 export default function QuizScreen() {

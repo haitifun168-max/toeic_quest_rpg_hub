@@ -66,7 +66,7 @@ try {
   hasSvgSupport = false;
 }
 
-const BACKEND_URL = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+import { BACKEND_URL } from '../config';
 
 const AVATAR_MAP = {
   knight: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCMvINP78Luvg2ihUhKsqduRfvGcIcV0phfOC1Vb9MGqpZGyINq-QeAKv2LSuenTf_jVjEiqZ8tMQJGI3lQjni03Nth7PYzA7KNMomY9YFUDR86Q8egYP9xiBOprqYYJyTNuRwC134eh_jmMIS18imjKCtS7WlIs7iVQIhkykQJ4fQIDwpAvCQb1zJz9PBg0_v7Scg33YSh0F5pgt82Z1UfeCXn39GAsBA5sbfsFhLu3aeo76pgBOqzNMoK9Tm4HaKXNJVqD4MtQBHU',

@@ -54,7 +54,7 @@ if (Platform.OS === 'web') {
   }
 }
 
-const BACKEND_URL = 'http://localhost:3000'; // Default API Host
+import { BACKEND_URL } from '../config'; // Default API Host
 
 /**
  * Cross-platform alert helper: uses window.alert on web, Alert.alert on native

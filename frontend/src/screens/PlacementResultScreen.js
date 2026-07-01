@@ -67,7 +67,7 @@ try {
   hasSvgSupport = false;
 }
 
-const BACKEND_URL = Platform.OS === 'android' ? 'http://10.0.2.2:3000' : 'http://localhost:3000';
+import { BACKEND_URL } from '../config';
 
 const AVATAR_OPTIONS = [
   {
