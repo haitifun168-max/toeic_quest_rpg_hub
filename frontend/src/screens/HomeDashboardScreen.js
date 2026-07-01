@@ -295,7 +295,7 @@ export default function HomeDashboardScreen({ navigation }) {
                     fill="none"
                     stroke="#F97316"
                     strokeWidth="3"
-                    strokeDasharray={`${profile?.current_streak ? Math.min(100, Math.round((profile.current_streak / 7) * 100)) : 0} 100`}
+                    strokeDasharray={[profile?.current_streak ? Math.min(100, Math.round((profile.current_streak / 7) * 100)) : 0, 100]}
                     strokeLinecap="round"
                   />
                 </Svg>
