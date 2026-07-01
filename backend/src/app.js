@@ -26,6 +26,14 @@ app.use('/api/quests', questRouter);
 app.use('/api/pvp', pvpRouter);
 app.use('/api/dungeons', dungeonRouter);
 
+// Root path check
+app.get('/', (req, res) => {
+  res.json({
+    ok: true,
+    message: "TOEIC Quest RPG Hub API is running successfully!"
+  });
+});
+
 // Standard 404 handler
 app.use((req, res) => {
   res.status(404).json({
