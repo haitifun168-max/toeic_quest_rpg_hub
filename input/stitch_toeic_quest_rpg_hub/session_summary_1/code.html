@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TOEIC QUEST - Session Summary</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #12121d;
+            color: #e3e0f1;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-green {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .progress-gradient {
+            background: linear-gradient(90deg, #7C3AED 0%, #10B181 100%);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .float-animation {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#292935",
+                        "glass-surface": "rgba(255, 255, 255, 0.08)",
+                        "on-surface-variant": "#ccc3d8",
+                        "primary": "#d2bbff",
+                        "primary-container": "#7c3aed",
+                        "on-primary-container": "#ede0ff",
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "streak-orange": "#F97316",
+                        "success-green": "#10B981",
+                        "error-red": "#EF4444",
+                    },
+                    fontSize: {
+                        "body-md": ["14px", "20px"],
+                        "label-sm": ["12px", "16px"],
+                        "headline-sm": ["20px", "28px"],
+                        "headline-md": ["24px", "32px"],
+                        "display-lg-mobile": ["28px", "36px"],
+                        "badge-xs": ["11px", "14px"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen pb-24">
+<!-- Background Shader -->
+
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-4 h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A cinematic 3D character portrait of a futuristic cyber-scholar wearing glowing purple visor and high-tech scholar robes. The character has a gold rank badge on their shoulder. Cyberpunk aesthetic with deep violet and neon teal lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAx69y_Ky4GU__UoMCdUq4gQBU10vdnqQLrnwbIr35VMwfoP8EFuhEgthyVdjM-ZTtywwJnkTiQHE2Ldx9NLueDkuDzQZcAhum4xPvZnU7NCkTgT7MKgAkIjvG30njEI8XS8IlemR_2z15-Gy7ybdhjX1LwX4Gi8DRdUFG-kM44M_161NJqzQpMuFpyoHjxAGVnPmQY0iR0VPtzQWcjqz5DTh31aEqDEJWD9NCL0lh4WR6rolLQc30oMzNcq6IevqVOzjDwZiOceB7g"/>
+</div>
+<span class="text-headline-md font-bold text-primary tracking-tight">TOEIC QUEST</span>
+</div>
+<button class="text-primary hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<main class="pt-20 px-4 max-w-[390px] mx-auto">
+<!-- Success Header Section -->
+<section class="text-center py-6 flex flex-col items-center">
+<div class="relative w-24 h-24 mb-4 float-animation">
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-2xl"></div>
+<span class="material-symbols-outlined text-[80px] text-primary relative z-10" style="font-variation-settings: 'FILL' 1;">task_alt</span>
+</div>
+<h1 class="font-bold text-display-lg-mobile text-primary mb-2">Hoàn Thành DQ-01 Từ Vựng!</h1>
+<div class="flex gap-4 items-center">
+<div class="flex items-center gap-1 bg-primary-container/30 px-3 py-1 rounded-full border border-primary/20">
+<span class="text-primary font-bold text-headline-sm">+80 KP</span>
+</div>
+<div class="flex items-center gap-1 bg-streak-orange/20 px-3 py-1 rounded-full border border-streak-orange/30">
+<span class="text-streak-orange font-bold">18 ngày</span>
+<span class="material-symbols-outlined text-streak-orange text-sm" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+</div>
+</section>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 gap-4 mb-6">
+<div class="glass-panel p-4 rounded-xl flex flex-col items-center">
+<span class="text-on-surface-variant text-label-sm mb-1 uppercase tracking-wider">Độ chính xác</span>
+<span class="text-headline-md font-bold text-success-green">78%</span>
+</div>
+<div class="glass-panel p-4 rounded-xl flex flex-col items-center">
+<span class="text-on-surface-variant text-label-sm mb-1 uppercase tracking-wider">Thời gian</span>
+<span class="text-headline-md font-bold text-primary">13:24</span>
+</div>
+</div>
+<!-- Rank Progression -->
+<section class="glass-panel p-5 rounded-xl mb-6">
+<div class="flex justify-between items-end mb-3">
+<div class="flex flex-col">
+<span class="text-label-sm text-on-surface-variant">Hạng hiện tại</span>
+<span class="text-headline-sm font-bold text-primary">Rank 2 → Rank 3</span>
+</div>
+<span class="text-label-sm font-bold text-on-surface-variant">4,250 / 8,000 KP</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden border border-glass-border">
+<div class="h-full progress-gradient neon-glow-green" style="width: 53%;"></div>
+</div>
+</section>
+<!-- Skill Analysis (Bar Charts) -->
+<section class="glass-panel p-5 rounded-xl mb-6">
+<h3 class="text-label-sm font-bold text-on-surface-variant mb-4 uppercase flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">equalizer</span> Phân tích kỹ năng
+            </h3>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm">
+<span>Listening</span>
+<span class="text-primary">85%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 85%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm">
+<span>Reading</span>
+<span class="text-primary">62%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 62%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-label-sm">
+<span>Vocabulary</span>
+<span class="text-primary">92%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full">
+<div class="h-full bg-primary rounded-full" style="width: 92%;"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- AI Mentor Box -->
+<section class="glass-panel p-5 rounded-xl border-primary/30 bg-primary/5 mb-8">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center neon-glow-purple">
+<span class="material-symbols-outlined text-on-primary text-sm">psychology</span>
+</div>
+<h3 class="font-bold text-primary">Top 3 điểm yếu phiên này</h3>
+</div>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="text-error-red mt-1 material-symbols-outlined text-sm">error</span>
+<span class="text-body-md">Sự nhầm lẫn giữa **"Affect"** và **"Effect"** trong ngữ cảnh báo cáo.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-error-red mt-1 material-symbols-outlined text-sm">error</span>
+<span class="text-body-md">Tốc độ xử lý Part 5 còn chậm hơn 15% so với mức trung bình.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="text-error-red mt-1 material-symbols-outlined text-sm">error</span>
+<span class="text-body-md">Quên chia động từ ở các câu điều kiện loại 2.</span>
+</li>
+</ul>
+</section>
+<!-- Actions -->
+<div class="flex flex-col gap-3 mb-10">
+<button class="h-[52px] w-full bg-primary-container text-on-primary-container font-bold rounded-full neon-glow-purple flex items-center justify-center gap-2 active:scale-95 transition-transform">
+                Tiếp tục Quest
+                <span class="material-symbols-outlined">double_arrow</span>
+</button>
+<button class="h-[52px] w-full border-2 border-primary text-primary font-bold rounded-full flex items-center justify-center gap-2 hover:bg-primary/10 transition-colors">
+                Xem chi tiết lỗi sai
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe px-2 bg-surface-container-high backdrop-blur-lg border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm">Trang Chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">swords</span>
+<span class="text-label-sm font-label-sm">PvP Battle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm">Skill Tree</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm">Guild</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Hồ Sơ</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for progression bar
+        document.addEventListener('DOMContentLoaded', () => {
+            const bar = document.querySelector('.progress-gradient');
+            if (bar) {
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    bar.style.width = '53%';
+                }, 300);
+            }
+
+            // Stat bars animation
+            const skillBars = document.querySelectorAll('.bg-primary.rounded-full');
+            skillBars.forEach(bar => {
+                const finalWidth = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.transition = 'width 1s ease-out';
+                    bar.style.width = finalWidth;
+                }, 800);
+            });
+        });
+    </script>
+</body></html>

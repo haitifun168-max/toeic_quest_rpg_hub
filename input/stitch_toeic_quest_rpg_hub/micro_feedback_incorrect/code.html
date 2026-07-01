@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Incorrect Feedback - TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0d0d18",
+                        "surface-tint": "#d2bbff",
+                        "secondary-fixed": "#ffddb8",
+                        "on-secondary": "#472a00",
+                        "primary-container": "#7c3aed",
+                        "primary": "#d2bbff",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-tertiary": "#003824",
+                        "on-primary-fixed": "#25005a",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-tertiary-container": "#76ffc2",
+                        "error": "#ffb4ab",
+                        "on-tertiary-fixed": "#002113",
+                        "surface-dim": "#12121d",
+                        "on-primary": "#3f008e",
+                        "glass-surface": "rgba(255, 255, 255, 0.08)",
+                        "tertiary-container": "#007650",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "outline-variant": "#4a4455",
+                        "surface-container-highest": "#343440",
+                        "surface-container": "#1f1e2a",
+                        "inverse-on-surface": "#302f3b",
+                        "primary-fixed": "#eaddff",
+                        "on-surface-variant": "#ccc3d8",
+                        "streak-orange": "#F97316",
+                        "error-red": "#EF4444",
+                        "secondary": "#ffb95f",
+                        "on-error": "#690005",
+                        "inverse-surface": "#e3e0f1",
+                        "surface-container-high": "#292935",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface": "#12121d",
+                        "text-muted": "#94A3B8",
+                        "on-secondary-fixed": "#2a1700",
+                        "on-surface": "#e3e0f1",
+                        "surface-bright": "#383845",
+                        "outline": "#958da1",
+                        "on-background": "#e3e0f1",
+                        "on-primary-container": "#ede0ff",
+                        "inverse-primary": "#732ee4",
+                        "primary-fixed-dim": "#d2bbff",
+                        "on-error-container": "#ffdad6",
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "surface-variant": "#343440",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "tertiary": "#4edea3",
+                        "secondary-container": "#ee9800",
+                        "on-secondary-container": "#5b3800",
+                        "background": "#12121d",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "text-primary": "#F1F5F9",
+                        "surface-container-low": "#1b1a26",
+                        "error-container": "#93000a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "md": "16px",
+                        "xl": "32px",
+                        "margin-mobile": "16px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "margin-desktop": "32px",
+                        "xs": "8px",
+                        "sm": "12px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "display-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "badge-xs": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-red-glow {
+            filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.8));
+        }
+        .neon-purple-glow {
+            filter: drop-shadow(0 0 10px rgba(124, 58, 237, 0.5));
+        }
+        .cta-gradient {
+            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+        }
+        .incorrect-overlay {
+            background: linear-gradient(to top, rgba(18, 18, 29, 0.95), rgba(147, 0, 10, 0.2));
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- Background Layer (Simulating Quiz Screen Screen 16 underneath) -->
+<div class="fixed inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center brightness-[0.3]" data-alt="A futuristic, cyber-scholar classroom setting with floating holographic screens displaying English grammar exercises. The color palette is dominated by deep indigo and midnight blue with subtle glowing purple highlights. The lighting is moody and cinematic, creating a focused study atmosphere with high-tech RPG aesthetic elements like skill nodes and stat bars visible in the distance." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDOynYPx6mWWWNe_Y6Q_iSBOhod41BBGRydDdE-kTfWSLD4faa8AGGz1WDRZCye4e64v_Ogb48wgJk35GsILJix7owgzrraz_UOr6M6hW2u6DlvfOQlel_kr7eO__2T1H6xiwu3x-41a2lRcmheVRQnaCvIXT1y9KkNHvfGq3Mxg7cdAWjXKbH22SMVR9VP3AQlCqgpqfpMcD7I6W8hoWz1w_C-YO40rdLodcIGThkDWvBUV6lundNb3Z9lmfEiwiR61yHE4YuQz8im')"></div>
+</div>
+<!-- Feedback Overlay -->
+<div class="fixed inset-0 z-10 incorrect-overlay flex flex-col justify-end">
+<!-- Main Feedback Container (Glass Panel) -->
+<div class="glass-panel w-full rounded-t-[32px] px-margin-mobile pt-10 pb-12 animate-in slide-in-from-bottom duration-500">
+<!-- Header Status -->
+<div class="flex flex-col items-center mb-8">
+<div class="w-16 h-16 rounded-full bg-error-container/30 border-2 border-error-red flex items-center justify-center neon-red-glow mb-4">
+<span class="material-symbols-outlined text-error-red text-[40px] font-bold">close</span>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile text-error-red tracking-tight mb-2">CHƯA ĐÚNG</h1>
+<!-- Insight Point Badge -->
+<div class="flex items-center gap-2 bg-primary-container/20 border border-primary/30 px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-primary text-[16px]" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<span class="text-badge-xs font-badge-xs text-primary">+1 INSIGHT POINT</span>
+</div>
+</div>
+<!-- Answer Comparison Bento Grid -->
+<div class="grid grid-cols-1 gap-sm mb-8">
+<!-- User's Incorrect Selection -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-error-red/10 border border-error-red/40">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-error-red flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px] font-bold">close</span>
+</div>
+<span class="font-body-lg text-body-lg text-on-surface">lately</span>
+</div>
+<span class="text-label-sm font-label-sm text-error-red/70">Lựa chọn của bạn</span>
+</div>
+<!-- Correct Answer -->
+<div class="flex items-center justify-between p-4 rounded-xl bg-tertiary-container/10 border border-tertiary/40">
+<div class="flex items-center gap-3">
+<div class="w-6 h-6 rounded-full bg-tertiary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-tertiary text-[16px] font-bold">check</span>
+</div>
+<span class="font-body-lg text-body-lg text-tertiary">latest</span>
+</div>
+<span class="text-label-sm font-label-sm text-tertiary/70">Đáp án đúng</span>
+</div>
+</div>
+<!-- Explanation Card -->
+<div class="p-5 rounded-xl bg-surface-container-high/60 border border-glass-border mb-8">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-[18px]">auto_stories</span>
+<span class="text-label-sm font-label-sm text-primary tracking-widest uppercase">Phân tích Tầng 1</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                    Sử dụng tính từ so sánh nhất <span class="text-tertiary font-bold">"the latest"</span> để chỉ phiên bản mới nhất của phần mềm, thay vì trạng từ "lately" (gần đây).
+                </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-3">
+<button class="w-full h-[52px] cta-gradient rounded-full flex items-center justify-center gap-2 neon-purple-glow active:scale-95 transition-all">
+<span class="font-body-lg text-body-lg text-white">Tiếp theo</span>
+<span class="material-symbols-outlined text-white">arrow_forward</span>
+</button>
+<button class="w-full h-[52px] border-2 border-primary/40 rounded-full flex items-center justify-center gap-2 hover:bg-primary/10 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<span class="font-body-lg text-body-lg text-primary">Xem phân tích sâu</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Shared TopAppBar (Reference from JSON) -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-margin-mobile h-16 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-glass-border shadow-sm">
+<button class="w-10 h-10 flex items-center justify-center text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="text-headline-sm font-headline-sm font-bold text-primary dark:text-primary tracking-widest">DAILY QUESTS</div>
+<button class="w-10 h-10 flex items-center justify-center text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</header>
+<!-- Bottom Navigation Suppressed for this transactional screen per guidelines -->
+<script>
+        // Simple micro-interaction for the buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('touchstart', () => {
+                button.style.transform = 'scale(0.96)';
+            });
+            button.addEventListener('touchend', () => {
+                button.style.transform = 'scale(1)';
+            });
+        });
+
+        // Atmospheric red pulse effect for the background overlay
+        const overlay = document.querySelector('.incorrect-overlay');
+        let opacity = 0.2;
+        let increasing = true;
+
+        function pulse() {
+            if (increasing) {
+                opacity += 0.002;
+                if (opacity >= 0.3) increasing = false;
+            } else {
+                opacity -= 0.002;
+                if (opacity <= 0.15) increasing = true;
+            }
+            overlay.style.background = `linear-gradient(to top, rgba(18, 18, 29, 0.95), rgba(147, 0, 10, ${opacity}))`;
+            requestAnimationFrame(pulse);
+        }
+        pulse();
+    </script>
+</body></html>

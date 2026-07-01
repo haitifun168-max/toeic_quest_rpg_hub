@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PvP Battle | TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-blue {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+        .neon-glow-gold {
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.4);
+        }
+        .active-glow {
+            filter: drop-shadow(0 0 8px rgba(210, 187, 255, 0.6));
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen overflow-x-hidden">
+<!-- Animated Background -->
+<div class="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+
+<div class="absolute inset-0 bg-gradient-to-b from-surface-container-lowest/50 via-background to-background"></div>
+</div>
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A cinematic character portrait of a futuristic scholar wearing sleek, purple-accented cybernetic visor and tactical academic robes. The character has a determined expression, set against a blurred background of a high-tech library in a dark, cyberpunk city. The art style is high-fidelity digital illustration with vibrant neon highlights and soft bokeh effects." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiO0V2wn_boCCxYLGrmRcvq1314UgunhyKyTHzqllHO8fbTJmBxJaEzRfysztrxihql-U0-Cx_iT-wwJSJ2pUSwks_CwTctTaGsKaqpy5J4mak1FUmR73OB47Om0Frp8zyNnyM0GNGRcRVJSpqX1dxMMJviFxT-d5UPlb0uayIjUXXhBT-bhFDCrm2obm8isNarXjsLr0lSoaHVfYeQzV1CAY7ClihFeMIBogNcbBIYqOcKRjCOQzWBHYNt_6ckYUyLbyd25IlaKWv"/>
+<div class="absolute bottom-0 right-0 bg-primary text-on-primary text-[8px] font-bold px-1 rounded-sm">LV.24</div>
+</div>
+<div>
+<h1 class="text-headline-sm font-headline-sm text-primary tracking-tight">PvP Battle</h1>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">workspace_premium</span>
+<span class="text-label-sm font-label-sm text-secondary">1,150 ELO</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error-red rounded-full"></span>
+</button>
+</div>
+</header>
+<main class="relative z-10 pt-20 pb-24 px-margin-mobile max-w-md mx-auto">
+<!-- Mode Selection Header -->
+<section class="mb-6">
+<h2 class="text-label-sm font-label-sm uppercase tracking-widest text-text-muted mb-4">Select Combat Mode</h2>
+<div class="grid grid-cols-1 gap-4">
+<!-- Ranked Mode -->
+<div class="glass-panel rounded-xl p-5 relative overflow-hidden group cursor-pointer active:scale-95 transition-transform duration-200 border-primary/30 neon-glow-purple">
+<div class="flex justify-between items-start relative z-10">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<h3 class="text-headline-sm font-headline-sm text-white">Ranked</h3>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant max-w-[200px]">Compete for ELO and climb the seasonal leaderboards.</p>
+</div>
+<div class="bg-primary/20 text-primary border border-primary/30 px-3 py-1 rounded-full text-badge-xs uppercase">Rank 2+</div>
+</div>
+<div class="mt-4 flex items-center justify-between relative z-10">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border border-background bg-surface-container"></div>
+<div class="w-6 h-6 rounded-full border border-background bg-surface-container"></div>
+<div class="w-6 h-6 rounded-full border border-background bg-surface-container"></div>
+</div>
+<span class="text-label-sm font-label-sm text-primary">1,240 Online</span>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/10 blur-3xl -mr-16 -mt-16"></div>
+</div>
+<!-- Casual Mode -->
+<div class="glass-panel rounded-xl p-5 relative overflow-hidden group cursor-pointer active:scale-95 transition-transform duration-200 border-blue-500/30 neon-glow-blue">
+<div class="flex justify-between items-start relative z-10">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-blue-400" style="font-variation-settings: 'FILL' 1;">swords</span>
+<h3 class="text-headline-sm font-headline-sm text-white">Casual</h3>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant max-w-[200px]">Practice against real opponents without ELO risk.</p>
+</div>
+<div class="text-blue-400">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 blur-3xl -mr-16 -mt-16"></div>
+</div>
+<!-- Challenge Friend -->
+<div class="glass-panel rounded-xl p-5 relative overflow-hidden group cursor-pointer active:scale-95 transition-transform duration-200 border-yellow-500/30 neon-glow-gold">
+<div class="flex justify-between items-start relative z-10">
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-yellow-400" style="font-variation-settings: 'FILL' 1;">stars</span>
+<h3 class="text-headline-sm font-headline-sm text-white">Challenge Friend</h3>
+</div>
+<p class="text-label-sm font-label-sm text-on-surface-variant max-w-[200px]">Invite a rival to a custom TOEIC duel.</p>
+</div>
+<div class="text-yellow-400">
+<span class="material-symbols-outlined">group_add</span>
+</div>
+</div>
+<div class="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 blur-3xl -mr-16 -mt-16"></div>
+</div>
+</div>
+</section>
+<!-- Recent Matches -->
+<section>
+<div class="flex justify-between items-end mb-4">
+<h2 class="text-label-sm font-label-sm uppercase tracking-widest text-text-muted">Recent Battles</h2>
+<button class="text-label-sm font-label-sm text-primary hover:underline">View History</button>
+</div>
+<div class="space-y-3">
+<!-- Match Item: Win -->
+<div class="glass-panel rounded-xl p-4 flex items-center justify-between border-l-4 border-l-tertiary">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center border border-glass-border">
+<span class="material-symbols-outlined text-tertiary">emoji_events</span>
+</div>
+<div>
+<p class="text-body-lg font-body-lg text-white">Victory vs. Alex22</p>
+<p class="text-label-sm font-label-sm text-text-muted">2 hours ago • Ranked</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-lg font-body-lg text-tertiary">+18 ELO</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Score: 480/495</p>
+</div>
+</div>
+<!-- Match Item: Loss -->
+<div class="glass-panel rounded-xl p-4 flex items-center justify-between border-l-4 border-l-error-red">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center border border-glass-border opacity-60">
+<span class="material-symbols-outlined text-error-red">close</span>
+</div>
+<div>
+<p class="text-body-lg font-body-lg text-white">Defeat vs. MinhTrand</p>
+<p class="text-label-sm font-label-sm text-text-muted">Yesterday • Ranked</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-lg font-body-lg text-error-red">-12 ELO</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Score: 390/495</p>
+</div>
+</div>
+<!-- Match Item: Win -->
+<div class="glass-panel rounded-xl p-4 flex items-center justify-between border-l-4 border-l-tertiary">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high flex items-center justify-center border border-glass-border">
+<span class="material-symbols-outlined text-tertiary">emoji_events</span>
+</div>
+<div>
+<p class="text-body-lg font-body-lg text-white">Victory vs. ShadowPlayer</p>
+<p class="text-label-sm font-label-sm text-text-muted">Oct 12 • Casual</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-body-lg font-body-lg text-tertiary">No ELO Change</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Score: 495/495</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe px-2 bg-surface-container-high backdrop-blur-lg border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl">
+<!-- Trang Chủ -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm mt-1">Trang Chủ</span>
+</a>
+<!-- PvP Battle (ACTIVE) -->
+<a class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">swords</span>
+<span class="text-label-sm font-label-sm mt-1 font-bold">PvP Battle</span>
+</a>
+<!-- Skill Tree -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm mt-1">Skill Tree</span>
+</a>
+<!-- Guild -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm mt-1">Guild</span>
+</a>
+<!-- Hồ Sơ -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm mt-1">Hồ Sơ</span>
+</a>
+</nav>
+<script>
+        // Simple Micro-interaction for mode buttons
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('mousedown', () => {
+                panel.style.transform = 'scale(0.98)';
+            });
+            panel.addEventListener('mouseup', () => {
+                panel.style.transform = 'scale(1)';
+            });
+            panel.addEventListener('mouseleave', () => {
+                panel.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

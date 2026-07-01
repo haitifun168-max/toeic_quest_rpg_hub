@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TOEIC QUEST - Placement Result</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#292935",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-surface-variant": "#ccc3d8",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-primary": "#3f008e",
+                    "inverse-surface": "#e3e0f1",
+                    "on-surface": "#e3e0f1",
+                    "outline": "#958da1",
+                    "on-background": "#e3e0f1",
+                    "surface-bright": "#383845",
+                    "surface-variant": "#343440",
+                    "surface": "#12121d",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#343440",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container": "#1f1e2a",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "background": "#12121d",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650",
+                    "secondary-container": "#ee9800",
+                    "inverse-primary": "#732ee4",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-error": "#690005",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary-container": "#ede0ff",
+                    "streak-orange": "#F97316",
+                    "outline-variant": "#4a4455",
+                    "error-red": "#EF4444",
+                    "inverse-on-surface": "#302f3b",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "primary": "#d2bbff",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-dim": "#12121d",
+                    "on-primary-fixed": "#25005a",
+                    "text-primary": "#F1F5F9",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#003824",
+                    "text-muted": "#94A3B8",
+                    "surface-container-lowest": "#0d0d18"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "margin-desktop": "32px",
+                    "xs": "8px",
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "badge-xs": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #12121d;
+            color: #e3e0f1;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .primary-glow {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .neon-text-purple {
+            text-shadow: 0 0 10px rgba(210, 187, 255, 0.8);
+        }
+        .radar-grid {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 1;
+        }
+        .radar-area {
+            fill: rgba(124, 58, 237, 0.3);
+            stroke: #d2bbff;
+            stroke-width: 2;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .character-option.active {
+            border-color: #d2bbff;
+            background: rgba(124, 58, 237, 0.2);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+            transform: scale(1.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="dark flex flex-col items-center justify-start min-h-[844px] w-full max-w-[390px] mx-auto pb-24 relative">
+<!-- Background Animation Layer -->
+<div class="fixed inset-0 -z-10 overflow-hidden">
+
+</div>
+<!-- Header Section -->
+<header class="w-full px-margin-mobile pt-8 flex flex-col items-center text-center">
+<h1 class="font-headline-md text-headline-md text-primary neon-text-purple mb-2">Trình độ hiện tại của bạn</h1>
+<div class="flex items-center gap-2 bg-surface-container-high/60 px-4 py-2 rounded-full border border-glass-border">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-body-lg text-body-lg text-secondary">Rank 2 — Nhân Viên Mới Vào Nghề</span>
+</div>
+</header>
+<!-- Placement Result Card -->
+<main class="w-full px-margin-mobile mt-6 space-y-6">
+<div class="glass-panel rounded-xl p-5 flex flex-col items-center">
+<div class="flex flex-col items-center mb-4">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">ƯỚC TÍNH ĐIỂM SỐ</span>
+<div class="font-display-lg-mobile text-display-lg-mobile text-primary-fixed-dim leading-none mt-1">~450 TOEIC</div>
+</div>
+<!-- Radar Chart Container -->
+<div class="relative w-full aspect-square max-w-[240px] flex items-center justify-center mb-4">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 100 100">
+<!-- Radar Polygons -->
+<circle class="radar-grid" cx="50" cy="50" fill="none" r="40"></circle>
+<circle class="radar-grid" cx="50" cy="50" fill="none" r="30"></circle>
+<circle class="radar-grid" cx="50" cy="50" fill="none" r="20"></circle>
+<circle class="radar-grid" cx="50" cy="50" fill="none" r="10"></circle>
+<!-- Axes -->
+<line class="radar-grid" x1="50" x2="50" y1="50" y2="10"></line>
+<line class="radar-grid" x1="50" x2="84.6" y1="50" y2="30"></line>
+<line class="radar-grid" x1="50" x2="84.6" y1="50" y2="70"></line>
+<line class="radar-grid" x1="50" x2="50" y1="50" y2="90"></line>
+<line class="radar-grid" x1="50" x2="15.4" y1="50" y2="70"></line>
+<line class="radar-grid" x1="50" x2="15.4" y1="50" y2="30"></line>
+<!-- Stat Area (Grammar, Vocab, Listening, Reading, Pronunciation, Speed) -->
+<polygon class="radar-area" points="50,22 74,38 77,65 50,82 25,65 22,38"></polygon>
+<!-- Points -->
+<circle cx="50" cy="22" fill="#ffb95f" r="2"></circle>
+<circle cx="74" cy="38" fill="#ffb95f" r="2"></circle>
+<circle cx="77" cy="65" fill="#ffb95f" r="2"></circle>
+<circle cx="50" cy="82" fill="#ffb95f" r="2"></circle>
+<circle cx="25" cy="65" fill="#ffb95f" r="2"></circle>
+<circle cx="22" cy="38" fill="#ffb95f" r="2"></circle>
+</svg>
+<!-- Labels - positioned absolutely around the SVG -->
+<span class="absolute -top-4 left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-on-surface-variant">Ngữ Pháp</span>
+<span class="absolute top-1/4 -right-10 font-label-sm text-label-sm text-on-surface-variant">Từ Vựng</span>
+<span class="absolute bottom-1/4 -right-12 font-label-sm text-label-sm text-on-surface-variant">Nghe</span>
+<span class="absolute -bottom-4 left-1/2 -translate-x-1/2 font-label-sm text-label-sm text-on-surface-variant">Đọc</span>
+<span class="absolute bottom-1/4 -left-12 font-label-sm text-label-sm text-on-surface-variant">Phát Âm</span>
+<span class="absolute top-1/4 -left-10 font-label-sm text-label-sm text-on-surface-variant">Tốc Độ</span>
+</div>
+<!-- Analysis Tags -->
+<div class="w-full flex gap-3 justify-center">
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-tertiary-container/20 border border-tertiary/30">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">trending_up</span>
+<span class="font-body-md text-body-md text-tertiary">Mạnh: Ngữ pháp</span>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-error-container/20 border border-error-red/30">
+<span class="material-symbols-outlined text-error-red text-sm" style="font-variation-settings: 'FILL' 1;">trending_down</span>
+<span class="font-body-md text-body-md text-error-red">Yếu: Nghe</span>
+</div>
+</div>
+</div>
+<!-- Character Creation Section -->
+<div class="space-y-4">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Khởi tạo Anh Hùng</h2>
+<!-- Avatar Selector -->
+<div class="flex gap-4 overflow-x-auto pb-2 hide-scrollbar snap-x">
+<!-- Character 1 - Active -->
+<button class="character-option active shrink-0 w-20 h-24 rounded-xl border border-glass-border overflow-hidden relative transition-all snap-start">
+<img class="w-full h-full object-cover" data-alt="A futuristic fantasy knight character portrait for a TOEIC educational RPG. The character wears sleek cybernetic purple armor with glowing white runes. The art style is high-quality digital painting with a professional game UI feel. Cool blue and deep purple lighting highlights the character's determined expression." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMvINP78Luvg2ihUhKsqduRfvGcIcV0phfOC1Vb9MGqpZGyINq-QeAKv2LSuenTf_jVjEiqZ8tMQJGI3lQjni03Nth7PYzA7KNMomY9YFUDR86Q8egYP9xiBOprqYYJyTNuRwC134eh_jmMIS18imjKCtS7WlIs7iVQIhkykQJ4fQIDwpAvCQb1zJz9PBg0_v7Scg33YSh0F5pgt82Z1UfeCXn39GAsBA5sbfsFhLu3aeo76pgBOqzNMoK9Tm4HaKXNJVqD4MtQBHU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-1 left-0 w-full text-center font-badge-xs text-badge-xs text-primary">KỴ SĨ</div>
+</button>
+<!-- Character 2 -->
+<button class="character-option shrink-0 w-20 h-24 rounded-xl border border-glass-border overflow-hidden relative transition-all snap-start">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="A futuristic techno-mage character portrait for an educational game. The character holds a glowing holographic tablet and wears high-tech eyewear. Sleek neon green accents illuminate their thoughtful face. Professional digital art style with a dark tech-noir aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD9Bq2cVYz_-gd4JMUPdkpL5bPwmliJnhAdTD4GIdYGLQST5inX-HILt4gcBM-q3UKh0KJnOyERKyLdflcFJvR8c3PIGBMGPLz69uWVvgO5i2NZTxlLr8qQuoS14d0za5mmderVV_M8Rhu5cnLJaM2wAzdonKaocKB_eOlKAYhIwBek8qppXumIqEq5RDeXqKSHjYe_MFJhuCHwpSsMy2Ryab0iz-90pVw50TKUW771Lvs3m5q3Z0VYzUGorZ4-t5Z0DOgIpe7e4jP"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-1 left-0 w-full text-center font-badge-xs text-badge-xs text-on-surface-variant">PHÁP SƯ</div>
+</button>
+<!-- Character 3 -->
+<button class="character-option shrink-0 w-20 h-24 rounded-xl border border-glass-border overflow-hidden relative transition-all snap-start">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="A cyber-ninja character portrait with a sharp, focused gaze. The character wears a dark tactical suit with gold neon circuitry patterns. Minimalist background with high-contrast shadows. Digital concept art for a mobile RPG game interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBr1z9ZzoAj9qPZnS8E-wTZHELGTYi5XCn0INN44LsI6q4aKemefF1b9qHqgwu6_Dt1QzRKEOMgPRGi1_4dRhW7SpVkWtVfDMA_7uN73sRG5P56_UAuIC-ki9LUjC4GM2My4ElHyzr-EhsyG6U9KTmCBJ2hPWPiAnDyinWfXJTjwKTHS5vnMpAodZb5t28Yx0bvTw9y19IbgOXjmczIhOWqQSqY1GGta_SPQHpiDPJY5RJKregMxVnfvmQd5CW-kD1CjflAE36lz90-"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-1 left-0 w-full text-center font-badge-xs text-badge-xs text-on-surface-variant">SÁT THỦ</div>
+</button>
+<!-- Character 4 -->
+<button class="character-option shrink-0 w-20 h-24 rounded-xl border border-glass-border overflow-hidden relative transition-all snap-start">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="A mechanical pilot character portrait featuring a futuristic flight helmet and amber-tinted goggles. The style is sleek cyberpunk minimalism with soft metallic reflections. High-stakes adventure mood with professional game character design qualities." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzNKQ8WUvd5XNq03jFbGlPJCo3XI5q41jeCkF3M0lqxNMfiHwcRAwMW9SlfDInCK59URzHYHcnpdVhebcbJw9CzEMX3ZvPr8-nozDa3LnAfH9NC0uNFXDAhgVgBbhO5QiWgRnKTA3VUVGvi1zZryhDeW8XfV-QxGvXmeMvuAu_s_oXNyDByoldRoTedZ25RdUQGHnOD-wUecGT-pqqy0BSjUt1mjvXIHqsPvODrW1ULc0-2P5ocWciL0FeQHk9ARJAlDXYM4UtHoyy"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-1 left-0 w-full text-center font-badge-xs text-badge-xs text-on-surface-variant">PHI CÔNG</div>
+</button>
+<!-- Character 5 -->
+<button class="character-option shrink-0 w-20 h-24 rounded-xl border border-glass-border overflow-hidden relative transition-all snap-start">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="A high-tech scholar character with glowing blue data streams floating around them. The character looks intelligent and determined. Modern digital illustration style with a focus on education and technology fusion. Dark background with vibrant light accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmLPKduZB7nVBGf9JRibMZJXUAPLsUhPKVmuGHhHuh8pwph8ckjhyvhOIBBG9zt7iK456RC-5P90RgRid6hGGE-lbliMkdw8mZv-NASVmqCmKB-h8dg3PmYCN2_te1o5-F8dWTw4qR53H-JaarNBHr5FK1dDCPKQt9JKLWm3FD2tzQ8TfeiE8DYTlszF0GLEcWzcHfZAjKQ97DHH3P2QrRDukT36P3aLwphNfThWybarjx-2mj9SXI8i6Zz4dziZ8JySCpkM9hPKpx"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-1 left-0 w-full text-center font-badge-xs text-badge-xs text-on-surface-variant">HỌC GIẢ</div>
+</button>
+<!-- Character 6 -->
+<button class="character-option shrink-0 w-20 h-24 rounded-xl border border-glass-border overflow-hidden relative transition-all snap-start">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="A cybernetic scout character with advanced detection equipment on their shoulder. Bright orange and white color palette for the armor. Clean, professional game character concept art with cinematic lighting. The character faces the camera with a confident smirk." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANBlWwRITDceN24ylInAewL1Ns4szVIC2xVM9XrvXLX8iCvhg_FNCF0Q7X-QJsxHA5tpW0pmfJdVMGjmsKqs7WWspndKm918I5bJpp5amPaqGjGDsMZ_jXMRQxziYyFL7rehCytE9eKtf3dgdx4a2SwkPbdlU1hgxLeGCn0lkvTaYcLgpbSobIsT5J4WxP50q1HJ-F4r03Kf8ipz_UAeRdEyoTF28hoOcHeU12tlZP_apMO4IYfmY1ZklWlav-q_HoKLXEp4V4buM2"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+<div class="absolute bottom-1 left-0 w-full text-center font-badge-xs text-badge-xs text-on-surface-variant">TRINH SÁT</div>
+</button>
+</div>
+<!-- Identity Input -->
+<div class="space-y-2">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">DANH XƯNG ANH HÙNG</label>
+<div class="relative">
+<input class="w-full h-[52px] bg-glass-surface border border-glass-border rounded-xl px-4 font-body-lg text-body-lg text-primary focus:ring-2 focus:ring-primary focus:border-transparent outline-none" type="text" value="Kỵ Sĩ TOEIC"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-primary opacity-60">edit</span>
+</div>
+</div>
+<!-- Character Preview Card -->
+<div class="glass-panel rounded-xl overflow-hidden flex gap-4 p-4 items-center">
+<div class="w-16 h-16 rounded-lg overflow-hidden border-2 border-primary/40 shrink-0">
+<img class="w-full h-full object-cover" data-alt="Close up portrait of a futuristic knight hero for a TOEIC game app. Glowing purple eyes and high-tech headgear. The character reflects determination. Digital art with cinematic lighting and a dark, atmospheric background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDhRdnYIjMfXsAJYMZMPn9gr9hBsrxeMLModRmVXYxBwiHH8NleTBohK3A1RkQ8spFYv63VWG6QgVaSspxj3c4YqEek4Eo8kV_f1vAhSUEDrnFLJRJchxcyfxCQNmjrtWRXhaKSOuMvCIM0mFmxqYkPbX0tM_jcPuzPbLsfxOcGIN1HCK48nG7fIciDvBRnUKMjUyMAsISUoHpBobTJdsNHao27fD3rNpPYNz2Il96p-uhM3znpleBCIN4iEsHVr7vPobcBlL2nT2og"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<span class="font-body-lg text-body-lg text-primary">Kỵ Sĩ TOEIC</span>
+<span class="font-badge-xs text-badge-xs px-2 py-0.5 rounded bg-primary-container text-white">LVL 1</span>
+</div>
+<div class="mt-1 w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-1/5 bg-gradient-to-r from-primary to-secondary glow-cap"></div>
+</div>
+<div class="mt-1 font-label-sm text-label-sm text-on-surface-variant">Chiến binh học thuật</div>
+</div>
+</div>
+</div>
+<!-- CTA Action -->
+<div class="pt-2 pb-8">
+<button class="w-full h-[52px] rounded-full bg-gradient-to-r from-primary-container to-primary text-white font-body-lg text-body-lg primary-glow active:scale-95 transition-transform flex items-center justify-center gap-2">
+                Bắt Đầu Cuộc Phiêu Lưu!
+                <span class="material-symbols-outlined">rocket_launch</span>
+</button>
+</div>
+</main>
+<!-- Simple Navigation Shell (Optional based on rules, here as persistent background structure) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 bg-surface-container-high/90 backdrop-blur-lg border-t border-glass-border rounded-t-xl px-2">
+<div class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm">Trang Chủ</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">swords</span>
+<span class="text-label-sm font-label-sm">PvP Battle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm">Skill Tree</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm">Guild</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Hồ Sơ</span>
+</div>
+</nav>
+<script>
+        // Micro-interactions for character selection
+        document.querySelectorAll('.character-option').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.character-option').forEach(b => {
+                    b.classList.remove('active');
+                    const img = b.querySelector('img');
+                    img.classList.add('grayscale', 'opacity-60');
+                    b.querySelector('div:last-child').classList.remove('text-primary');
+                    b.querySelector('div:last-child').classList.add('text-on-surface-variant');
+                });
+                btn.classList.add('active');
+                const activeImg = btn.querySelector('img');
+                activeImg.classList.remove('grayscale', 'opacity-60');
+                btn.querySelector('div:last-child').classList.add('text-primary');
+                btn.querySelector('div:last-child').classList.remove('text-on-surface-variant');
+                
+                // Update character name or small animations could go here
+            });
+        });
+
+        // Simple typing effect for the result score
+        const scoreEl = document.querySelector('.font-display-lg-mobile');
+        if (scoreEl) {
+            let start = 0;
+            const end = 450;
+            const duration = 1500;
+            const startTime = performance.now();
+
+            function animateScore(currentTime) {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const currentScore = Math.floor(progress * end);
+                scoreEl.textContent = `~${currentScore} TOEIC`;
+                if (progress < 1) {
+                    requestAnimationFrame(animateScore);
+                }
+            }
+            requestAnimationFrame(animateScore);
+        }
+    </script>
+</body></html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>PvP Battle | TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#25005a",
+                    "secondary-container": "#ee9800",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-tertiary": "#003824",
+                    "on-secondary-container": "#5b3800",
+                    "surface-bright": "#383845",
+                    "primary-container": "#7c3aed",
+                    "surface-dim": "#12121d",
+                    "streak-orange": "#F97316",
+                    "on-primary": "#3f008e",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-background": "#e3e0f1",
+                    "surface-container-highest": "#343440",
+                    "outline-variant": "#4a4455",
+                    "surface": "#12121d",
+                    "secondary-fixed": "#ffddb8",
+                    "text-primary": "#F1F5F9",
+                    "surface-container-high": "#292935",
+                    "on-secondary-fixed": "#2a1700",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "inverse-surface": "#e3e0f1",
+                    "surface-container-lowest": "#0d0d18",
+                    "primary-fixed": "#eaddff",
+                    "text-muted": "#94A338",
+                    "error": "#ffb4ab",
+                    "secondary": "#ffb95f",
+                    "on-surface-variant": "#ccc3d8",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#76ffc2",
+                    "tertiary": "#4edea3",
+                    "on-secondary": "#472a00",
+                    "error-red": "#EF4444",
+                    "background": "#12121d",
+                    "inverse-on-surface": "#302f3b",
+                    "on-primary-container": "#ede0ff",
+                    "surface-tint": "#d2bbff",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-surface": "#e3e0f1",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-variant": "#343440",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650",
+                    "surface-container": "#1f1e2a",
+                    "outline": "#958da1",
+                    "primary": "#d2bbff",
+                    "inverse-primary": "#732ee4",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-tertiary-fixed": "#002113"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "margin-desktop": "32px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "sm": "12px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "badge-xs": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-green {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .vs-badge {
+            background: linear-gradient(135deg, #7C3AED 0%, #D2BBFF 100%);
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.6);
+        }
+        .timer-radial {
+            background: conic-gradient(#7C3AED var(--progress), transparent 0deg);
+        }
+        @keyframes pulse-thinking {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+        .thinking-animation {
+            animation: pulse-thinking 1.5s infinite ease-in-out;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col overflow-hidden">
+<!-- Cyberpunk Background Shader -->
+
+<!-- Top App Bar (Shell Component) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 backdrop-blur-xl border-b border-glass-border shadow-lg shadow-primary/10">
+<div class="flex items-center gap-sm">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized character portrait for a high-ranking TOEIC learner. The avatar has futuristic digital glasses and a purple-tinted military-style educational uniform, set against a dark neon cyber-scholar background. The lighting is dramatic and cinematic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAhRP1u6Ny4GaPdzZojppX0OXX4HqPfQblYZeyba5x4o6htvV6kKORuXlmoKz-kUNIvywEBaBN-49g1bpLp-G5PwNYMvxEZNdmBih44HHl-1uuG2D9hsWXMhjX-YmHZpN4zC3ISSOWNAjZdukaIeG4aNLvYttQrRHY0HQxWkCr8s-p_fs5idMNfENK2ZwyekoyPYgxLqN7KqEGKlX0ziNnjZenRghj1zOtqNGjWq6ZlxSOHDEVFz04Ss10vg4_4dkCOSwN2x_H5vpU"/>
+</div>
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-primary">TOEIC QUEST</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Rank: Diamond I</span>
+</div>
+</div>
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">notifications</button>
+</header>
+<main class="flex-grow pt-16 pb-20 flex flex-col relative z-10">
+<!-- Opponent Section (Top Half) -->
+<section class="flex-1 flex flex-col justify-center px-margin-mobile py-4">
+<div class="glass-panel rounded-xl p-md flex flex-col gap-sm relative overflow-hidden">
+<!-- Thinking Overlay Indication -->
+<div class="absolute top-2 right-4 flex items-center gap-xs">
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim thinking-animation"></span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed-dim italic">Đang suy nghĩ...</span>
+</div>
+<div class="flex items-center gap-md">
+<div class="relative">
+<div class="w-14 h-14 rounded-full border-2 border-error-red overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional yet fierce female avatar named TranThiB. She has sharp features, wearing a sleek silver tech-enabled headset. The background is a dark gradient of crimson and obsidian, matching her high-stakes competitor status in a digital learning arena." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAG_xRdkTBom2r4JJJxmN_dxyJ-L9bllIa_rCP8fzLUeaCHrCW_Uu0mNp3VVtYNPopVDcvV-TtTsIvVogQzkRrYgqCmFOs7CG-NO1dhnriqcTIdyd9jKBJMxUkGRfxlCojSseUopKX38dLqBOXlvm1D0xakP9ccFmOU0wV0PgyrQfW2xjlCZNKWqhMFTsVEuKTzBEqyoMJTcYBgUTpFgIZFUguDzt2K5w66_YIonzv4-L6_4FqF1gZZ839RAp0JGL4khRHB-zlpznn5"/>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-error-red text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">LV.42</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-end mb-1">
+<h3 class="font-headline-sm text-headline-sm text-on-surface">TranThiB</h3>
+<span class="font-display-lg text-headline-md text-error-red">35</span>
+</div>
+<!-- Progress Track -->
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden flex gap-0.5">
+<div class="h-full bg-error-red w-[10%]"></div>
+<div class="h-full bg-error-red w-[10%]"></div>
+<div class="h-full bg-error-red w-[10%]"></div>
+<div class="h-full bg-error-red w-[10%]"></div>
+<div class="h-full bg-surface-container-highest flex-grow"></div>
+</div>
+<div class="flex justify-between mt-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">4/10 Đúng</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Kỷ lục: 890</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- VS Divider -->
+<div class="relative h-4 flex items-center justify-center">
+<div class="absolute w-full h-[1px] bg-glass-border"></div>
+<div class="vs-badge z-20 px-4 py-1 rounded-full text-white font-black italic tracking-tighter text-label-sm">VS</div>
+<div class="absolute -top-8 bg-surface-container-highest px-3 py-1 rounded-t-lg border-t border-x border-glass-border font-label-sm text-label-sm text-primary">
+                Câu 5/10
+            </div>
+</div>
+<!-- User Quiz Section (Bottom Half) -->
+<section class="flex-[1.5] flex flex-col px-margin-mobile py-4 gap-md">
+<!-- Question Card -->
+<div class="glass-panel rounded-xl p-lg flex flex-col gap-md relative">
+<!-- Countdown Timer -->
+<div class="absolute -top-4 right-6 w-12 h-12 bg-surface-container-high rounded-full p-1 border border-glass-border shadow-xl flex items-center justify-center">
+<div class="w-full h-full rounded-full border-2 border-primary-container flex items-center justify-center">
+<span class="font-body-lg text-body-lg text-primary">18s</span>
+</div>
+</div>
+<div class="flex items-center gap-xs">
+<span class="bg-primary-container text-white px-2 py-0.5 rounded text-[10px] font-bold">PART 5</span>
+<span class="text-on-surface-variant font-label-sm text-label-sm">Grammar: Prepositions</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface leading-relaxed">
+                    The marketing department decided to postpone the launch of the new campaign _______ the results of the focus group are analyzed.
+                </p>
+<!-- Options Grid -->
+<div class="grid grid-cols-1 gap-sm mt-2">
+<!-- Option A -->
+<button class="glass-panel rounded-xl p-md flex items-center gap-md hover:border-primary transition-all active:scale-95 text-left group">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-on-surface-variant group-hover:bg-primary-container group-hover:text-white transition-colors">A</div>
+<span class="font-body-md text-body-md text-on-surface">until</span>
+</button>
+<!-- Option B (Selected State Example) -->
+<button class="glass-panel rounded-xl p-md flex items-center gap-md border-primary bg-primary-container/20 shadow-[0_0_15px_rgba(124,58,237,0.2)] text-left active:scale-95">
+<div class="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center font-bold text-white">B</div>
+<span class="font-body-md text-body-md text-on-surface">during</span>
+</button>
+<!-- Option C -->
+<button class="glass-panel rounded-xl p-md flex items-center gap-md hover:border-primary transition-all active:scale-95 text-left group">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-on-surface-variant group-hover:bg-primary-container group-hover:text-white transition-colors">C</div>
+<span class="font-body-md text-body-md text-on-surface">within</span>
+</button>
+<!-- Option D -->
+<button class="glass-panel rounded-xl p-md flex items-center gap-md hover:border-primary transition-all active:scale-95 text-left group">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center font-bold text-on-surface-variant group-hover:bg-primary-container group-hover:text-white transition-colors">D</div>
+<span class="font-body-md text-body-md text-on-surface">among</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Shell Component) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe px-2 bg-surface-container-high backdrop-blur-lg border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-sm text-label-sm">Trang Chủ</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-transform duration-200">
+<span class="material-symbols-outlined">swords</span>
+<span class="font-label-sm text-label-sm">PvP Battle</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="font-label-sm text-label-sm">Skill Tree</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-sm text-label-sm">Guild</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Hồ Sơ</span>
+</button>
+</nav>
+<!-- Floating Atmosphere FX (Optional Micro-interaction Script) -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const options = document.querySelectorAll('.grid button');
+            options.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    options.forEach(o => o.classList.remove('border-primary', 'bg-primary-container/20'));
+                    opt.classList.add('border-primary', 'bg-primary-container/20');
+                });
+            });
+        });
+    </script>
+</body></html>

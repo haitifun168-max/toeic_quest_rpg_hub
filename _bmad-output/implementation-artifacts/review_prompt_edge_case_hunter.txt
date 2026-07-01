@@ -1,0 +1,906 @@
+You are an Edge Case Hunter code reviewer. Your role is to examine the provided code files adversarially to identify unhandled boundary conditions, logical edge cases, security validation bypasses, database constraints failures, and error-handling bugs.
+
+Please review the following implemented files and list only the unhandled edge cases or defects you discover:
+
+===================================================================
+=== File: backend/src/db/migrations/01_create_users.sql
+===================================================================
+-- Enable uuid-ossp extension for auto-generating UUIDs
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    display_name VARCHAR(255) NOT NULL,
+    email TEXT UNIQUE NOT NULL, -- AES-256 encrypted email, unique constraint
+    password_hash VARCHAR(255), -- Nullable to support OAuth2 users
+    current_rank INTEGER DEFAULT 1, -- 1: Thực Tập Sinh
+    total_kp INTEGER DEFAULT 0,
+    current_elo INTEGER DEFAULT 1000,
+    current_stamina INTEGER DEFAULT 15, -- Stamina for Free users (15) and Premium (30)
+    last_stamina_reset TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Trigger to automatically update updated_at timestamp
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = NOW();
+    RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+CREATE OR REPLACE TRIGGER update_users_updated_at
+    BEFORE UPDATE ON users
+    FOR EACH ROW
+    EXECUTE FUNCTION update_updated_at_column();
+
+===================================================================
+=== File: backend/src/utils/crypto.js
+===================================================================
+const crypto = require('crypto');
+
+const ALGORITHM = 'aes-256-cbc';
+
+// In production, ENCRYPTION_KEY must be exactly 32 bytes and ENCRYPTION_IV must be exactly 16 bytes.
+const KEY_STRING = process.env.ENCRYPTION_KEY || 'default_secret_key_32_bytes_long_!'; // 32 bytes fallback
+const IV_STRING = process.env.ENCRYPTION_IV || 'default_iv_16byte'; // 16 bytes fallback
+
+const KEY = Buffer.from(KEY_STRING.substring(0, 32), 'utf-8');
+const IV = Buffer.from(IV_STRING.substring(0, 16), 'utf-8');
+
+/**
+ * Encrypts cleartext using AES-256-CBC
+ * @param {string} text 
+ * @returns {string} hex encrypted ciphertext
+ */
+function encrypt(text) {
+    if (!text) return null;
+    const cipher = crypto.createCipheriv(ALGORITHM, KEY, IV);
+    let encrypted = cipher.update(text, 'utf8', 'hex');
+    encrypted += cipher.final('hex');
+    return encrypted;
+}
+
+/**
+ * Decrypts hex ciphertext back to cleartext
+ * @param {string} ciphertext 
+ * @returns {string} decrypted cleartext
+ */
+function decrypt(ciphertext) {
+    if (!ciphertext) return null;
+    // If it's not a hex string, it is already cleartext
+    if (!/^[0-9a-fA-F]+$/.test(ciphertext)) {
+        return ciphertext;
+    }
+    try {
+        const decipher = crypto.createDecipheriv(ALGORITHM, KEY, IV);
+        let decrypted = decipher.update(ciphertext, 'hex', 'utf8');
+        decrypted += decipher.final('utf8');
+        return decrypted;
+    } catch (err) {
+        // Fallback to original text if decryption fails
+        return ciphertext;
+    }
+}
+
+module.exports = {
+    encrypt,
+    decrypt
+};
+
+===================================================================
+=== File: backend/src/db/index.js
+===================================================================
+const { Pool } = require('pg');
+require('dotenv').config();
+
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/toeic_quest_rpg',
+  ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
+});
+
+module.exports = {
+  query: (text, params) => pool.query(text, params),
+  pool
+};
+
+===================================================================
+=== File: backend/src/models/user.js
+===================================================================
+const db = require('../db');
+const cryptoUtils = require('../utils/crypto');
+const bcrypt = require('bcryptjs');
+
+class User {
+  /**
+   * Helper to format user record from DB (decrypt email)
+   */
+  static formatUser(rawUser) {
+    if (!rawUser) return null;
+    const formatted = { ...rawUser };
+    if (formatted.email) {
+      formatted.email = cryptoUtils.decrypt(formatted.email);
+    }
+    // Delete password hash from output for security
+    delete formatted.password_hash;
+    return formatted;
+  }
+
+  /**
+   * Find user by id
+   */
+  static async findById(id) {
+    const query = 'SELECT * FROM users WHERE id = $1';
+    const res = await db.query(query, [id]);
+    return res.rows.length ? this.formatUser(res.rows[0]) : null;
+  }
+
+  /**
+   * Find user by email (using encrypted email)
+   */
+  static async findByEmail(email) {
+    if (!email) return null;
+    const encryptedEmail = cryptoUtils.encrypt(email.toLowerCase().trim());
+    const query = 'SELECT * FROM users WHERE email = $1';
+    const res = await db.query(query, [encryptedEmail]);
+    return res.rows.length ? res.rows[0] : null;
+  }
+
+  /**
+   * Create new email user
+   */
+  static async create({ displayName, email, password }) {
+    if (!displayName || !email || !password) {
+      throw new Error('Missing required user registration fields');
+    }
+
+    // Password validation: minimum 8 characters, at least 1 uppercase, 1 special character
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      throw new Error('Password must be at least 8 characters, contain 1 uppercase letter and 1 special character');
+    }
+
+    // Encrypt email and hash password
+    const encryptedEmail = cryptoUtils.encrypt(email.toLowerCase().trim());
+    const passwordHash = await bcrypt.hash(password, 10); // using standard 10 salt rounds
+
+    const query = `
+      INSERT INTO users (display_name, email, password_hash, current_rank, total_kp, current_elo, current_stamina)
+      VALUES ($1, $2, $3, 1, 0, 1000, 15)
+      RETURNING *
+    `;
+
+    const res = await db.query(query, [displayName, encryptedEmail, passwordHash]);
+    return this.formatUser(res.rows[0]);
+  }
+
+  /**
+   * Create or find OAuth2 user (Google/Facebook)
+   */
+  static async findOrCreateOAuthUser({ displayName, email }) {
+    if (!email) {
+      throw new Error('Email is required for OAuth user registration');
+    }
+
+    // Check if user already exists
+    const existing = await this.findByEmail(email);
+    if (existing) {
+      return this.formatUser(existing);
+    }
+
+    const encryptedEmail = cryptoUtils.encrypt(email.toLowerCase().trim());
+    const query = `
+      INSERT INTO users (display_name, email, password_hash, current_rank, total_kp, current_elo, current_stamina)
+      VALUES ($1, $2, null, 1, 0, 1000, 15)
+      RETURNING *
+    `;
+
+    const res = await db.query(query, [displayName || 'Player', encryptedEmail]);
+    return this.formatUser(res.rows[0]);
+  }
+}
+
+module.exports = { User };
+
+===================================================================
+=== File: backend/src/api/auth.js
+===================================================================
+const express = require('express');
+const router = express.Router();
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const { User } = require('../models/user');
+
+const JWT_SECRET = process.env.JWT_SECRET || 'default_jwt_secret_key_change_me_in_prod';
+
+/**
+ * REST API standard response helper for success
+ */
+function sendSuccess(res, data, status = 200) {
+  return res.status(status).json({
+    ok: true,
+    data,
+    error: null
+  });
+}
+
+/**
+ * REST API standard response helper for error
+ */
+function sendError(res, code, message, status = 400) {
+  return res.status(status).json({
+    ok: false,
+    data: null,
+    error: {
+      code,
+      message
+    }
+  });
+}
+
+/**
+ * POST /api/auth/register
+ * Register with Email
+ */
+router.post('/register', async (req, res) => {
+  try {
+    const { displayName, email, password } = req.body;
+
+    if (!displayName || !email || !password) {
+      return sendError(res, 'MISSING_FIELDS', 'Display name, email, and password are required');
+    }
+
+    // Check if email already registered
+    const existing = await User.findByEmail(email);
+    if (existing) {
+      return sendError(res, 'EMAIL_EXISTS', 'Email is already registered');
+    }
+
+    // Create user (User.create does password strength validation internally)
+    let newUser;
+    try {
+      newUser = await User.create({ displayName, email, password });
+    } catch (validationErr) {
+      return sendError(res, 'VALIDATION_FAILED', validationErr.message);
+    }
+
+    // Sign JWT
+    const token = jwt.sign({ id: newUser.id }, JWT_SECRET, { expiresIn: '7d' });
+
+    return sendSuccess(res, {
+      user: newUser,
+      token
+    }, 201);
+  } catch (err) {
+    console.error('Registration API Error:', err);
+    return sendError(res, 'INTERNAL_SERVER_ERROR', 'An error occurred during registration', 500);
+  }
+});
+
+/**
+ * POST /api/auth/login
+ * Login with Email
+ */
+router.post('/login', async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return sendError(res, 'MISSING_FIELDS', 'Email and password are required');
+    }
+
+    const user = await User.findByEmail(email);
+    if (!user || !user.password_hash) {
+      return sendError(res, 'INVALID_CREDENTIALS', 'Invalid email or password');
+    }
+
+    // Compare bcrypt passwords
+    const isMatch = await bcrypt.compare(password, user.password_hash);
+    if (!isMatch) {
+      return sendError(res, 'INVALID_CREDENTIALS', 'Invalid email or password');
+    }
+
+    // Sign JWT
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
+
+    // Format user (removes password_hash)
+    const formattedUser = User.formatUser(user);
+
+    return sendSuccess(res, {
+      user: formattedUser,
+      token
+    });
+  } catch (err) {
+    console.error('Login API Error:', err);
+    return sendError(res, 'INTERNAL_SERVER_ERROR', 'An error occurred during login', 500);
+  }
+});
+
+/**
+ * POST /api/auth/oauth
+ * OAuth2 endpoint to login or register with Google/Facebook on mobile client.
+ * Mobile handles Google/FB login locally and passes credentials/details to the backend.
+ */
+router.post('/oauth', async (req, res) => {
+  try {
+    const { email, displayName, provider } = req.body;
+
+    if (!email) {
+      return sendError(res, 'MISSING_FIELDS', 'Email is required for OAuth login');
+    }
+
+    // Find or create the user record
+    const user = await User.findOrCreateOAuthUser({
+      displayName,
+      email
+    });
+
+    // Sign JWT
+    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
+
+    return sendSuccess(res, {
+      user,
+      token,
+      provider: provider || 'oauth2'
+    });
+  } catch (err) {
+    console.error('OAuth API Error:', err);
+    return sendError(res, 'INTERNAL_SERVER_ERROR', 'An error occurred during OAuth validation', 500);
+  }
+});
+
+module.exports = router;
+
+===================================================================
+=== File: backend/src/app.js
+===================================================================
+const express = require('express');
+const authRouter = require('./api/auth');
+
+const app = express();
+
+app.use(express.json());
+
+// Routes
+app.use('/api/auth', authRouter);
+
+// Standard 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    ok: false,
+    data: null,
+    error: {
+      code: 'NOT_FOUND',
+      message: 'Resource not found'
+    }
+  });
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Unhandled Server Error:', err);
+  res.status(500).json({
+    ok: false,
+    data: null,
+    error: {
+      code: 'INTERNAL_SERVER_ERROR',
+      message: err.message || 'An unexpected error occurred'
+    }
+  });
+});
+
+module.exports = app;
+
+===================================================================
+=== File: backend/src/server.js
+===================================================================
+const app = require('./app');
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`Authentication & RPG Gateway service running on port ${PORT}`);
+});
+
+===================================================================
+=== File: frontend/src/screens/AuthScreen.js
+===================================================================
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  ActivityIndicator,
+  Alert,
+  SafeAreaView,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
+
+// Fallback secure storage interface
+let SecureStore;
+try {
+  SecureStore = require('expo-secure-store');
+} catch (e) {
+  // Simple in-memory fallback for testing environments
+  const store = {};
+  SecureStore = {
+    setItemAsync: async (key, val) => { store[key] = val; },
+    getItemAsync: async (key) => store[key] || null,
+    deleteItemAsync: async (key) => { delete store[key]; }
+  };
+}
+
+const BACKEND_URL = 'http://localhost:3000'; // Default API Host
+
+export default function AuthScreen({ navigation }) {
+  const [isLogin, setIsLogin] = useState(true);
+  const [displayName, setDisplayName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  // Password validation: minimum 8 characters, at least 1 uppercase, 1 special character
+  const validatePassword = (pass) => {
+    const regex = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).{8,}$/;
+    return regex.test(pass);
+  };
+
+  const handleAuth = async () => {
+    if (!email || !password) {
+      Alert.alert('Lỗi', 'Vui lòng nhập đầy đủ Email và Mật khẩu');
+      return;
+    }
+
+    if (!isLogin && !displayName) {
+      Alert.alert('Lỗi', 'Vui lòng nhập Tên hiển thị');
+      return;
+    }
+
+    if (!isLogin && !validatePassword(password)) {
+      Alert.alert(
+        'Mật khẩu không hợp lệ',
+        'Mật khẩu phải chứa ít nhất 8 ký tự, 1 chữ hoa, và 1 ký tự đặc biệt'
+      );
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      const body = isLogin 
+        ? { email, password } 
+        : { displayName, email, password };
+
+      const response = await fetch(`${BACKEND_URL}${endpoint}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error?.message || 'Đã có lỗi xảy ra');
+      }
+
+      const { token, user } = result.data;
+      
+      // Save Token securely
+      await SecureStore.setItemAsync('user_token', token);
+      await SecureStore.setItemAsync('user_profile', JSON.stringify(user));
+
+      Alert.alert(
+        isLogin ? 'Đăng nhập thành công' : 'Đăng ký thành công',
+        `Chào mừng ${user.display_name} đến với TOEIC Quest!`,
+        [
+          { 
+            text: 'OK', 
+            onPress: () => {
+              if (navigation) {
+                navigation.replace('MainHub');
+              } else {
+                console.log('Navigation trigger: MainHub');
+              }
+            } 
+          }
+        ]
+      );
+    } catch (error) {
+      Alert.alert('Thất bại', error.message || 'Lỗi kết nối máy chủ');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOAuth = async (provider) => {
+    setLoading(true);
+    try {
+      // Simulate mobile local OAuth login returning user info
+      const mockEmail = `${provider}.user@gmail.com`;
+      const mockName = `${provider === 'google' ? 'Google' : 'Facebook'} Challenger`;
+
+      const response = await fetch(`${BACKEND_URL}/api/auth/oauth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: mockEmail,
+          displayName: mockName,
+          provider
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error?.message || 'OAuth2 authentication failed');
+      }
+
+      const { token, user } = result.data;
+      await SecureStore.setItemAsync('user_token', token);
+      await SecureStore.setItemAsync('user_profile', JSON.stringify(user));
+
+      Alert.alert(
+        'Liên kết thành công',
+        `Đăng nhập qua ${provider === 'google' ? 'Google' : 'Facebook'} thành công!`,
+        [
+          { text: 'Bắt đầu', onPress: () => navigation?.replace('MainHub') }
+        ]
+      );
+    } catch (error) {
+      Alert.alert('Thất bại', error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.keyboardView}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
+          
+          {/* Header */}
+          <View style={styles.header}>
+            <Text style={styles.title}>TOEIC QUEST</Text>
+            <Text style={styles.subtitle}>Chinh phục đỉnh cao tri thức</Text>
+          </View>
+
+          {/* Glass Panel */}
+          <View style={styles.glassPanel}>
+            {/* Tabs */}
+            <View style={styles.tabContainer}>
+              <TouchableOpacity 
+                style={[styles.tabButton, isLogin && styles.activeTabButton]} 
+                onPress={() => setIsLogin(true)}
+              >
+                <Text style={[styles.tabText, isLogin && styles.activeTabText]}>Đăng nhập</Text>
+              </TouchableOpacity>
+              <TouchableOpacity 
+                style={[styles.tabButton, !isLogin && styles.activeTabButton]} 
+                onPress={() => setIsLogin(false)}
+              >
+                <Text style={[styles.tabText, !isLogin && styles.activeTabText]}>Đăng ký</Text>
+              </TouchableOpacity>
+            </View>
+
+            {/* Form */}
+            <View style={styles.form}>
+              {!isLogin && (
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Tên hiển thị</Text>
+                  <View style={styles.inputWrapper}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder="Hiệp sĩ TOEIC"
+                      placeholderTextColor="#958da1"
+                      value={displayName}
+                      onChangeText={setDisplayName}
+                    />
+                  </View>
+                </View>
+              )}
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Email</Text>
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="example@gmail.com"
+                    placeholderTextColor="#958da1"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                    value={email}
+                    onChangeText={setEmail}
+                  />
+                </View>
+              </View>
+
+              <View style={styles.inputContainer}>
+                <Text style={styles.label}>Mật khẩu</Text>
+                <View style={styles.inputWrapper}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder="••••••••"
+                    placeholderTextColor="#958da1"
+                    secureTextEntry={!showPassword}
+                    value={password}
+                    onChangeText={setPassword}
+                  />
+                  <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+                    <Text style={styles.eyeText}>{showPassword ? 'Hide' : 'Show'}</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+
+              {/* Submit CTA */}
+              <TouchableOpacity style={styles.submitButton} onPress={handleAuth} disabled={loading}>
+                {loading ? (
+                  <ActivityIndicator color="#3f008e" />
+                ) : (
+                  <Text style={styles.submitButtonText}>
+                    {isLogin ? 'Đăng nhập' : 'Đăng ký'}
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </View>
+
+            {/* Forgot Password (Login mode only) */}
+            {isLogin && (
+              <TouchableOpacity style={styles.forgotButton}>
+                <Text style={styles.forgotText}>Quên mật khẩu?</Text>
+              </TouchableOpacity>
+            )}
+
+            {/* Divider */}
+            <View style={styles.dividerContainer}>
+              <View style={styles.dividerLine} />
+              <Text style={styles.dividerText}>Hoặc</Text>
+              <View style={styles.dividerLine} />
+            </View>
+
+            {/* Social Authentication */}
+            <View style={styles.socialContainer}>
+              <TouchableOpacity style={styles.socialButton} onPress={() => handleOAuth('google')} disabled={loading}>
+                <Image 
+                  source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAoeIgqPK92DWG4iiKk0UaT4rnZUZr9De8mUQurzGIGovyXSRzEbQFk2v5U5L3zexGpPeAaoLL-_wkMm22AztDHGiBGZunDagCKnHn8ERNXfbBOfHnGM4wLxkdzOkGUQSw7jxUExKVcwRHhwqC9m1DsQRWOyW3eIzDWbmmUt9vOJiYRNKOGkU8i6aTRq6-d-KT9_h_amT6DP6BT1UBKGvOcKwyK7qPnTIded8k1C2lKzBz_RELL2jU_d2lRguQqfi-ZEhxWOA-eenJA' }}
+                  style={styles.socialIcon}
+                />
+                <Text style={styles.socialButtonText}>Tiếp tục với Google</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.socialButton} onPress={() => handleOAuth('facebook')} disabled={loading}>
+                <Image 
+                  source={{ uri: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAcS7l9fiEFZkIFzFS8zCySul4Jgl-JfBShjnM9O1O_xx7XwFQW3g0GHVpUiF1VkeZFzYQG5mXii5hStRBuBsrY0oXged-mIZPgef_8p2BX6mu07KtI7hg6TQ1y1U526kbM6abX1F_ED8TZozpTNVw_qOpFxMXPW4gnl-3HlA84crGW3imMCR8_j6lif50jjI8HlkfhTYg507ouKQPbpDv_Jh7Nf5y4GNe0iIoqHrHXeBtBtK0h-COY1HxDLj_tLD-ORfCoYohTNyX6' }}
+                  style={styles.socialIcon}
+                />
+                <Text style={styles.socialButtonText}>Tiếp tục với Facebook</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
+          {/* Footer Note */}
+          <Text style={styles.footerText}>
+            Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của chúng tôi.
+          </Text>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#12121d',
+  },
+  keyboardView: {
+    flex: 1,
+  },
+  scrollContainer: {
+    paddingHorizontal: 20,
+    paddingVertical: 40,
+    alignItems: 'center',
+  },
+  header: {
+    marginBottom: 24,
+    alignItems: 'center',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: '700',
+    color: '#d2bbff',
+    letterSpacing: -0.5,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: '#ccc3d8',
+    marginTop: 6,
+  },
+  glassPanel: {
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    padding: 24,
+    shadowColor: '#7c3aed',
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.15,
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: 'rgba(255, 255, 255, 0.15)',
+    marginBottom: 20,
+  },
+  tabButton: {
+    flex: 1,
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  activeTabButton: {
+    borderBottomWidth: 2,
+    borderBottomColor: '#d2bbff',
+  },
+  tabText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ccc3d8',
+  },
+  activeTabText: {
+    color: '#d2bbff',
+  },
+  form: {
+    width: '100%',
+  },
+  inputContainer: {
+    marginBottom: 16,
+  },
+  label: {
+    fontSize: 12,
+    color: '#ccc3d8',
+    marginBottom: 6,
+    paddingLeft: 4,
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.1)',
+    paddingHorizontal: 16,
+    height: 50,
+  },
+  input: {
+    flex: 1,
+    color: '#e3e0f1',
+    fontSize: 14,
+  },
+  eyeButton: {
+    padding: 4,
+  },
+  eyeText: {
+    color: '#d2bbff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  submitButton: {
+    height: 52,
+    borderRadius: 26,
+    backgroundColor: '#7c3aed',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 12,
+    shadowColor: '#7c3aed',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 6,
+  },
+  submitButtonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#ede0ff',
+  },
+  forgotButton: {
+    alignSelf: 'center',
+    marginTop: 16,
+  },
+  forgotText: {
+    fontSize: 12,
+    color: '#d2bbff',
+    textDecorationLine: 'underline',
+  },
+  dividerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: 'rgba(255, 255, 255, 0.15)',
+  },
+  dividerText: {
+    fontSize: 12,
+    color: '#ccc3d8',
+    marginHorizontal: 12,
+  },
+  socialContainer: {
+    gap: 12,
+  },
+  socialButton: {
+    height: 50,
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.15)',
+    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  socialIcon: {
+    width: 20,
+    height: 20,
+    resizeMode: 'contain',
+  },
+  socialButtonText: {
+    color: '#e3e0f1',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  footerText: {
+    fontSize: 11,
+    color: '#ccc3d8',
+    textAlign: 'center',
+    marginTop: 32,
+    paddingHorizontal: 20,
+    lineHeight: 16,
+    opacity: 0.7,
+  },
+});
+
+===================================================================
+=== File: package.json
+===================================================================
+{
+  "name": "02-bmad-toeic_quest_rpg_hub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.12.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
+  }
+}

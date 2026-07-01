@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+<title>Skill Tree - TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "primary": "#d2bbff",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-dim": "#12121d",
+                    "text-primary": "#F1F5F9",
+                    "on-primary-fixed": "#25005a",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#003824",
+                    "text-muted": "#94A3B8",
+                    "surface-container-lowest": "#0d0d18",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "inverse-primary": "#732ee4",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#002113",
+                    "outline-variant": "#4a4455",
+                    "streak-orange": "#F97316",
+                    "on-primary-container": "#ede0ff",
+                    "inverse-on-surface": "#302f3b",
+                    "error-red": "#EF4444",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-error-container": "#ffdad6",
+                    "surface-container": "#1f1e2a",
+                    "primary-fixed-dim": "#d2bbff",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "background": "#12121d",
+                    "primary-fixed": "#eaddff",
+                    "tertiary-container": "#007650",
+                    "surface-container-low": "#1b1a26",
+                    "secondary-container": "#ee9800",
+                    "surface-container-high": "#292935",
+                    "on-surface-variant": "#ccc3d8",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-surface": "#e3e0f1",
+                    "inverse-surface": "#e3e0f1",
+                    "on-primary": "#3f008e",
+                    "outline": "#958da1",
+                    "surface-variant": "#343440",
+                    "surface": "#12121d",
+                    "on-background": "#e3e0f1",
+                    "surface-bright": "#383845",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#343440",
+                    "boss-purple": "#7C3AED",
+                    "success-green": "#10B981",
+                    "gold-active": "#F59E0B"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-desktop": "32px",
+                    "sm": "12px",
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "badge-xs": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #12121d;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .skill-map-container {
+            background: linear-gradient(to bottom, #0d0d18 0%, #12121d 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .floating-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(210, 187, 255, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float-up 15s linear infinite;
+        }
+
+        @keyframes float-up {
+            0% { transform: translateY(100vh) scale(1); opacity: 0; }
+            50% { opacity: 0.6; }
+            100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .node-line {
+            position: absolute;
+            width: 4px;
+            z-index: 0;
+            transform-origin: top center;
+            opacity: 0.6;
+        }
+
+        .line-glow-gold { background: linear-gradient(to bottom, #F59E0B, #F59E0B); box-shadow: 0 0 10px #F59E0B; }
+        .line-glow-green { background: linear-gradient(to bottom, #F59E0B, #10B981); box-shadow: 0 0 10px #10B981; }
+        .line-glow-gray { background: #374151; }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .node-active { animation: pulse-green 2s infinite; }
+        @keyframes pulse-green {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .node-boss { animation: pulse-purple 2s infinite; }
+        @keyframes pulse-purple {
+            0% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(124, 58, 237, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+        }
+
+        .city-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: brightness(0.4) blur(2px);
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface">
+<!-- Background Layers -->
+<div class="city-bg" data-alt="A sprawling futuristic cyberpunk RPG city at night, with towering skyscrapers, neon signs in purple and green reflecting off wet asphalt, and deep atmospheric fog. The visual style is high-end digital concept art with a cinematic mood and intricate detail, matching a dark scholar aesthetic." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGfKTZ-bG4emoKBdKOvAKryUtgXlSzuxU0hMi75m0VsiLGQhzg1sgQh8J1kSq9FtEAq4M0iqZDXNEAsaxhLt9fQzq7T3e-f44w4rO7g0DXSeCqzzbe91ZL3RrOZLZlK15Nd9pBPyDaa9cJroYM2y3fH4yE34QRukgqmOYQq1OcPlh5eRuULHIRzi79B70Vdp9APav3PLsMhr_nZ51NnBpD8W5mJL2XdOUNSgXrUdjBwCSP5fU4XIgec-X3gsUgmuFgRATtsbAP5vpl')"></div>
+<div id="particles-container"></div>
+<!-- Sticky Top Bar -->
+<header class="fixed top-0 w-full z-50 h-16 glass-panel flex items-center justify-between px-margin-mobile shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="text-headline-sm font-headline-sm text-primary">Lộ Trình Kỹ Năng</h1>
+</div>
+<button class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full border border-glass-border">
+<span class="material-symbols-outlined text-label-sm">filter_list</span>
+<span class="text-label-sm font-label-sm">Bộ lọc</span>
+</button>
+</header>
+<!-- Main Map Body -->
+<main class="pt-24 pb-32 px-4 relative overflow-y-auto scroll-smooth">
+<!-- SVG for lines connecting nodes -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="min-height: 1200px;">
+<defs>
+<lineargradient id="grad-gold" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1"></stop>
+</lineargradient>
+<lineargradient id="grad-unlocking" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#10B981;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1"></stop>
+</lineargradient>
+<lineargradient id="grad-locked" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#374151;stop-opacity:0.5"></stop>
+<stop offset="100%" style="stop-color:#374151;stop-opacity:0.5"></stop>
+</lineargradient>
+</defs>
+<!-- Lines (Conceptual paths) -->
+<!-- Path to Listening side -->
+<path class="drop-shadow-[0_0_5px_rgba(245,158,11,0.5)]" d="M 50% 1120 L 25% 1000 L 25% 850 L 25% 700 L 25% 550 L 50% 400" fill="none" stroke="url(#grad-gold)" stroke-width="4"></path>
+<!-- Path to Reading side -->
+<path class="drop-shadow-[0_0_5px_rgba(16,185,129,0.5)]" d="M 50% 1120 L 75% 1000 L 75% 850 L 75% 700 L 75% 550 L 50% 400" fill="none" stroke="url(#grad-unlocking)" stroke-width="4"></path>
+<!-- Final Boss Path -->
+<path d="M 50% 400 L 50% 150" fill="none" stroke="url(#grad-locked)" stroke-dasharray="8,8" stroke-width="4"></path>
+</svg>
+<div class="relative flex flex-col items-center gap-32 py-10" style="min-height: 1000px;">
+<!-- FINAL BOSS (Top) -->
+<div class="flex flex-col items-center z-10 -mt-8">
+<div class="w-20 h-20 rounded-full glass-panel border-boss-purple/50 bg-boss-purple/20 flex items-center justify-center node-boss shadow-[0_0_25px_rgba(124,58,237,0.6)]">
+<span class="material-symbols-outlined text-4xl text-boss-purple" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<span class="mt-4 text-headline-sm font-headline-sm text-center text-on-surface uppercase tracking-widest">TOEIC CHAMPION</span>
+<span class="text-label-sm font-label-sm text-boss-purple bg-boss-purple/10 px-3 py-1 rounded-full mt-2">Dungeon: Level 990</span>
+</div>
+<!-- Path Middle Bosses -->
+<div class="w-full flex justify-between px-4 z-10">
+<!-- Listening Boss -->
+<div class="flex flex-col items-center w-1/2">
+<div class="w-16 h-16 rounded-full glass-panel border-boss-purple/50 bg-boss-purple/10 flex items-center justify-center shadow-[0_0_15px_rgba(124,58,237,0.4)]">
+<span class="material-symbols-outlined text-3xl text-boss-purple">swords</span>
+</div>
+<span class="mt-2 text-label-sm font-bold text-center">L-Star Trial</span>
+</div>
+<!-- Reading Boss -->
+<div class="flex flex-col items-center w-1/2">
+<div class="w-16 h-16 rounded-full glass-panel border-boss-purple/50 bg-boss-purple/10 flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-3xl text-boss-purple">lock</span>
+</div>
+<span class="mt-2 text-label-sm font-bold text-center text-muted">R-Star Trial</span>
+</div>
+</div>
+<!-- Paths Layer 3 -->
+<div class="w-full flex justify-between px-2 z-10">
+<div class="flex flex-col items-center w-1/2">
+<div class="w-14 h-14 rounded-full bg-gold-active flex items-center justify-center shadow-[0_0_15px_#F59E0B]">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">L-03 Hội Thoại</span>
+</div>
+<div class="flex flex-col items-center w-1/2">
+<div class="w-14 h-14 rounded-full glass-panel border-success-green flex items-center justify-center node-active shadow-[0_0_15px_#10B981]">
+<span class="material-symbols-outlined text-success-green">play_arrow</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">R-03 Đoạn Văn</span>
+</div>
+</div>
+<!-- Paths Layer 2 -->
+<div class="w-full flex justify-between px-2 z-10">
+<div class="flex flex-col items-center w-1/2">
+<div class="w-14 h-14 rounded-full bg-gold-active flex items-center justify-center shadow-[0_0_15px_#F59E0B]">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">L-02 Câu Hỏi</span>
+</div>
+<div class="flex flex-col items-center w-1/2">
+<div class="w-14 h-14 rounded-full bg-surface-variant border border-glass-border flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-muted">lock</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center text-muted">R-02 Từ Vựng</span>
+</div>
+</div>
+<!-- Paths Layer 1 -->
+<div class="w-full flex justify-between px-2 z-10">
+<div class="flex flex-col items-center w-1/2">
+<div class="w-14 h-14 rounded-full bg-gold-active flex items-center justify-center shadow-[0_0_15px_#F59E0B]">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">L-01 Nền Tảng</span>
+</div>
+<div class="flex flex-col items-center w-1/2">
+<div class="w-14 h-14 rounded-full bg-surface-variant border border-glass-border flex items-center justify-center opacity-60">
+<span class="material-symbols-outlined text-muted">lock</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center text-muted">R-01 Ngữ Pháp</span>
+</div>
+</div>
+<!-- START POINT (Bottom) -->
+<div class="flex flex-col items-center z-10">
+<div class="w-16 h-16 rounded-full glass-panel border-primary flex items-center justify-center shadow-[0_0_20px_rgba(210,187,255,0.4)]">
+<span class="material-symbols-outlined text-3xl text-primary">flag</span>
+</div>
+<span class="mt-3 text-label-sm font-bold text-primary tracking-tighter">ĐIỂM XUẤT PHÁT</span>
+</div>
+</div>
+</main>
+<!-- Path Titles Overlay -->
+<div class="fixed top-24 left-0 w-full flex justify-between px-6 pointer-events-none">
+<div class="glass-panel px-3 py-1 rounded-lg border-primary/20">
+<span class="text-badge-xs font-badge-xs text-primary uppercase">Listening Path</span>
+</div>
+<div class="glass-panel px-3 py-1 rounded-lg border-tertiary/20">
+<span class="text-badge-xs font-badge-xs text-tertiary uppercase">Reading Path</span>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 bg-surface-container-high backdrop-blur-lg border-t border-glass-border pb-safe px-2 shadow-[0_-8px_32px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-label-sm font-label-sm mt-1">Trang Chủ</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">swords</span>
+<span class="text-label-sm font-label-sm mt-1">PvP Battle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-transform duration-200 cursor-pointer">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="text-label-sm font-label-sm mt-1">Skill Tree</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+<span class="text-label-sm font-label-sm mt-1">Guild</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-label-sm font-label-sm mt-1">Hồ Sơ</span>
+</div>
+</nav>
+<script>
+        // Generate floating particles
+        const container = document.getElementById('particles-container');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'floating-particle';
+            particle.style.left = Math.random() * 100 + 'vw';
+            particle.style.animationDelay = Math.random() * 15 + 's';
+            particle.style.opacity = Math.random() * 0.5;
+            container.appendChild(particle);
+        }
+
+        // Simple scroll to bottom on load to show starting point
+        window.onload = () => {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        };
+    </script>
+</body></html>

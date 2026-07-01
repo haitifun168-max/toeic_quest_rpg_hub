@@ -1,0 +1,349 @@
+<!DOCTYPE html><html class="dark" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+<style>
+        :root {
+            --glass-blur: blur(12px);
+        }
+        body {
+            background-color: #12121d;
+            font-family: 'Inter', sans-serif;
+            color: #e3e0f1;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-success {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+        }
+        .orb-animation {
+            animation: pulse 4s infinite ease-in-out;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); filter: brightness(1); }
+            50% { transform: scale(1.05); filter: brightness(1.3) drop-shadow(0 0 15px #7c3aed); }
+        }
+        .floating-ui {
+            animation: float 6s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container-high": "#292935",
+                        "glass-surface": "rgba(255, 255, 255, 0.08)",
+                        "on-surface-variant": "#ccc3d8",
+                        "tertiary-fixed": "#6ffbbe",
+                        "on-primary": "#3f008e",
+                        "inverse-surface": "#e3e0f1",
+                        "on-surface": "#e3e0f1",
+                        "outline": "#958da1",
+                        "on-background": "#e3e0f1",
+                        "surface-bright": "#383845",
+                        "surface-variant": "#343440",
+                        "surface": "#12121d",
+                        "error": "#ffb4ab",
+                        "surface-container-highest": "#343440",
+                        "tertiary": "#4edea3",
+                        "surface-tint": "#d2bbff",
+                        "primary-fixed-dim": "#d2bbff",
+                        "background": "#12121d",
+                        "primary-fixed": "#eaddff",
+                        "surface-container-low": "#1b1a26",
+                        "tertiary-container": "#007650",
+                        "secondary-container": "#ee9800",
+                        "inverse-primary": "#732ee4",
+                        "on-error": "#690005",
+                        "primary-container": "#7c3aed",
+                        "on-primary-container": "#ede0ff",
+                        "streak-orange": "#F97316",
+                        "outline-variant": "#4a4455",
+                        "error-red": "#EF4444",
+                        "secondary": "#ffb95f",
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "primary": "#d2bbff",
+                        "on-tertiary-container": "#76ffc2",
+                        "text-primary": "#F1F5F9",
+                        "text-muted": "#94A3B8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "sm": "12px",
+                        "margin-desktop": "32px",
+                        "xs": "8px",
+                        "xl": "32px",
+                        "base": "4px",
+                        "md": "16px",
+                        "gutter": "16px",
+                        "margin-mobile": "16px",
+                        "lg": "24px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "display-lg-mobile": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background pb-20 overflow-y-auto">
+<!-- Cyber-Scholar Background -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none opacity-30">
+
+</div>
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A highly detailed close-up portrait of a futuristic anime-style scholar wearing sleek high-tech glasses with neon HUD interfaces. The lighting is dominated by cinematic purple and teal rim lights against a dark, tech-infused academic background. The character has a determined expression, embodying the Cyber-Scholar aesthetic with sharp, digital lines and professional finish." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDohqtyyExBCWAl2ffoYt29AnrUZ70btkEzBokYicdyk_nZkBC5DyffbCRCcfUjv_OhLDrL8wGtyZbvrJknKR-6dPs-PIAVnPIba0E2zH9X8NCM-VIboddMfucK9OmUuu5cZarNUmVtIm4LG747dho2dUe16ZcMtR63gNKtRGSVv_jwkdK8XepQsYLGCglxOP5vnaGGZbnkFF-qoZhX9RaOxDeVIVeosYei4m7vW9SFqQ5LK8gixD47iDkR7H_Gkou74IJFr03Mhxqc">
+</div>
+<div class="absolute -bottom-1 -right-1 bg-primary text-on-primary text-[8px] px-1 rounded font-bold uppercase tracking-wider">RANK IV</div>
+</div>
+<div>
+<p class="font-headline-sm text-label-sm text-on-surface-variant leading-none">Chào, Minh Quân</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center text-streak-orange font-bold text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">local_fire_department</span> 18
+                    </span>
+<span class="flex items-center text-primary font-bold text-label-sm">
+<span class="material-symbols-outlined text-[14px] mr-1" style="font-variation-settings: 'FILL' 1;">bolt</span> 8,250 KP
+                    </span>
+</div>
+</div>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-glass-surface border border-glass-border hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined text-primary">notifications</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-20 px-margin-mobile space-y-md">
+<!-- Hero Widget: Daily Quests -->
+<section class="glass-panel p-md rounded-xl neon-glow-primary overflow-hidden relative snappy-widget stagger-1">
+<div class="absolute top-0 right-0 p-2 opacity-10">
+<span class="material-symbols-outlined text-[80px]" style="font-variation-settings: 'wght' 700;">task_alt</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-primary mb-md flex items-center gap-2">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                NHIỆM VỤ HÔM NAY
+            </h2>
+<div class="space-y-sm">
+<!-- Quest 1 -->
+<div class="flex items-center gap-3 p-sm bg-surface-container rounded-lg border border-glass-border">
+<div class="w-8 h-8 rounded bg-primary-container/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">translate</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-text-primary">Học 10 từ vựng Part 1</p>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
+</div>
+</div>
+<span class="font-label-sm text-primary">7/10</span>
+</div>
+<!-- Quest 2 -->
+<div class="flex items-center gap-3 p-sm bg-surface-container rounded-lg border border-glass-border">
+<div class="w-8 h-8 rounded bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">hearing</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-text-primary">Hoàn thành 1 bài nghe Part 2</p>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-tertiary h-full rounded-full" style="width: 0%"></div>
+</div>
+</div>
+<span class="font-label-sm text-text-muted">0/1</span>
+</div>
+<!-- Quest 3 -->
+<div class="flex items-center gap-3 p-sm bg-surface-container rounded-lg border border-glass-border">
+<div class="w-8 h-8 rounded bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">swords</span>
+</div>
+<div class="flex-1">
+<p class="font-body-md text-text-primary">Thắng 1 trận PvP Battle</p>
+<div class="w-full bg-surface-container-high h-1 rounded-full mt-2">
+<div class="bg-secondary h-full rounded-full" style="width: 100%"></div>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary text-[20px]" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</section>
+<!-- Streak/Goal Full Width -->
+<section class="glass-panel p-md rounded-xl flex items-center justify-between snappy-widget stagger-2">
+<div class="space-y-1">
+<p class="font-label-sm text-on-surface-variant">MỤC TIÊU NGÀY</p>
+<h3 class="font-headline-sm text-text-primary">Chuỗi 18 ngày</h3>
+<p class="font-label-sm text-tertiary">Còn 2 ngày nữa để nhận rương</p>
+</div>
+<div class="relative w-16 h-16">
+<svg class="w-full h-full" viewBox="0 0 36 36">
+<circle class="stroke-surface-container-high" cx="18" cy="18" fill="none" r="16" stroke-width="3"></circle>
+<circle class="stroke-streak-orange" cx="18" cy="18" fill="none" r="16" stroke-dasharray="80, 100" stroke-linecap="round" stroke-width="3"></circle>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center text-streak-orange font-bold text-body-md">80%</div>
+</div>
+</section>
+<div class="grid grid-cols-2 gap-md snappy-widget stagger-3">
+<!-- Competency Radar Half -->
+<div class="glass-panel p-md rounded-xl flex flex-col items-center">
+<p class="font-label-sm text-on-surface-variant w-full mb-xs">NĂNG LỰC</p>
+<div class="w-full aspect-square relative flex items-center justify-center">
+<!-- Radar Chart Placeholder -->
+<svg class="w-full h-full opacity-60" viewBox="0 0 100 100">
+<polygon fill="none" points="50,10 90,40 75,90 25,90 10,40" stroke="rgba(210,187,255,0.3)" stroke-width="1"></polygon>
+<polygon fill="rgba(210,187,255,0.4)" points="50,25 75,45 65,75 35,75 25,45" stroke="#d2bbff" stroke-width="2"></polygon>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center pt-2">
+<span class="font-display-lg-mobile text-primary leading-none">B1</span>
+<span class="font-label-sm text-text-muted mt-1">Hạng Vàng</span>
+</div>
+</div>
+</div>
+<!-- Roadmap Half -->
+<div class="glass-panel p-md rounded-xl flex flex-col justify-between">
+<div>
+<p class="font-label-sm text-on-surface-variant mb-xs">LỘ TRÌNH</p>
+<h3 class="font-body-lg text-text-primary leading-tight">Chinh phục TOEIC 750+</h3>
+</div>
+<div class="mt-4">
+<div class="flex justify-between items-end mb-1">
+<span class="font-label-sm text-text-muted">Giai đoạn 3/5</span>
+<span class="font-label-sm text-tertiary">45%</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full">
+<div class="h-full bg-gradient-to-r from-primary to-tertiary rounded-full neon-glow-success" style="width: 45%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Flashcard Quick Learn -->
+<section class="glass-panel p-md rounded-xl border-l-4 border-secondary flex items-center gap-4 snappy-widget stagger-4">
+<div class="w-14 h-14 bg-surface-container-high rounded-lg flex flex-col items-center justify-center border border-glass-border">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">style</span>
+<p class="font-label-sm text-secondary font-bold">250</p>
+</div>
+<div class="flex-1">
+<h4 class="font-body-lg text-text-primary">Flashcard Ôn Tập</h4>
+<p class="font-label-sm text-text-muted">Cần ôn lại 12 từ khó hôm nay</p>
+</div>
+<button class="w-10 h-10 rounded-full bg-secondary text-on-secondary-fixed-variant flex items-center justify-center shadow-lg shadow-secondary/20">
+<span class="material-symbols-outlined">play_arrow</span>
+</button>
+</section>
+<!-- AI Mentor Widget -->
+<section class="glass-panel p-md rounded-xl overflow-hidden relative bg-gradient-to-br from-primary-container/20 to-transparent snappy-widget stagger-5">
+<div class="flex items-center justify-between">
+<div class="flex-1 pr-12">
+<span class="inline-block px-2 py-0.5 rounded bg-primary/20 text-primary font-bold text-[10px] mb-2 uppercase tracking-widest">AI MENTOR</span>
+<h3 class="font-headline-sm text-text-primary leading-tight">"Bạn đang gặp khó ở Part 5, hãy thử một bài luyện nhanh?"</h3>
+<button class="mt-4 px-4 py-2 bg-primary text-on-primary rounded-full font-body-md font-bold hover:scale-105 transition-transform flex items-center gap-2">
+                        Bắt đầu ngay <span class="material-symbols-outlined text-[18px]">bolt</span>
+</button>
+</div>
+<div class="absolute -right-4 -bottom-4 w-32 h-32 floating-ui">
+<div class="w-full h-full flex items-center justify-center relative">
+<div class="absolute w-20 h-20 bg-primary/40 rounded-full blur-2xl orb-animation"></div>
+<div class="w-16 h-16 rounded-full bg-gradient-to-tr from-primary to-tertiary orb-animation flex items-center justify-center shadow-[0_0_30px_rgba(124,58,237,0.6)]">
+<span class="material-symbols-outlined text-white text-[32px]">psychology</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Space for Bottom Nav -->
+<div class="h-10"></div>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 bg-surface-container-high backdrop-blur-lg border-t border-glass-border rounded-t-xl shadow-[0_-8px_32px_rgba(0,0,0,0.4)] px-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="text-label-sm font-label-sm mt-0.5">Trang Chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">swords</span>
+<span class="text-label-sm font-label-sm mt-0.5">PvP Battle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm mt-0.5">Skill Tree</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm mt-0.5">Guild</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm mt-0.5">Hồ Sơ</span>
+</a>
+</nav>
+<!-- FAB (Suppressed on Home according to logic, but user requested specific high-end AI mentor/action, which is already a widget. If needed, a floating action for "QUICK START" could go here) -->
+<script>
+        // Micro-interactions and atmospheric effects
+        document.addEventListener('DOMContentLoaded', () => {
+            const panels = document.querySelectorAll('.glass-panel');
+            panels.forEach(panel => {
+                panel.addEventListener('touchstart', () => {
+                    panel.style.transform = 'scale(0.98)';
+                    panel.style.transition = 'transform 0.1s ease';
+                });
+                panel.addEventListener('touchend', () => {
+                    panel.style.transform = 'scale(1)';
+                });
+            });
+
+            // Smooth parallax for the AI Orb based on device tilt (if supported)
+            if (window.DeviceOrientationEvent) {
+                window.addEventListener('deviceorientation', (event) => {
+                    const orb = document.querySelector('.floating-ui');
+                    if (orb) {
+                        const x = event.gamma / 10;
+                        const y = event.beta / 10;
+                        orb.style.transform = `translate(${x}px, ${y}px)`;
+                    }
+                });
+            }
+        });
+    </script>
+
+
+</body></html>

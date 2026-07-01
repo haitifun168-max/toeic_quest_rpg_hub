@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Daily Quests - SCR-09</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-background": "#e3e0f1",
+                    "primary-fixed": "#eaddff",
+                    "on-primary": "#3f008e",
+                    "text-primary": "#F1F5F9",
+                    "error-container": "#93000a",
+                    "on-surface-variant": "#ccc3d8",
+                    "outline-variant": "#4a4455",
+                    "inverse-primary": "#732ee4",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "inverse-surface": "#e3e0f1",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "inverse-on-surface": "#302f3b",
+                    "surface-container-lowest": "#0d0d18",
+                    "surface-tint": "#d2bbff",
+                    "on-primary-fixed": "#25005a",
+                    "streak-orange": "#F97316",
+                    "surface-container-high": "#292935",
+                    "surface-bright": "#383845",
+                    "on-secondary-container": "#5b3800",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-error": "#690005",
+                    "primary-container": "#7c3aed",
+                    "surface-variant": "#343440",
+                    "error-red": "#EF4444",
+                    "surface-container-highest": "#343440",
+                    "on-tertiary-fixed": "#002113",
+                    "on-secondary": "#472a00",
+                    "secondary": "#ffb95f",
+                    "on-tertiary-container": "#76ffc2",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "secondary-fixed": "#ffddb8",
+                    "tertiary": "#4edea3",
+                    "on-error-container": "#ffdad6",
+                    "primary": "#d2bbff",
+                    "on-surface": "#e3e0f1",
+                    "surface": "#12121d",
+                    "on-secondary-fixed": "#2a1700",
+                    "surface-container": "#1f1e2a",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-dim": "#12121d",
+                    "primary-fixed-dim": "#d2bbff",
+                    "error": "#ffb4ab",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-tertiary": "#003824",
+                    "outline": "#958da1",
+                    "background": "#12121d",
+                    "on-primary-container": "#ede0ff",
+                    "text-muted": "#94A3B8",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "secondary-container": "#ee9800",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "margin-desktop": "32px",
+                    "xs": "8px",
+                    "md": "16px",
+                    "sm": "12px",
+                    "base": "4px",
+                    "xl": "32px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "badge-xs": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #0d0d18;
+            color: #e3e0f1;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+
+        .neon-glow-gold {
+            box-shadow: 0 0 15px rgba(255, 185, 95, 0.3);
+        }
+
+        .quest-card:active {
+            transform: scale(0.98);
+        }
+
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .bottom-sheet-up {
+            animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .progress-bar-fill {
+            background: linear-gradient(90deg, #7c3aed 0%, #4edea3 100%);
+            box-shadow: 0 0 8px #7c3aed;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="h-screen w-full flex items-end">
+<!-- Background Layer (Simulating Home Dashboard) -->
+<div class="fixed inset-0 z-0">
+
+<div class="p-margin-mobile pt-16">
+<div class="w-24 h-24 rounded-full bg-surface-container-high mb-4"></div>
+<div class="h-8 w-48 bg-surface-container-high rounded-lg mb-8"></div>
+<div class="grid grid-cols-2 gap-4">
+<div class="h-32 bg-surface-container-low rounded-xl border border-glass-border"></div>
+<div class="h-32 bg-surface-container-low rounded-xl border border-glass-border"></div>
+</div>
+</div>
+</div>
+<!-- Bottom Sheet Container -->
+<main class="relative z-10 w-full h-[795px] bg-surface-dim/80 backdrop-blur-2xl rounded-t-[32px] border-t border-glass-border shadow-[0_-12px_40px_rgba(0,0,0,0.6)] bottom-sheet-up flex flex-col overflow-hidden">
+<!-- Sheet Handle -->
+<div class="w-full flex justify-center pt-4 pb-2">
+<div class="w-12 h-1.5 bg-on-surface-variant/30 rounded-full"></div>
+</div>
+<!-- Header Component -->
+<header class="px-margin-mobile flex items-center justify-between py-4">
+<h1 class="text-headline-sm-mobile font-headline-sm-mobile text-primary tracking-wider uppercase">CHOOSE YOUR QUEST</h1>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-highest/50 border border-glass-border hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-on-surface">close</span>
+</button>
+</header>
+<!-- Quest List Scroll Area -->
+<div class="flex-1 overflow-y-auto px-margin-mobile space-y-4 pb-32 pt-2">
+<!-- Quest 1: Vocabulary Blitz -->
+<section class="quest-card glass-panel rounded-xl p-md flex flex-col gap-4 relative transition-all duration-200 hover:border-primary/40">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center neon-glow-primary">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="auto_stories">auto_stories</span>
+</div>
+<div>
+<h3 class="text-body-lg font-body-lg text-text-primary">Vocabulary Blitz</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center gap-1 text-label-sm font-label-sm text-text-muted">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 15 mins
+                                </span>
+<span class="bg-secondary-container/20 text-secondary border border-secondary-container/30 px-2 py-0.5 rounded text-badge-xs font-badge-xs">
+                                    +80 KP
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-end">
+<span class="text-label-sm font-label-sm text-text-muted uppercase tracking-tighter">Quest Readiness</span>
+<span class="text-label-sm font-label-sm text-primary">0%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-0 progress-bar-fill"></div>
+</div>
+</div>
+<button class="w-full h-[52px] rounded-full bg-primary-container text-on-primary-container font-body-lg flex items-center justify-center gap-2 neon-glow-primary hover:opacity-90 active:scale-95 transition-all">
+                    Start <span class="material-symbols-outlined text-[20px]">bolt</span>
+</button>
+</section>
+<!-- Quest 2: Audio Reflex (Resumable) -->
+<section class="quest-card glass-panel rounded-xl p-md flex flex-col gap-4 relative transition-all duration-200 border-primary/30">
+<div class="absolute -top-2 -right-2">
+<div class="bg-primary text-on-primary px-3 py-1 rounded-full text-badge-xs font-badge-xs shadow-lg pulse-animation">
+                        RESUME
+                    </div>
+</div>
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center neon-glow-primary">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="headphones">headphones</span>
+</div>
+<div>
+<h3 class="text-body-lg font-body-lg text-text-primary">Audio Reflex</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center gap-1 text-label-sm font-label-sm text-text-muted">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 10 mins
+                                </span>
+<span class="bg-secondary-container/20 text-secondary border border-secondary-container/30 px-2 py-0.5 rounded text-badge-xs font-badge-xs">
+                                    +60 KP
+                                </span>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-1.5">
+<div class="flex justify-between items-end">
+<span class="text-label-sm font-label-sm text-text-muted uppercase tracking-tighter">Current Progress</span>
+<span class="text-label-sm font-label-sm text-primary">40%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-[40%] progress-bar-fill"></div>
+</div>
+</div>
+<button class="w-full h-[52px] rounded-full bg-primary-container text-on-primary-container font-body-lg flex items-center justify-center gap-2 neon-glow-primary hover:opacity-90 active:scale-95 transition-all">
+                    Continue <span class="material-symbols-outlined text-[20px]">play_arrow</span>
+</button>
+</section>
+<!-- Quest 3: Grammar Guardian -->
+<section class="quest-card glass-panel rounded-xl p-md flex flex-col gap-4 relative transition-all duration-200 opacity-80 hover:opacity-100">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest border border-glass-border flex items-center justify-center">
+<span class="material-symbols-outlined text-on-surface-variant text-[28px]" data-icon="shield">shield</span>
+</div>
+<div>
+<h3 class="text-body-lg font-body-lg text-text-primary">Grammar Guardian</h3>
+<div class="flex items-center gap-2 mt-1">
+<span class="flex items-center gap-1 text-label-sm font-label-sm text-text-muted">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 5 mins
+                                </span>
+<span class="bg-secondary-container/20 text-secondary border border-secondary-container/30 px-2 py-0.5 rounded text-badge-xs font-badge-xs">
+                                    +40 KP
+                                </span>
+</div>
+</div>
+</div>
+<button class="h-10 px-4 rounded-full border border-primary text-primary font-label-sm flex items-center justify-center hover:bg-primary/10 transition-colors">
+                        Select
+                    </button>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full w-0 progress-bar-fill"></div>
+</div>
+</section>
+<!-- Locked Boss Challenge -->
+<section class="glass-panel rounded-xl p-md border-dashed border-2 border-glass-border bg-surface-container-lowest/40 mt-4">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-full bg-surface-container-highest border border-glass-border flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant text-3xl" data-icon="lock" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<div>
+<h4 class="text-body-lg font-body-lg text-on-surface-variant">Boss Challenge</h4>
+<p class="text-label-sm font-label-sm text-text-muted mt-0.5">Complete all 3 to unlock</p>
+</div>
+</div>
+<!-- Mini Progress Preview -->
+<div class="flex gap-2 mt-4">
+<div class="h-1.5 flex-1 bg-primary/40 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-primary/40 rounded-full"></div>
+<div class="h-1.5 flex-1 bg-surface-container-highest rounded-full"></div>
+</div>
+</section>
+</div>
+<!-- Sticky Footer Info -->
+<div class="absolute bottom-0 w-full p-gutter bg-gradient-to-t from-surface via-surface/90 to-transparent pt-12 pb-8 pointer-events-none">
+<div class="max-w-xs mx-auto text-center pointer-events-auto">
+<p class="text-label-sm font-label-sm text-text-muted mb-2">Daily Multiplier: <span class="text-secondary">x1.5 Active</span></p>
+<div class="flex items-center justify-center gap-1 text-badge-xs font-badge-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[12px]">info</span>
+                    Quests reset in 14h 22m
+                </div>
+</div>
+</div>
+</main>
+<!-- Shared Components Integration -->
+<nav class="fixed bottom-0 w-full z-50 h-16 flex justify-around items-center px-4 bg-surface-container-highest/90 dark:bg-surface-container-highest/90 backdrop-blur-xl border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-label-sm">QUESTS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="map">map</span>
+<span class="text-label-sm font-label-sm">MAP</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span class="text-label-sm font-label-sm">STUDY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech">military_tech</span>
+<span class="text-label-sm font-label-sm">RANK</span>
+</a>
+</nav>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('.quest-card button').forEach(button => {
+            button.addEventListener('mousedown', () => {
+                button.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', () => {
+                button.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', () => {
+                button.classList.remove('scale-95');
+            });
+        });
+
+        // Background parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            const bg = document.querySelector('webgl-shader');
+            if(bg) {
+                bg.style.transform = `translate(${x * 20}px, ${y * 20}px) scale(1.1)`;
+            }
+        });
+    </script>
+</body></html>

@@ -1,0 +1,38 @@
+generated: 2026-06-23T11:27:00Z
+last_updated: 2026-06-30T15:13:00Z
+project: 02-bmad-toeic_quest_rpg_hub
+project_key: NOKEY
+tracking_system: file-system
+story_location: "{project-root}/_bmad-output/implementation-artifacts"
+
+development_status:
+  epic-1: done
+  1-1-dang-ky-dang-nhap-tai-khoan-oauth2-bcrypt: done
+  1-2-dat-muc-tieu-hoc-tap-goal-setting: done
+  1-3-lam-bai-kiem-tra-dau-vao-placement-test: done
+  1-4-xep-rank-ban-dau-chon-avatar: done
+  1-5-ho-so-nhan-vat-character-profile: done
+  epic-1-retrospective: optional
+  epic-2: done
+  2-1-dashboard-nhiem-vu-hang-ngay-daily-quest: done
+  2-2-chon-nhiem-vu-hoc-tap-quest-selection: done
+  2-3-giao-dien-hoc-quiz-giai-thich-3-tang: done
+  2-4-tong-ket-phien-hoc-session-summary: done
+  2-5-he-thong-duy-tri-streak-hoc-tap: done
+  epic-2-retrospective: optional
+  epic-3: done
+  3-1-sanh-cho-pvp-lobby-elo: done
+  3-2-ghep-cap-doi-thu-matchmaking-redis: done
+  3-3-ket-noi-phong-dau-pvp-websocket: done
+  3-4-tran-chien-pvp-dau-tri-battle-screen: done
+  3-5-bang-ket-qua-pvp-victory-consolation: done
+  epic-3-retrospective: optional
+  epic-4: done
+  4-1-chon-dungeon-thi-thu-mock-test: done
+  4-2-thi-dungeon-tu-dong-luu-nhap-checkpoint: done
+  4-3-ket-qua-dungeon-phan-tich-irt-sim-score: done
+  epic-4-retrospective: optional
+  epic-5: done
+  5-1-hoat-hoa-le-thang-hang-rank-up-ceremony: done
+  5-2-career-milestone-dinh-huong-nghe-nghiep: done
+  epic-5-retrospective: optional

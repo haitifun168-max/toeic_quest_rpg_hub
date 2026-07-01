@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dungeon Entry Warning - Iron Vanguard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+            vertical-align: middle;
+        }
+        
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        
+        .neon-glow-gold {
+            box-shadow: 0 0 15px rgba(238, 152, 0, 0.3);
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes pulse-subtle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.02); }
+        }
+        .animate-pulse-subtle {
+            animation: pulse-subtle 3s infinite ease-in-out;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-secondary-container": "#5b3800",
+                      "on-tertiary": "#003824",
+                      "surface-container-highest": "#343440",
+                      "surface-tint": "#d2bbff",
+                      "on-tertiary-container": "#76ffc2",
+                      "surface-container-lowest": "#0d0d18",
+                      "on-surface": "#e3e0f1",
+                      "outline": "#958da1",
+                      "inverse-primary": "#732ee4",
+                      "background": "#12121d",
+                      "secondary": "#ffb95f",
+                      "on-tertiary-fixed-variant": "#005236",
+                      "on-primary-container": "#ede0ff",
+                      "primary-fixed-dim": "#d2bbff",
+                      "on-primary-fixed-variant": "#5a00c6",
+                      "secondary-fixed": "#ffddb8",
+                      "primary-container": "#7c3aed",
+                      "surface-container-low": "#1b1a26",
+                      "on-error": "#690005",
+                      "error-container": "#93000a",
+                      "streak-orange": "#F97316",
+                      "error-red": "#EF4444",
+                      "surface-bright": "#383845",
+                      "inverse-surface": "#e3e0f1",
+                      "tertiary-container": "#007650",
+                      "surface-container": "#1f1e2a",
+                      "on-surface-variant": "#ccc3d8",
+                      "on-primary-fixed": "#25005a",
+                      "inverse-on-surface": "#302f3b",
+                      "surface": "#12121d",
+                      "text-muted": "#94A3B8",
+                      "on-tertiary-fixed": "#002113",
+                      "error": "#ffb4ab",
+                      "tertiary": "#4edea3",
+                      "on-background": "#e3e0f1",
+                      "on-secondary-fixed-variant": "#653e00",
+                      "secondary-container": "#ee9800",
+                      "secondary-fixed-dim": "#ffb95f",
+                      "on-secondary-fixed": "#2a1700",
+                      "outline-variant": "#4a4455",
+                      "text-primary": "#F1F5F9",
+                      "primary": "#d2bbff",
+                      "on-primary": "#3f008e",
+                      "surface-dim": "#12121d",
+                      "primary-fixed": "#eaddff",
+                      "on-error-container": "#ffdad6",
+                      "tertiary-fixed-dim": "#4edea3",
+                      "tertiary-fixed": "#6ffbbe",
+                      "surface-container-high": "#292935",
+                      "glass-surface": "rgba(255, 255, 255, 0.08)",
+                      "glass-border": "rgba(255, 255, 255, 0.15)",
+                      "on-secondary": "#472a00",
+                      "surface-variant": "#343440"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "xl": "32px",
+                      "base": "4px",
+                      "xs": "8px",
+                      "margin-mobile": "16px",
+                      "gutter": "16px",
+                      "lg": "24px",
+                      "margin-desktop": "32px",
+                      "sm": "12px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Inter"],
+                      "headline-md": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "badge-xs": ["Inter"],
+                      "display-lg-mobile": ["Inter"],
+                      "display-lg": ["Inter"],
+                      "headline-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                      "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                      "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                      "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                      "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                      "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+      </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden">
+<!-- Background Layer (Guild Hub) -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-black/60 z-10 backdrop-blur-sm"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="A sprawling, high-tech cyberpunk library and training guild hall. Massive holographic displays of vocabulary words and kanji float in the air. The lighting is dominated by deep indigo and electric purple neon strips. Several students in futuristic tactical school uniforms are seen at sleek glass terminals. The mood is focused, quiet, and intensely professional, like an elite military briefing room for scholars." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBRisc97XI3e5h3Wzl1COg2eS1tiKxAtCMGkX9OynxXQPKPu1JwXPLEpvXRPGfAx8HDMdcUXSqPblOg7sSezkkZSFjtNrgGSCUk8wSL5fTquLxHEBYwgT9vrRM8sKRnWfwrKficMabDshahn3uQFnEWCq42xz0gWqdGnL8ZyYEfIn8_pPDAVET3zGkUc3_m9qUDKTpHXFUYClI3tdwMEghFgmCzkPHkGdibhBdPNfqwQ4f7qwuTOFhzdCOLG4k0azruWhtPCGL7CJMv')"></div>
+</div>
+<!-- Top App Bar (Shared Component Reference) -->
+<header class="w-full fixed top-0 z-50 bg-glass-surface/80 backdrop-blur-xl border-b border-glass-border shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex justify-between items-center px-margin-mobile py-base md:px-margin-desktop">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container">
+<span class="material-symbols-outlined text-[18px]">shield</span>
+</div>
+<span class="font-headline-md text-headline-md-mobile md:text-headline-md text-primary tracking-tighter">Iron Vanguard</span>
+</div>
+<button class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Modal Overlay Container -->
+<main class="fixed inset-0 z-[60] flex items-center justify-center px-margin-mobile">
+<!-- The Dungeon Entry Modal (GlassPanel) -->
+<div class="w-full max-w-[480px] glass-panel rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.6)] flex flex-col border border-white/20">
+<!-- Modal Header -->
+<div class="px-lg py-md border-b border-glass-border bg-white/5 flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-secondary text-[24px] animate-pulse-subtle" data-icon="swords">swords</span>
+<h1 class="font-headline-sm text-headline-sm text-secondary uppercase tracking-widest">Dungeon Mode</h1>
+</div>
+<!-- Modal Content Body -->
+<div class="p-lg space-y-lg">
+<!-- Challenge Details Card -->
+<div class="bg-surface-container-low/50 rounded-lg p-md border border-glass-border">
+<div class="flex flex-col items-center text-center">
+<span class="text-primary font-bold text-[13px] tracking-widest uppercase mb-base">Listening Challenge</span>
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-primary mb-sm">L-★ Cấp Độ 1</h2>
+<div class="flex items-center gap-lg w-full justify-center">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+<span class="font-label-sm text-label-sm">50 Questions</span>
+</div>
+<div class="h-4 w-[1px] bg-glass-border"></div>
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="font-label-sm text-label-sm">45 Minutes</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Warning Section -->
+<div class="space-y-sm">
+<div class="flex items-center gap-xs text-error-red">
+<span class="material-symbols-outlined" data-icon="warning">warning</span>
+<span class="font-body-lg text-body-lg uppercase tracking-wider">Warning</span>
+</div>
+<ul class="space-y-xs">
+<li class="flex items-start gap-sm text-on-surface-variant">
+<div class="mt-2 w-1.5 h-1.5 rounded-full bg-error-red flex-shrink-0"></div>
+<p class="font-body-md text-body-md">Không thể thoát giữa chừng khi đã bắt đầu.</p>
+</li>
+<li class="flex items-start gap-sm text-on-surface-variant">
+<div class="mt-2 w-1.5 h-1.5 rounded-full bg-error-red flex-shrink-0"></div>
+<p class="font-body-md text-body-md">Không có giải thích chi tiết trong quá trình kiểm tra.</p>
+</li>
+<li class="flex items-start gap-sm text-on-surface-variant">
+<div class="mt-2 w-1.5 h-1.5 rounded-full bg-error-red flex-shrink-0"></div>
+<p class="font-body-md text-body-md">Mô phỏng điều kiện phòng thi thực tế (Áp lực thời gian).</p>
+</li>
+</ul>
+</div>
+<!-- Rewards Section -->
+<div class="pt-base">
+<span class="font-label-sm text-label-sm text-on-surface-variant/70 uppercase tracking-widest block mb-xs">Phần thưởng dự kiến</span>
+<div class="grid grid-cols-2 gap-sm">
+<div class="bg-tertiary-container/20 rounded-lg p-sm border border-tertiary/30 flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary/20 flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]" data-icon="military_tech">military_tech</span>
+</div>
+<span class="font-body-lg text-body-lg text-tertiary">+8,000 KP</span>
+</div>
+<div class="bg-secondary-container/20 rounded-lg p-sm border border-secondary/30 flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full bg-secondary/20 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]" data-icon="inventory_2">inventory_2</span>
+</div>
+<span class="font-body-lg text-body-lg text-secondary">Silver Chest</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Actions -->
+<div class="px-lg pb-lg pt-base flex flex-col gap-sm">
+<button class="w-full h-[52px] rounded-full bg-gradient-to-r from-[#7C3AED] to-[#9D67EF] text-white font-body-lg text-body-lg flex items-center justify-center gap-sm neon-glow-purple active:scale-95 transition-all duration-150">
+<span class="material-symbols-outlined" data-icon="bolt" data-weight="fill" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                    Vào Dungeon
+                </button>
+<button class="w-full h-[52px] rounded-full border border-primary-container text-primary-container font-body-lg text-body-lg flex items-center justify-center hover:bg-primary-container/10 active:scale-95 transition-all duration-150">
+                    Hủy
+                </button>
+</div>
+</div>
+</main>
+<!-- Bottom Nav (Shared Component Reference - Non-active on this task-focused screen, but rendered for shell integrity as per prompt context) -->
+<nav class="fixed bottom-0 w-full z-50 h-[64px] bg-glass-surface/90 backdrop-blur-xl border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] flex justify-around items-center px-xs md:hidden">
+<div class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_8px_rgba(210,187,255,0.6)]">
+<span class="material-symbols-outlined" data-icon="bolt">bolt</span>
+<span class="font-label-sm text-label-sm">Quest</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined" data-icon="swords">swords</span>
+<span class="font-label-sm text-label-sm">Arena</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm">Guild</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Shop</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<script>
+        // Simple Micro-interaction for the CTA button glow
+        const ctaBtn = document.querySelector('button.bg-gradient-to-r');
+        if (ctaBtn) {
+            ctaBtn.addEventListener('mouseenter', () => {
+                ctaBtn.style.boxShadow = '0 0 25px rgba(124, 58, 237, 0.6)';
+            });
+            ctaBtn.addEventListener('mouseleave', () => {
+                ctaBtn.style.boxShadow = '0 0 15px rgba(124, 58, 237, 0.4)';
+            });
+        }
+    </script>
+</body></html>

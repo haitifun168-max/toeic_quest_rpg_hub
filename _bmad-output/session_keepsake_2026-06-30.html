@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biên bản họp Party Mode — TOEIC Quest RPG Hub</title>
+    <style>
+        body {
+            background-color: #0f0f16;
+            color: #e2e8f0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            padding: 40px 20px;
+            margin: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border: 1px border;
+            border-color: rgba(210, 187, 255, 0.15);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            color: #d2bbff;
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin-top: 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 20px;
+        }
+        .meta {
+            font-size: 13px;
+            color: #94a3b8;
+            margin-bottom: 30px;
+        }
+        .badge {
+            background-color: rgba(124, 58, 237, 0.2);
+            color: #c084fc;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        .section-title {
+            color: #a78bfa;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        ul {
+            padding-left: 20px;
+            line-height: 24px;
+        }
+        li {
+            margin-bottom: 10px;
+            color: #cbd5e1;
+        }
+        .chat-line {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 12px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .avatar {
+            font-size: 24px;
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .message-box {
+            flex: 1;
+        }
+        .name {
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 4px;
+            font-size: 14px;
+        }
+        .role {
+            font-weight: 400;
+            color: #94a3b8;
+            font-size: 11px;
+            margin-left: 6px;
+        }
+        .text {
+            font-size: 13px;
+            color: #cbd5e1;
+            line-height: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 BIÊN BẢN HỌP PHÁT TRIỂN SONG SONG</h1>
+        <div class="meta">
+            <span>Dự án: <strong>02-bmad-toeic_quest_rpg_hub</strong></span> &bull; 
+            <span>Ngày: <strong>2026-06-30</strong></span> &bull; 
+            <span class="badge">Sprint 2 - Epic 2</span>
+        </div>
+
+        <div class="section-title">📌 Thống nhất Phân công & Bảo đảm Chất lượng</div>
+        <ul>
+            <li><strong>Mục tiêu:</strong> Tăng tốc hoàn thành đồng thời Story 2-4 (Session Summary) và Story 2-5 (Streak System).</li>
+            <li><strong>Quy trình bảo đảm chất lượng:</strong>
+                <ul>
+                    <li>Chốt thiết kế UI và API contract trước khi Amelia tích hợp frontend.</li>
+                    <li>Sử dụng TDD (Test-Driven Development) cho logic tính toán ngày của Streak ở backend để ngăn chặn việc chỉnh sửa giờ từ client.</li>
+                    <li>Triển khai SQL migration cập nhật bảng `users` trước để đảm bảo tính an toàn dữ liệu.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <div class="section-title">💬 Tóm tắt thảo luận (Roundtable Highlights)</div>
+        
+        <div class="chat-line">
+            <div class="avatar">📋</div>
+            <div class="message-box">
+                <div class="name">John<span class="role">Product Manager</span></div>
+                <div class="text">Đề xuất triển khai song song 2-4 và 2-5 nhưng yêu cầu bảo đảm chất lượng tuyệt đối, không để lọt lỗi.</div>
+            </div>
+        </div>
+
+        <div class="chat-line">
+            <div class="avatar">🎨</div>
+            <div class="message-box">
+                <div class="name">Sally<span class="role">UX Designer</span></div>
+                <div class="text">Thiết kế trước giao diện Session Summary (2-4), tiếp theo là hiệu ứng chúc mừng Streak (2-5) để Amelia lắp code khung trước.</div>
+            </div>
+        </div>
+
+        <div class="chat-line">
+            <div class="avatar">🏗️</div>
+            <div class="message-box">
+                <div class="name">Winston<span class="role">System Architect</span></div>
+                <div class="text">Yêu cầu chốt API Contract trước. Thêm trường vào bảng `users` cho tính năng Streak để đồng bộ với PostgreSQL.</div>
+            </div>
+        </div>
+
+        <div class="chat-line">
+            <div class="avatar">📚</div>
+            <div class="message-box">
+                <div class="name">Paige<span class="role">Technical Writer</span></div>
+                <div class="text">Soạn sẵn API specs cho các endpoints submit kết quả học và freeze streak. Khuyên dùng TDD cho logic tính toán ngày ở backend.</div>
+            </div>
+        </div>
+
+        <div class="chat-line">
+            <div class="avatar">💻</div>
+            <div class="message-box">
+                <div class="name">Amelia<span class="role">Senior Developer</span></div>
+                <div class="text">Sẽ triển khai SQL migration trước, xây dựng các endpoints và viết Unit Tests đầy đủ cho logic Streak trước khi làm giao diện frontend.</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

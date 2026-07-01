@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Character Profile - TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "primary-container": "#7c3aed",
+                "inverse-primary": "#732ee4",
+                "on-secondary-fixed": "#2a1700",
+                "tertiary": "#4edea3",
+                "surface-container-high": "#292935",
+                "streak-orange": "#F97316",
+                "on-surface": "#e3e0f1",
+                "error-red": "#EF4444",
+                "text-muted": "#94A3B8",
+                "surface-dim": "#12121d",
+                "glass-border": "rgba(255, 255, 255, 0.15)",
+                "on-primary-container": "#ede0ff",
+                "secondary-container": "#ee9800",
+                "error-container": "#93000a",
+                "on-primary-fixed": "#25005a",
+                "text-primary": "#F1F5F9",
+                "glass-surface": "rgba(255, 255, 255, 0.08)",
+                "on-tertiary-fixed": "#002113",
+                "surface": "#12121d",
+                "on-tertiary-container": "#76ffc2",
+                "inverse-on-surface": "#302f3b",
+                "secondary": "#ffb95f",
+                "on-primary": "#3f008e",
+                "primary": "#d2bbff",
+                "surface-tint": "#d2bbff",
+                "secondary-fixed": "#ffddb8",
+                "on-error": "#690005",
+                "surface-container-lowest": "#0d0d18",
+                "error": "#ffb4ab",
+                "surface-variant": "#343440",
+                "surface-container-highest": "#343440",
+                "outline-variant": "#4a4455",
+                "on-tertiary-fixed-variant": "#005236",
+                "outline": "#958da1",
+                "background": "#12121d",
+                "secondary-fixed-dim": "#ffb95f",
+                "surface-container-low": "#1b1a26",
+                "surface-bright": "#383845",
+                "primary-fixed": "#eaddff",
+                "inverse-surface": "#e3e0f1",
+                "on-background": "#e3e0f1",
+                "tertiary-container": "#007650",
+                "on-primary-fixed-variant": "#5a00c6",
+                "on-error-container": "#ffdad6",
+                "on-secondary": "#472a00",
+                "on-secondary-fixed-variant": "#653e00",
+                "on-tertiary": "#003824",
+                "tertiary-fixed-dim": "#4edea3",
+                "primary-fixed-dim": "#d2bbff",
+                "on-secondary-container": "#5b3800",
+                "surface-container": "#1f1e2a",
+                "on-surface-variant": "#ccc3d8",
+                "tertiary-fixed": "#6ffbbe"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "sm": "12px",
+                "margin-mobile": "16px",
+                "base": "4px",
+                "margin-desktop": "32px",
+                "lg": "24px",
+                "xs": "8px",
+                "gutter": "16px",
+                "md": "16px",
+                "xl": "32px"
+            },
+            "fontFamily": {
+                "label-sm": ["Inter"],
+                "body-md": ["Inter"],
+                "headline-md": ["Inter"],
+                "display-lg-mobile": ["Inter"],
+                "display-lg": ["Inter"],
+                "body-lg": ["Inter"],
+                "badge-xs": ["Inter"],
+                "headline-sm": ["Inter"]
+            },
+            "fontSize": {
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-gold {
+            box-shadow: 0 0 15px rgba(255, 185, 95, 0.4);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        body {
+            background-color: #0d0d18;
+            color: #e3e0f1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 z-50 w-full h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border flex justify-between items-center px-margin-mobile md:px-margin-desktop shadow-2xl shadow-black/40">
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm uppercase tracking-wider text-primary">CHARACTER PROFILE</h1>
+<button class="active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-primary">settings</span>
+</button>
+</header>
+<!-- Content Canvas -->
+<main class="flex-1 mt-16 pb-32 overflow-y-auto">
+<!-- Hero Section: Character Card -->
+<section class="px-margin-mobile mt-6">
+<div class="glass-panel rounded-xl p-lg flex flex-col items-center relative overflow-hidden">
+<!-- Background Decorative Glow -->
+<div class="absolute -top-10 -right-10 w-40 h-40 bg-primary/20 blur-3xl rounded-full"></div>
+<!-- Avatar -->
+<div class="relative mb-4">
+<div class="w-32 h-32 rounded-full border-2 border-primary overflow-hidden neon-glow-purple">
+<img class="w-full h-full object-cover" data-alt="A highly detailed portrait of a cyber-scholar warrior with sleek futuristic glasses, wearing scholarly robes over lightweight silver armor, set against a dark library filled with holographic scrolls. The style is cyberpunk minimalism with neon purple and gold highlights, soft focus on the high-tech background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoI4MTT2MxQHwMi4ljO3-mjOgmGk8_F8h1YsglU6DvtZ4eD_mVtBMbWZwwBRVJcqJ8KWm8FJIN16s99fnMPVJfT0ASnb08I1ek3euV-fMeurVJt79DaSji_SVq04gR7V-dVtpPOPImPXVZqXxyNPNBeXfsrWXObtcz1JIRktMWp7GTeYF-F7KInLTU1UxV8NKSwWLD-tZtHknCn5Cn6p2mXeVnmArEPmtD_sRQuhjTt07oC5yJZCWaj3vVottMuOn7GeWq9PR0cC6P"/>
+</div>
+<div class="absolute -bottom-2 right-2 bg-secondary text-on-secondary-fixed text-badge-xs font-badge-xs px-2 py-1 rounded-full border border-on-secondary-fixed/20 shadow-lg">
+                        LVL 12
+                    </div>
+</div>
+<!-- Identity -->
+<div class="text-center">
+<h2 class="font-headline-md text-headline-md text-text-primary mb-1">Squire Alex</h2>
+<div class="flex items-center justify-center gap-xs mb-4">
+<span class="material-symbols-outlined text-secondary text-lg" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<span class="font-body-lg text-body-lg text-secondary uppercase tracking-tight">Bronze Guard</span>
+</div>
+<!-- TOEIC Score Banner -->
+<div class="bg-primary-container/20 border border-primary-container rounded-lg py-2 px-6 mb-6 inline-block">
+<span class="font-label-sm text-label-sm text-primary uppercase block">Estimated Score</span>
+<span class="font-display-lg-mobile text-display-lg-mobile text-primary">~450 TOEIC</span>
+</div>
+<!-- Hero Stats -->
+<div class="grid grid-cols-2 gap-sm w-full border-t border-glass-border pt-lg">
+<div class="flex flex-col items-center border-r border-glass-border">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Total KP</span>
+<span class="font-headline-sm text-headline-sm text-text-primary">8,250</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Streak</span>
+<span class="font-headline-sm text-headline-sm text-streak-orange">18 Days 🔥</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stat Radar Chart -->
+<section class="px-margin-mobile mt-8">
+<h3 class="font-headline-sm text-headline-sm-mobile text-text-primary mb-md">Attribute Proficiency</h3>
+<div class="glass-panel rounded-xl p-lg relative flex justify-center items-center h-72">
+<!-- Simple SVG Radar Simulation -->
+<svg class="w-full h-full max-w-[240px]" viewbox="0 0 100 100">
+<!-- Outer Hexagons -->
+<polygon fill="none" points="50,5 90,27.5 90,72.5 50,95 10,72.5 10,27.5" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"></polygon>
+<polygon fill="none" points="50,25 70,36.25 70,58.75 50,70 30,58.75 30,36.25" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"></polygon>
+<!-- Axis Lines -->
+<line stroke="rgba(255,255,255,0.05)" stroke-width="0.5" x1="50" x2="50" y1="5" y2="95"></line>
+<line stroke="rgba(255,255,255,0.05)" stroke-width="0.5" x1="10" x2="90" y1="27.5" y2="72.5"></line>
+<line stroke="rgba(255,255,255,0.05)" stroke-width="0.5" x1="10" x2="90" y1="72.5" y2="27.5"></line>
+<!-- Data Area (The actual chart) -->
+<polygon fill="rgba(124, 58, 237, 0.4)" points="50,15 80,40 85,60 50,85 25,65 20,35" stroke="#7c3aed" stroke-width="1.5"></polygon>
+<!-- Points -->
+<circle cx="50" cy="15" fill="#ffb95f" r="2"></circle>
+<circle cx="80" cy="40" fill="#ffb95f" r="2"></circle>
+<circle cx="85" cy="60" fill="#ffb95f" r="2"></circle>
+<circle cx="50" cy="85" fill="#ffb95f" r="2"></circle>
+<circle cx="25" cy="65" fill="#ffb95f" r="2"></circle>
+<circle cx="20" cy="35" fill="#ffb95f" r="2"></circle>
+<!-- Labels (Approximate Placement) -->
+<text class="fill-on-surface-variant font-label-sm" style="font-size: 4px;" text-anchor="middle" x="50" y="3">GRAMMAR</text>
+<text class="fill-on-surface-variant font-label-sm" style="font-size: 4px;" text-anchor="start" x="95" y="27">READING</text>
+<text class="fill-on-surface-variant font-label-sm" style="font-size: 4px;" text-anchor="start" x="95" y="75">LISTENING</text>
+<text class="fill-on-surface-variant font-label-sm" style="font-size: 4px;" text-anchor="middle" x="50" y="98">VOCAB</text>
+<text class="fill-on-surface-variant font-label-sm" style="font-size: 4px;" text-anchor="end" x="5" y="75">ERROR IQ</text>
+<text class="fill-on-surface-variant font-label-sm" style="font-size: 4px;" text-anchor="end" x="5" y="27">STAMINA</text>
+</svg>
+</div>
+</section>
+<!-- Achievements Grid -->
+<section class="px-margin-mobile mt-8">
+<div class="flex justify-between items-end mb-md">
+<h3 class="font-headline-sm text-headline-sm-mobile text-text-primary">Achievements</h3>
+<button class="font-label-sm text-label-sm text-primary uppercase">View All</button>
+</div>
+<div class="grid grid-cols-2 gap-sm">
+<!-- Unlocked Achievement -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center mb-xs neon-glow-gold border border-secondary/50">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-primary font-bold">14-Day Streak</span>
+<span class="text-[10px] text-on-surface-variant leading-tight">Master of Consistency</span>
+</div>
+<!-- Unlocked Achievement -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center text-center">
+<div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mb-xs neon-glow-purple border border-primary/50">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">swords</span>
+</div>
+<span class="font-label-sm text-label-sm text-text-primary font-bold">10 PvP Wins</span>
+<span class="text-[10px] text-on-surface-variant leading-tight">Dungeon Conqueror</span>
+</div>
+<!-- Locked Achievement -->
+<div class="glass-panel opacity-60 rounded-xl p-md flex flex-col items-center text-center relative grayscale">
+<div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-xs border border-glass-border">
+<span class="material-symbols-outlined text-on-surface-variant">school</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">Grammar Sage</span>
+<span class="text-[10px] text-on-surface-variant/70 leading-tight">100 Perfect Tests</span>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl">
+<span class="material-symbols-outlined text-on-surface-variant text-base">lock</span>
+</div>
+</div>
+<!-- Locked Achievement -->
+<div class="glass-panel opacity-60 rounded-xl p-md flex flex-col items-center text-center relative grayscale">
+<div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-xs border border-glass-border">
+<span class="material-symbols-outlined text-on-surface-variant">auto_stories</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-bold">Speed Reader</span>
+<span class="text-[10px] text-on-surface-variant/70 leading-tight">50,000 Words Read</span>
+<div class="absolute inset-0 flex items-center justify-center bg-black/40 rounded-xl">
+<span class="material-symbols-outlined text-on-surface-variant text-base">lock</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Premium Status Banner -->
+<section class="px-margin-mobile mt-8 mb-8">
+<div class="bg-gradient-to-r from-primary-container/40 to-transparent border border-primary-container/30 rounded-xl p-md flex items-center gap-md">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center neon-glow-purple">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div>
+<h4 class="font-body-lg text-body-lg text-text-primary">Vanguard Premium Active</h4>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Next billing cycle in 12 days</p>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-16 bg-glass-surface/90 backdrop-blur-lg border-t border-glass-border flex justify-around items-center px-4 pb-safe z-50 shadow-[0_-8px_32px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">fort</span>
+<span class="font-label-sm text-label-sm">Dungeon</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="font-label-sm text-label-sm">Armory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Guild</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary scale-110 drop-shadow-[0_0_10px_rgba(255,185,95,0.6)] active:scale-90 transition-all duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for achievement unlocking animation mock
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('click', () => {
+                panel.classList.add('scale-95');
+                setTimeout(() => panel.classList.remove('scale-95'), 150);
+            });
+        });
+    </script>
+</body></html>

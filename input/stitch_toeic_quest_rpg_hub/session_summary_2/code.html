@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0d0d18;
+            color: #e3e0f1;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-gold {
+            box-shadow: 0 0 15px rgba(255, 185, 95, 0.3);
+        }
+        .progress-gradient {
+            background: linear-gradient(90deg, #7c3aed 0%, #4edea3 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s ease-in-out infinite;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#d2bbff",
+                        "primary-container": "#7c3aed",
+                        "secondary": "#ffb95f",
+                        "tertiary": "#4edea3",
+                        "surface": "#12121d",
+                        "surface-container": "#1f1e2a",
+                        "on-surface": "#e3e0f1",
+                        "on-surface-variant": "#ccc3d8",
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "glass-surface": "rgba(255, 255, 255, 0.08)",
+                        "background": "#0d0d18"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "lg": "24px",
+                        "base": "4px",
+                        "xs": "8px",
+                        "sm": "12px",
+                        "xl": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm-mobile": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "display-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="dark bg-background min-h-screen pb-24">
+<!-- Background Shader -->
+<div class="fixed inset-0 z-0">
+
+</div>
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface/80 backdrop-blur-xl border-b border-glass-border shadow-2xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:scale-95 transition-transform">close</span>
+</div>
+<h1 class="font-headline-sm-mobile text-headline-sm-mobile uppercase tracking-widest text-primary">QUEST COMPLETE</h1>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-transform">home</span>
+</div>
+</header>
+<main class="relative z-10 pt-20 px-margin-mobile flex flex-col gap-6">
+<!-- Hero Celebration Area -->
+<section class="glass-panel rounded-xl p-6 flex flex-col items-center text-center overflow-hidden relative">
+<div class="absolute -top-12 -right-12 w-32 h-32 bg-primary-container/20 blur-3xl rounded-full"></div>
+<div class="mb-2">
+<span class="material-symbols-outlined text-secondary text-5xl drop-shadow-[0_0_12px_rgba(255,185,95,0.6)]" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+</div>
+<h2 class="font-display-lg-mobile text-display-lg-mobile text-on-surface mb-1">Hành trình hoàn tất!</h2>
+<div class="bg-primary-container/30 border border-primary/40 px-3 py-1 rounded-full mb-6">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-tighter">DQ-01 Vocabulary Blitz</span>
+</div>
+<div class="flex gap-4 w-full">
+<!-- Reward 1 -->
+<div class="flex-1 glass-panel rounded-lg py-4 border-primary/20 flex flex-col items-center neon-glow-purple">
+<span class="font-display-lg-mobile text-primary font-black">+180 KP</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Kinh nghiệm</span>
+</div>
+<!-- Reward 2 -->
+<div class="flex-1 glass-panel rounded-lg py-4 border-secondary/20 flex flex-col items-center neon-glow-gold">
+<span class="font-display-lg-mobile text-secondary font-black">18 Days 🔥</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Chuỗi học tập</span>
+</div>
+</div>
+</section>
+<!-- Performance Metrics Grid -->
+<section class="grid grid-cols-2 gap-4">
+<div class="glass-panel p-4 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary">check_circle</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Accuracy</p>
+<p class="font-headline-sm-mobile text-on-surface">85%</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">timer</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Time</p>
+<p class="font-headline-sm-mobile text-on-surface">12:45</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary">psychology</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Insight Pts</p>
+<p class="font-headline-sm-mobile text-on-surface">3</p>
+</div>
+</div>
+<div class="glass-panel p-4 rounded-xl flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center">
+<span class="material-symbols-outlined text-error-red">bolt</span>
+</div>
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant">Speed</p>
+<p class="font-headline-sm-mobile text-on-surface">High</p>
+</div>
+</div>
+</section>
+<!-- AI Mentor Review Section -->
+<section class="glass-panel rounded-xl p-5 border-l-4 border-primary-container relative">
+<div class="flex items-start gap-4">
+<div class="relative">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center animate-pulse-slow">
+<span class="material-symbols-outlined text-white text-3xl" style="font-variation-settings: 'FILL' 1;">smart_toy</span>
+</div>
+<div class="absolute -bottom-1 -right-1 w-4 h-4 bg-tertiary border-2 border-surface rounded-full"></div>
+</div>
+<div class="flex-1">
+<h3 class="font-body-lg text-body-lg text-primary mb-2 flex items-center gap-2">
+                        AI Mentor Insight
+                    </h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                        Bạn đã làm rất tốt ở phần từ vựng! Tuy nhiên, hãy chú ý hơn đến các <span class="text-secondary font-bold">Giới từ chỉ thời gian</span> trong lần tới.
+                    </p>
+<button class="mt-4 flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all duration-300">
+                        Ôn tập ngay <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Rank Progression -->
+<section class="glass-panel rounded-xl p-5">
+<div class="flex justify-between items-end mb-3">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase">Current Rank</p>
+<h4 class="font-headline-sm-mobile text-on-surface">Rank 2: Squire</h4>
+</div>
+<div class="text-right">
+<p class="font-label-sm text-label-sm text-tertiary">Next: Warrior</p>
+<p class="font-body-md text-body-md text-on-surface">3,250 / 5,000 KP</p>
+</div>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full progress-gradient relative" style="width: 65%;">
+<div class="absolute right-0 top-0 h-full w-2 bg-white/40 blur-[2px]"></div>
+</div>
+</div>
+<div class="mt-2 text-right">
+<span class="font-label-sm text-label-sm text-on-surface-variant">65% Complete</span>
+</div>
+</section>
+</main>
+<!-- Primary Actions -->
+<footer class="fixed bottom-0 w-full p-margin-mobile bg-background/80 backdrop-blur-md z-50 flex flex-col gap-3">
+<button class="h-[52px] w-full bg-primary-container rounded-full font-body-lg text-white shadow-[0_0_20px_rgba(124,58,237,0.5)] active:scale-95 transition-transform flex items-center justify-center gap-2">
+            Tiếp Tục Quest Mới
+            <span class="material-symbols-outlined">double_arrow</span>
+</button>
+<button class="h-[52px] w-full border border-primary/40 rounded-full font-body-lg text-primary active:bg-primary/10 transition-colors">
+            Về Trang Chủ
+        </button>
+</footer>
+<!-- Bottom Nav Hidden for Transactional Context (Suppressed as per rules) -->
+<script>
+        // Simple micro-interaction for performance metrics
+        document.querySelectorAll('.glass-panel').forEach(panel => {
+            panel.addEventListener('touchstart', () => {
+                panel.classList.add('scale-[0.98]');
+            });
+            panel.addEventListener('touchend', () => {
+                panel.classList.remove('scale-[0.98]');
+            });
+        });
+    </script>
+</body></html>

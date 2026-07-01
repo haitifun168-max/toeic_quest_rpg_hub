@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#292935",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-surface-variant": "#ccc3d8",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-primary": "#3f008e",
+                    "inverse-surface": "#e3e0f1",
+                    "on-surface": "#e3e0f1",
+                    "outline": "#958da1",
+                    "on-background": "#e3e0f1",
+                    "surface-bright": "#383845",
+                    "surface-variant": "#343440",
+                    "surface": "#12121d",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#343440",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container": "#1f1e2a",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "background": "#12121d",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650",
+                    "secondary-container": "#ee9800",
+                    "inverse-primary": "#732ee4",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-error": "#690005",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary-container": "#ede0ff",
+                    "streak-orange": "#F97316",
+                    "outline-variant": "#4a4455",
+                    "error-red": "#EF4444",
+                    "inverse-on-surface": "#302f3b",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "primary": "#d2bbff",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-dim": "#12121d",
+                    "on-primary-fixed": "#25005a",
+                    "text-primary": "#F1F5F9",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#003824",
+                    "text-muted": "#94A3B8",
+                    "surface-container-lowest": "#0d0d18"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "margin-desktop": "32px",
+                    "xs": "8px",
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "badge-xs": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        backdrop-filter: blur(12px);
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+      }
+      .glass-card-selected {
+        background: rgba(124, 58, 237, 0.3);
+        border-color: #7C3AED;
+      }
+      .neon-glow {
+        box-shadow: 0 0 10px rgba(124, 58, 237, 0.5);
+      }
+      .step-indicator {
+        width: 48px;
+        height: 4px;
+        border-radius: 2px;
+      }
+      body {
+        background-color: #12121d;
+        color: #F1F5F9;
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden;
+      }
+      .canvas-container {
+        width: 390px;
+        height: 844px;
+        position: relative;
+        overflow: hidden;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex justify-center items-center min-h-screen bg-black">
+<!-- Main App Canvas (390x844) -->
+<main class="canvas-container bg-background">
+<!-- Atmospheric Background Shader -->
+
+<!-- Top Navigation (Shell suppressed for onboarding/goal flow as per mandate) -->
+<header class="relative z-10 px-margin-mobile pt-12 flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<button class="p-2 -ml-2 text-on-surface hover:opacity-80 transition-opacity">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<div class="flex gap-2">
+<div class="step-indicator bg-primary-container neon-glow"></div>
+<div class="step-indicator bg-surface-container-highest"></div>
+</div>
+<div class="w-10"></div> <!-- Spacer -->
+</div>
+<div class="mt-4">
+<p class="font-label-sm text-label-sm text-primary tracking-widest uppercase mb-1">Bước 1/2</p>
+<h1 class="font-headline-md text-headline-md leading-tight">Bạn muốn đạt bao nhiêu điểm TOEIC?</h1>
+</div>
+</header>
+<!-- Main Content (Bento Grid Style for Goals) -->
+<section class="relative z-10 px-margin-mobile mt-8 overflow-y-auto h-[540px] pb-32 no-scrollbar">
+<div class="grid grid-cols-2 gap-4">
+<!-- Card 300 -->
+<div class="glass-card rounded-xl p-4 flex flex-col gap-2 transition-all active:scale-95 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-headline-sm text-headline-sm text-on-surface">300</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-60">A1</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Cơ bản: Giao tiếp xã giao</p>
+</div>
+<!-- Card 450 -->
+<div class="glass-card rounded-xl p-4 flex flex-col gap-2 transition-all active:scale-95 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-headline-sm text-headline-sm text-on-surface">450</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-60">A2</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Tốt nghiệp: Tiêu chuẩn chung</p>
+</div>
+<!-- Card 600 (SELECTED) -->
+<div class="glass-card glass-card-selected rounded-xl p-4 flex flex-col gap-2 transition-all active:scale-95 cursor-pointer border-2 shadow-[0_0_20px_rgba(124,58,237,0.2)]">
+<div class="flex justify-between items-start">
+<span class="font-headline-sm text-headline-sm text-on-primary-container">600</span>
+<span class="material-symbols-outlined text-primary scale-110" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<p class="font-body-md text-body-md text-on-primary-container">B1: Đủ điều kiện làm việc VP</p>
+<div class="mt-1 px-2 py-0.5 bg-primary/20 rounded-full w-fit">
+<span class="font-badge-xs text-badge-xs text-primary">PHỔ BIẾN</span>
+</div>
+</div>
+<!-- Card 750 -->
+<div class="glass-card rounded-xl p-4 flex flex-col gap-2 transition-all active:scale-95 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-headline-sm text-headline-sm text-on-surface">750</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-60">B2</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Nâng cao: Tập đoàn đa quốc gia</p>
+</div>
+<!-- Card 850 -->
+<div class="glass-card rounded-xl p-4 flex flex-col gap-2 transition-all active:scale-95 cursor-pointer">
+<div class="flex justify-between items-start">
+<span class="font-headline-sm text-headline-sm text-on-surface">850</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant opacity-60">C1</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Thành thạo: Quản lý cấp cao</p>
+</div>
+<!-- Card 900+ -->
+<div class="glass-card rounded-xl p-4 flex flex-col gap-2 transition-all active:scale-95 cursor-pointer relative overflow-hidden">
+<div class="absolute -right-2 -top-2 opacity-10">
+<span class="material-symbols-outlined text-[64px]">workspace_premium</span>
+</div>
+<div class="flex justify-between items-start">
+<span class="font-headline-sm text-headline-sm text-tertiary">900+</span>
+<span class="font-label-sm text-label-sm text-tertiary-fixed opacity-60">C2</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">Chuyên gia: Bản ngữ hoàn hảo</p>
+</div>
+</div>
+<!-- Contextual Illustration/Hint -->
+<div class="mt-8 glass-card border-dashed border-primary/30 rounded-2xl p-4 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-on-primary-container">psychology</span>
+</div>
+<div>
+<p class="font-body-md text-body-md text-on-surface leading-snug">Lựa chọn mục tiêu giúp chúng tôi tối ưu hóa lộ trình học cho riêng bạn.</p>
+</div>
+</div>
+</section>
+<!-- Bottom Action Area -->
+<footer class="absolute bottom-0 left-0 w-full p-margin-mobile bg-gradient-to-t from-background via-background/90 to-transparent pt-12 z-20">
+<button class="w-full h-[52px] rounded-full bg-gradient-to-r from-primary-container to-primary flex items-center justify-center gap-2 neon-glow transition-all active:scale-95">
+<span class="font-body-lg text-body-lg text-on-primary-container">Tiếp theo — Làm bài kiểm tra đầu vào</span>
+<span class="material-symbols-outlined text-on-primary-container">bolt</span>
+</button>
+</footer>
+</main>
+<script>
+        // Micro-interaction for selecting cards
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // Remove selected class from all
+                document.querySelectorAll('.glass-card').forEach(c => {
+                    c.classList.remove('glass-card-selected', 'border-2', 'shadow-[0_0_20px_rgba(124,58,237,0.2)]');
+                    c.querySelectorAll('.material-symbols-outlined').forEach(icon => {
+                        if(icon.textContent === 'check_circle') icon.remove();
+                    });
+                    const headline = c.querySelector('.font-headline-sm');
+                    if (headline) headline.classList.replace('text-on-primary-container', 'text-on-surface');
+                    const body = c.querySelector('.font-body-md');
+                    if (body) body.classList.replace('text-on-primary-container', 'text-on-surface-variant');
+                });
+
+                // Add selected class to this
+                this.classList.add('glass-card-selected', 'border-2', 'shadow-[0_0_20px_rgba(124,58,237,0.2)]');
+                
+                // Add check icon
+                const header = this.querySelector('.flex');
+                if (header && !header.querySelector('[data-check]')) {
+                    const check = document.createElement('span');
+                    check.className = 'material-symbols-outlined text-primary scale-110';
+                    check.style.fontVariationSettings = "'FILL' 1";
+                    check.textContent = 'check_circle';
+                    check.setAttribute('data-check', 'true');
+                    const indicator = header.querySelector('.font-label-sm');
+                    if(indicator) indicator.replaceWith(check);
+                    else header.appendChild(check);
+                }
+
+                // Swap colors
+                const headline = this.querySelector('.font-headline-sm');
+                if (headline) headline.classList.replace('text-on-surface', 'text-on-primary-container');
+                const body = this.querySelector('.font-body-md');
+                if (body) body.classList.replace('text-on-surface-variant', 'text-on-primary-container');
+            });
+        });
+    </script>
+</body></html>

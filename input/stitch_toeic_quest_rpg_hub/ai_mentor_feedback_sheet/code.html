@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI Mentor Feedback | TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #12121d;
+            color: #e3e0f1;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(210, 187, 255, 0.3);
+        }
+
+        .neon-glow-gold {
+            box-shadow: 0 0 15px rgba(255, 185, 95, 0.3);
+        }
+
+        .orb-pulse {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; filter: brightness(1); }
+            50% { transform: scale(1.05); opacity: 1; filter: brightness(1.3); }
+        }
+
+        .radar-grid {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        /* Custom scrollbar for the bottom sheet content */
+        .custom-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: rgba(210, 187, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<!-- Tailwind Config Injection -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-container": "#007650",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-primary-fixed": "#25005a",
+                    "surface-container-high": "#292935",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "inverse-surface": "#e3e0f1",
+                    "text-primary": "#F1F5F9",
+                    "tertiary-fixed": "#6ffbbe",
+                    "background": "#12121d",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#302f3b",
+                    "text-muted": "#94A3B8",
+                    "secondary-container": "#ee9800",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-background": "#e3e0f1",
+                    "on-error-container": "#ffdad6",
+                    "surface-tint": "#d2bbff",
+                    "on-surface": "#e3e0f1",
+                    "on-tertiary": "#003824",
+                    "tertiary": "#4edea3",
+                    "on-primary-container": "#ede0ff",
+                    "outline-variant": "#4a4455",
+                    "on-surface-variant": "#ccc3d8",
+                    "surface-bright": "#383845",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "surface": "#12121d",
+                    "streak-orange": "#F97316",
+                    "on-secondary-fixed": "#2a1700",
+                    "primary": "#d2bbff",
+                    "surface-container": "#1f1e2a",
+                    "primary-fixed": "#eaddff",
+                    "error-red": "#EF4444",
+                    "surface-container-lowest": "#0d0d18",
+                    "surface-container-low": "#1b1a26",
+                    "surface-variant": "#343440",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "outline": "#958da1",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-tertiary-fixed": "#002113",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-tertiary-container": "#76ffc2",
+                    "inverse-primary": "#732ee4",
+                    "primary-container": "#7c3aed",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-dim": "#12121d",
+                    "surface-container-highest": "#343440",
+                    "error-container": "#93000a",
+                    "on-error": "#690005",
+                    "on-primary": "#3f008e",
+                    "on-secondary-fixed-variant": "#653e00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "margin-desktop": "32px",
+                    "md": "16px",
+                    "base": "4px",
+                    "gutter": "16px",
+                    "sm": "12px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "badge-xs": ["Inter"],
+                    "display-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest min-h-screen flex items-end justify-center">
+<!-- Backdrop Scene (Blurred RPG City) -->
+<div class="fixed inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center opacity-40 blur-sm" data-alt="A sprawling futuristic cyberpunk cityscape in Vietnam at night, featuring neon signs in Vietnamese, floating digital pagodas, and sleek architectural lines. The scene is bathed in deep purples, violets, and golden highlights with a soft motion blur effect to create depth. Atmospheric smoke and light rain add to the high-stakes RPG adventure mood." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD4pqpIP9jsN6KKyPpGl47CaJWcqGrz38RarqDwk4icP49ZKa99hSjRrtTBYfP26MTY-rZ2N7zJPHpfwmrMdAhxNztcuF_KjQo0v4Ydaa0Zu2wJIP7grPAaHJVDzGY8pmNl9A7uXxO_K0qRpHtpalyTM9mAvrnYG0plb_PAGcDyd_SxT8XTCxdIndOZBpYzAAGugTagXtloxYEMDgj5yEbpMCdpa-YEmPDUukxP1pDGHT485fnrA3k4e_3pTwNO_MmH4xk1iYVWdJoP')"></div>
+
+</div>
+<!-- AI Mentor Feedback Bottom Sheet -->
+<div class="relative z-10 w-full max-w-2xl bg-surface-container rounded-t-[2.5rem] shadow-2xl border-t border-glass-border h-[813px] flex flex-col overflow-hidden">
+<!-- Drag Handle / Header -->
+<div class="w-full flex flex-col items-center pt-4 pb-2">
+<div class="w-12 h-1.5 bg-outline-variant/30 rounded-full mb-6"></div>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">PHÂN TÍCH CHIẾN BINH</h1>
+</div>
+<div class="flex-1 overflow-y-auto px-margin-mobile pb-32 custom-scroll">
+<!-- 1. AI Orb Hero -->
+<div class="relative flex justify-center items-center py-8">
+<div class="absolute inset-0 flex justify-center items-center">
+<div class="w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+</div>
+<div class="relative w-40 h-40">
+
+<!-- Status Badge -->
+<div class="absolute -bottom-2 left-1/2 -translate-x-1/2 glass-panel px-4 py-1 rounded-full border-primary/30 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span class="text-label-sm font-label-sm text-tertiary uppercase tracking-widest">Mentor Ready</span>
+</div>
+</div>
+</div>
+<!-- 2. Session Score Card -->
+<div class="grid grid-cols-3 gap-md mb-lg">
+<div class="glass-panel p-md rounded-xl text-center border-glass-border">
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-1">Tỷ lệ đúng</p>
+<p class="text-headline-sm font-headline-sm text-tertiary">85%</p>
+</div>
+<div class="glass-panel p-md rounded-xl text-center border-glass-border">
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-1">Thời gian</p>
+<p class="text-headline-sm font-headline-sm text-text-primary">12:45</p>
+</div>
+<div class="glass-panel p-md rounded-xl text-center border-glass-border">
+<p class="text-label-sm font-label-sm text-on-surface-variant mb-1">Thưởng</p>
+<p class="text-headline-sm font-headline-sm text-secondary">+450 KP</p>
+</div>
+</div>
+<!-- 3. Skill Radar Analysis -->
+<div class="glass-panel rounded-2xl p-lg mb-lg border-glass-border relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4">
+<span class="material-symbols-outlined text-primary/40 text-4xl">analytics</span>
+</div>
+<h2 class="text-headline-sm font-headline-sm mb-6 flex items-center gap-2">
+<span class="w-1 h-6 bg-primary rounded-full"></span>
+                    Biểu Đồ Kỹ Năng
+                </h2>
+<div class="flex justify-center items-center py-4">
+<!-- SVG Radar Mockup -->
+<svg class="w-64 h-64 overflow-visible" viewbox="0 0 200 200">
+<!-- Hexagon Grids -->
+<polygon fill="none" points="100,20 170,60 170,140 100,180 30,140 30,60" stroke="rgba(255,255,255,0.1)" stroke-width="1"></polygon>
+<polygon fill="none" points="100,50 145,75 145,125 100,150 55,125 55,75" stroke="rgba(255,255,255,0.1)" stroke-width="1"></polygon>
+<!-- Axis Lines -->
+<line stroke="rgba(255,255,255,0.1)" x1="100" x2="100" y1="100" y2="20"></line>
+<line stroke="rgba(255,255,255,0.1)" x1="100" x2="170" y1="100" y2="60"></line>
+<line stroke="rgba(255,255,255,0.1)" x1="100" x2="170" y1="100" y2="140"></line>
+<line stroke="rgba(255,255,255,0.1)" x1="100" x2="100" y1="100" y2="180"></line>
+<line stroke="rgba(255,255,255,0.1)" x1="100" x2="30" y1="100" y2="140"></line>
+<line stroke="rgba(255,255,255,0.1)" x1="100" x2="30" y1="100" y2="60"></line>
+<!-- Data Polygon -->
+<polygon class="drop-shadow-[0_0_8px_rgba(210,187,255,0.6)]" fill="rgba(124, 58, 237, 0.4)" points="100,40 160,70 150,130 100,160 40,135 50,80" stroke="#d2bbff" stroke-width="2"></polygon>
+<!-- Vertex Points (Gold) -->
+<circle cx="100" cy="40" fill="#ffb95f" r="3"></circle>
+<circle cx="160" cy="70" fill="#ffb95f" r="3"></circle>
+<circle cx="150" cy="130" fill="#ffb95f" r="3"></circle>
+<circle cx="100" cy="160" fill="#ffb95f" r="3"></circle>
+<circle cx="40" cy="135" fill="#ffb95f" r="3"></circle>
+<circle cx="50" cy="80" fill="#ffb95f" r="3"></circle>
+<!-- Labels -->
+<text class="fill-on-surface-variant text-[8px] font-bold uppercase" text-anchor="middle" x="100" y="10">Grammar Power</text>
+<text class="fill-on-surface-variant text-[8px] font-bold uppercase" text-anchor="start" x="185" y="65">Reading Speed</text>
+<text class="fill-on-surface-variant text-[8px] font-bold uppercase" text-anchor="start" x="185" y="145">Listening Reflex</text>
+<text class="fill-on-surface-variant text-[8px] font-bold uppercase" text-anchor="middle" x="100" y="195">Vocab Bank</text>
+<text class="fill-on-surface-variant text-[8px] font-bold uppercase" text-anchor="end" x="15" y="145">Error IQ</text>
+<text class="fill-on-surface-variant text-[8px] font-bold uppercase" text-anchor="end" x="15" y="65">Stamina</text>
+</svg>
+</div>
+</div>
+<!-- 4. Insight Points -->
+<div class="mb-lg">
+<h3 class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mb-md">Dữ liệu phân tích (Critical Insights)</h3>
+<div class="space-y-md">
+<div class="glass-panel p-md rounded-xl flex items-start gap-md border-l-4 border-l-primary">
+<span class="material-symbols-outlined text-primary">psychology</span>
+<div>
+<p class="text-body-md font-body-md text-text-primary">Bạn đang gặp khó khăn với cấu trúc <span class="text-primary font-bold">"since vs for"</span>.</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">Đã sai 3 lần trong các câu hỏi về thì hiện tại hoàn thành.</p>
+</div>
+</div>
+<div class="glass-panel p-md rounded-xl flex items-start gap-md border-l-4 border-l-tertiary">
+<span class="material-symbols-outlined text-tertiary">bolt</span>
+<div>
+<p class="text-body-md font-body-md text-text-primary">Tốc độ làm Part 5 của bạn nhanh hơn <span class="text-tertiary font-bold">20%</span> trung bình.</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1">Bạn tiết kiệm được 2 phút để dành cho Part 7.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- 5. Next Step Recommendations -->
+<div class="mb-lg">
+<h3 class="text-label-sm font-label-sm text-secondary uppercase tracking-widest mb-md">Nhiệm vụ tiếp theo</h3>
+<div class="space-y-xs">
+<button class="w-full glass-panel hover:bg-white/10 transition-colors p-md rounded-xl flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<span class="w-10 h-10 rounded-full bg-error-container/40 flex items-center justify-center text-error">
+<span class="material-symbols-outlined">rule</span>
+</span>
+<div class="text-left">
+<p class="text-body-lg font-body-lg">Sửa 3 lỗi ngữ pháp</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Thưởng: +100 KP</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+<button class="w-full glass-panel hover:bg-white/10 transition-colors p-md rounded-xl flex items-center justify-between group">
+<div class="flex items-center gap-md">
+<span class="w-10 h-10 rounded-full bg-primary-container/40 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">lock_open</span>
+</span>
+<div class="text-left">
+<p class="text-body-lg font-body-lg">Mở khóa Node L-04</p>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Chủ đề: Giao dịch ngân hàng</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant group-hover:translate-x-1 transition-transform">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 6. Floating Action Footer -->
+<div class="absolute bottom-0 left-0 w-full p-lg bg-surface-container-high/80 backdrop-blur-xl border-t border-glass-border flex flex-col gap-sm">
+<button class="h-[52px] w-full bg-gradient-to-r from-primary-container to-[#a78bfa] rounded-full text-on-primary-container font-body-lg flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(124,58,237,0.4)] active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                Học Ngay
+            </button>
+<button class="h-[52px] w-full border border-primary text-primary rounded-full font-body-lg flex items-center justify-center active:scale-[0.98] transition-transform">
+                Về Trang Chủ
+            </button>
+</div>
+</div>
+<!-- UI Interaction Scripts -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sheet = document.querySelector('.bg-surface-container');
+            
+            // Subtle entry animation
+            sheet.style.transform = 'translateY(100%)';
+            setTimeout(() => {
+                sheet.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+                sheet.style.transform = 'translateY(0)';
+            }, 100);
+
+            // Micro-interaction for Insights
+            const insightCards = document.querySelectorAll('.glass-panel');
+            insightCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    card.classList.add('neon-glow-purple');
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.classList.remove('neon-glow-purple');
+                });
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Dungeon Result | Iron Vanguard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes pulse-glow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.6)); }
+            50% { filter: drop-shadow(0 0 20px rgba(124, 58, 237, 0.9)); }
+        }
+        .animate-glow {
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #B8860B 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .text-gradient-purple {
+            background: linear-gradient(135deg, #d2bbff 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#d2bbff",
+                        "primary-container": "#7c3aed",
+                        "on-primary-container": "#ede0ff",
+                        "surface": "#12121d",
+                        "background": "#12121d",
+                        "glass-surface": "rgba(255, 255, 255, 0.08)",
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "success-green": "#10b981",
+                        "error-red": "#EF4444",
+                        "on-surface-variant": "#ccc3d8",
+                        "on-surface": "#e3e0f1"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "xs": "8px",
+                        "sm": "12px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "xl": "32px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden min-h-screen">
+<!-- Background Layer -->
+<div class="fixed inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center" data-alt="A sprawling, futuristic cyberpunk city at night with towering obsidian skyscrapers and neon purple light accents. The atmosphere is thick with a cinematic mist, reflecting soft lavender glows from holographic billboards onto wet cobblestone streets. Deep atmospheric shadows dominate the scene, creating a mysterious and heroic RPG dungeon aesthetic. The lighting is low-key with high-contrast violet highlights." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGTZH2Dhb0Dn8QxmaeSaWM1PzH5YV7AisD5z5mQdnbdLfOkOBFvheY_iGpqHBf3gmInbDyP-7zY0PmBt3VDkhW-EALvos7F1xYhwY1Mxvb7vpfj1RE08JzUbYEid3dN78TqNX9qBosS0-iTEGDxg_gU7pxLguEs3AuGg4k9Z_9wjPas8cndbpWVzy-yoYCp-8pdHJGQB7t_RyXGqLKr2wiZWkesQlnIPzUYd0MBz0nW85BJj7l47IDhEEHw8moOPoHM-jWB73SfcPG')"></div>
+<div class="absolute inset-0 bg-background/80 backdrop-blur-[2px]"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 flex flex-col min-h-screen pb-32">
+<!-- Header: TopAppBar (Simulated from JSON) -->
+<header class="w-full fixed top-0 z-50 bg-glass-surface/80 backdrop-blur-xl border-b border-glass-border flex justify-between items-center px-margin-mobile py-base shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+<div class="flex items-center gap-sm">
+<div class="w-8 h-8 rounded-full border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A high-quality metallic crest icon for a prestigious warrior guild. The crest features intricate silver wings and a central violet gemstone, set against a dark carbon fiber background. Professional RPG UI asset style with sharp edges and clean metallic reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcq5uUKN0fVAmZsbyR1F6J2n93d73ugiEuyd9z3C9-IlsL9Qt4xo2rB6STEngOKyGl4wKen7WyXVzW9NXOSRVVAonWaUiBE_yVGgJP8Fl8oWPtnBC70WVAO567ldra-NhM_REVIcQ4JsGv5CeeGMSK78XJb9BA9OlBd46h8vuVYcNJ31V6uuJiKAUUaZSbiZKyGAIASnEqw-4CGOMVMEi8Bq32SsoZOzpL8JBbYHZv-Brb4XoZLfxigJ1Kp1cd_wCWNycLTulzeroc"/>
+</div>
+<h1 class="font-headline-md text-headline-md-mobile text-primary tracking-tighter">Iron Vanguard</h1>
+</div>
+<button class="material-symbols-outlined text-primary p-2">settings</button>
+</header>
+<!-- Result Content -->
+<div class="mt-20 px-margin-mobile flex flex-col items-center">
+<!-- Victory Title -->
+<div class="text-center mb-lg">
+<h2 class="text-[40px] leading-tight font-extrabold tracking-widest text-gradient-gold uppercase drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">
+                    DUNGEON CLEAR
+                </h2>
+<p class="font-headline-sm text-primary-fixed uppercase tracking-[0.2em] mt-base">
+                    CHIẾN THẮNG HUY HOÀNG
+                </p>
+</div>
+<!-- Reward Chest Illustration -->
+<div class="relative w-64 h-64 mb-xl flex items-center justify-center">
+
+<div class="relative z-20 w-48 h-48 animate-glow">
+<img class="w-full h-full object-contain" data-alt="A high-fidelity 3D render of a majestic silver treasure chest that has just been unlocked. The chest is adorned with glowing purple runes and polished chrome hardware. Radiant violet light beams escape from the slightly open lid, casting a mystical glow. Set against a dark, minimalist background, the style is reminiscent of premium RPG loot screens with cinematic lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2R_tpDWk1PwwIfFZyLGbPbET2qV4TlaBQFGXEoQ2DJV5Q_hDKmglp2UsLjoDG5Af4zWOiqE6tLVJ4iO7OccGCG5Dd245f0VxHfrjJvyZsUd-blED3C1lvDrB0hjcxz0LiAquPIX6JdrW5yNIiFKZSfTixyWljI3f95Bps9-BFbXKSzfbw-fNXAg5lXjIASYeV2lGhOYQO0idzGUD2SAiATtVo47-BEmkIt8fEGDgpeOe-p7_v03Yylhbxjk5_RjQc77zNjISZN8h5"/>
+</div>
+</div>
+<!-- Main Reward Display -->
+<div class="text-center mb-xl bg-glass-surface/40 px-xl py-md rounded-xl border border-glass-border">
+<span class="text-on-surface-variant font-label-sm uppercase tracking-widest block mb-xs">PHẦN THƯỞNG CHÍNH</span>
+<div class="flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[48px] text-primary" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-[56px] font-black text-gradient-purple drop-shadow-[0_0_12px_rgba(210,187,255,0.5)]">+8,000 KP</span>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="w-full grid grid-cols-2 gap-md mb-xl">
+<div class="glass-panel p-md rounded-xl flex flex-col gap-base">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">timer</span>
+<span class="font-label-sm uppercase">THỜI GIAN</span>
+</div>
+<div class="text-headline-sm text-primary">42:15 <span class="text-label-sm text-on-surface-variant">/ 45:00</span></div>
+</div>
+<div class="glass-panel p-md rounded-xl flex flex-col gap-base">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">fact_check</span>
+<span class="font-label-sm uppercase">ĐỘ CHÍNH XÁC</span>
+</div>
+<div class="text-headline-sm text-success-green">96% <span class="text-label-sm text-on-surface-variant">(48/50)</span></div>
+</div>
+<div class="glass-panel p-md rounded-xl col-span-2 flex flex-col gap-sm">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">trending_up</span>
+<span class="font-label-sm uppercase">TIẾN TRÌNH HẠNG</span>
+</div>
+<span class="text-primary font-bold">+12% Rank 4</span>
+</div>
+<!-- Rank Progress Bar -->
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden border border-glass-border">
+<div class="h-full w-[78%] bg-gradient-to-r from-primary-container to-success-green relative shadow-[0_0_10px_rgba(124,58,237,0.5)]">
+<div class="absolute right-0 top-0 h-full w-2 bg-white/40 blur-[2px]"></div>
+</div>
+</div>
+<div class="flex justify-between text-label-sm text-on-surface-variant">
+<span>Rank 3</span>
+<span>Rank 4</span>
+</div>
+</div>
+</div>
+<!-- Loot Section -->
+<div class="w-full mb-xl">
+<h3 class="font-label-sm text-on-surface-variant uppercase tracking-widest mb-md ml-base">VẬT PHẨM NHẬN ĐƯỢC</h3>
+<div class="flex gap-md overflow-x-auto pb-sm snap-x">
+<!-- Loot Card 1 -->
+<div class="min-w-[140px] glass-panel p-sm rounded-xl flex flex-col items-center snap-start border-primary/30">
+<div class="w-16 h-16 mb-xs">
+<img class="w-full h-full object-contain" data-alt="A stylized silver chest icon for an RPG inventory, featuring glowing purple accents and polished metal edges. Digital icon art style with high contrast and sharp detailing, optimized for mobile UI screens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9_Vn-NlOlWViCuiMgh_mdtdlv3E4H_B8o7k7kVUcCkZeTIxmLuNzy_ndvKJUU169cjYgC1lRF0nlRp5QJga3FG0dzVqqHM_VuH1_XAR4lVmr64lwvX4ku6aVNMaIaNYkHv_xtHsFJohsjJOFW5yyP9y8bCGxz_1w4hkrVBBfZ3VcbQzrEsuj0a94Lab9DM9VEIRfS9moXhSBeRerZdeFcc8u9g28i4OEqCms1v4mlQLx64r9PD8-72tZMmJCkdA9h86tGI51vQTWP"/>
+</div>
+<span class="text-label-sm text-center font-bold text-primary">Silver Chest</span>
+<span class="text-[10px] text-success-green uppercase mt-base">ĐÃ MỞ</span>
+</div>
+<!-- Loot Card 2 -->
+<div class="min-w-[140px] glass-panel p-sm rounded-xl flex flex-col items-center snap-start">
+<div class="w-16 h-16 mb-xs flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-secondary" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+</div>
+<span class="text-label-sm text-center font-bold text-on-surface">Dungeon Crawler</span>
+<span class="text-[10px] text-on-surface-variant uppercase mt-base">DANH HIỆU</span>
+</div>
+<!-- Loot Card 3 -->
+<div class="min-w-[140px] glass-panel p-sm rounded-xl flex flex-col items-center snap-start">
+<div class="w-16 h-16 mb-xs flex items-center justify-center">
+<span class="material-symbols-outlined text-[48px] text-error-red" style="font-variation-settings: 'FILL' 1;">ac_unit</span>
+</div>
+<span class="text-label-sm text-center font-bold text-on-surface">Streak Freeze x1</span>
+<span class="text-[10px] text-on-surface-variant uppercase mt-base">VẬT PHẨM</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full flex flex-col gap-md">
+<button class="w-full h-[52px] rounded-full bg-gradient-to-r from-primary-container to-[#9333ea] text-on-primary-container font-body-lg flex items-center justify-center gap-xs shadow-[0_0_20px_rgba(124,58,237,0.5)] active:scale-95 transition-all">
+<span>NHẬN THƯỞNG &amp; QUAY LẠI</span>
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+<button class="w-full h-[52px] rounded-full glass-panel text-on-surface font-body-lg flex items-center justify-center gap-xs border border-primary/20 active:scale-95 transition-all">
+<span class="material-symbols-outlined">analytics</span>
+<span>XEM PHÂN TÍCH CHI TIẾT</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Simulated from JSON) -->
+<nav class="fixed bottom-0 w-full z-50 h-[64px] bg-glass-surface/90 backdrop-blur-xl border-t border-glass-border flex justify-around items-center px-xs shadow-[0_-8px_32px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_8px_rgba(210,187,255,0.6)]">
+<span class="material-symbols-outlined">bolt</span>
+<span class="font-label-sm text-label-sm">Quest</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined">swords</span>
+<span class="font-label-sm text-label-sm">Arena</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-sm text-label-sm">Guild</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-label-sm text-label-sm">Shop</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-all">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</div>
+</nav>
+<script>
+        // Micro-interaction: Particle burst effect on button click
+        document.querySelector('button').addEventListener('click', function(e) {
+            const ripple = document.createElement('div');
+            ripple.classList.add('absolute', 'w-4', 'h-4', 'bg-white/20', 'rounded-full', 'animate-ping');
+            this.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 500);
+        });
+    </script>
+</body></html>

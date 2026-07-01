@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#292935",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-surface-variant": "#ccc3d8",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-primary": "#3f008e",
+                    "inverse-surface": "#e3e0f1",
+                    "on-surface": "#e3e0f1",
+                    "outline": "#958da1",
+                    "on-background": "#e3e0f1",
+                    "surface-bright": "#383845",
+                    "surface-variant": "#343440",
+                    "surface": "#12121d",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#343440",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container": "#1f1e2a",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "background": "#12121d",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650",
+                    "secondary-container": "#ee9800",
+                    "inverse-primary": "#732ee4",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-error": "#690005",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary-container": "#ede0ff",
+                    "streak-orange": "#F97316",
+                    "outline-variant": "#4a4455",
+                    "error-red": "#EF4444",
+                    "inverse-on-surface": "#302f3b",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "primary": "#d2bbff",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-dim": "#12121d",
+                    "on-primary-fixed": "#25005a",
+                    "text-primary": "#F1F5F9",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#003824",
+                    "text-muted": "#94A3B8",
+                    "surface-container-lowest": "#0d0d18"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "margin-desktop": "32px",
+                    "xs": "8px",
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "badge-xs": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-green {
+            box-shadow: 0 0 15px rgba(78, 222, 163, 0.3);
+        }
+        .bottom-sheet-transition {
+            transition: transform 0.5s cubic-bezier(0.32, 0.72, 0, 1);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #12121d;
+            color: #e3e0f1;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+        .scrolling-container::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<!-- Background Canvas (Dashboard Mockup) -->
+<div class="relative w-[390px] h-[844px] bg-background overflow-hidden border border-white/5 shadow-2xl">
+<div class="absolute inset-0 z-0">
+
+</div>
+<!-- Top App Bar Mockup -->
+<header class="fixed top-0 w-[390px] z-10 flex justify-between items-center px-4 h-16 backdrop-blur-xl border-b border-glass-border">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized futuristic character portrait for a high-ranking student in a cyberpunk academic RPG. The character has sleek neon-tinted glasses reflecting data streams, wearing a tech-infused academy uniform. The lighting is dramatic, with purple and teal highlights against a dark, tech-heavy background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5_3nML9C-nUlaKUX91dk56eVvl-cCGn0hcTI2TFq2pWuC6MaG3xcDl4E3KMR1sVmAngzXLbKkG_0sPSU2STpr8XztoV0RmHPLiFx4edyjKLIiLFiQ2rghkPqquytf0BE3IysD7nJGyq03O2GuE3eQNvy3-foonHj-F4eaAihHVdpcGNNeFh5ZKtwK6ZSQpBUZJhRpIzO8dWGP6T7vkgLKXYzVQGk7p9zTRyC0B8AwQZDjzH8wVWUF9QI-foRoTlIrt72r0kBoldVY"/>
+</div>
+<div>
+<div class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Rank: Scholar</div>
+<div class="text-headline-sm font-headline-sm text-on-surface leading-tight">Alex V.</div>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-full border border-glass-border">
+<span class="material-symbols-outlined text-streak-orange text-[18px]">local_fire_department</span>
+<span class="text-label-sm font-label-sm font-bold">14</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</div>
+</header>
+<!-- Main Content (Behind Sheet) -->
+<main class="pt-20 px-4 space-y-6 opacity-40 grayscale-[0.5]">
+<div class="glass-panel p-5 rounded-xl space-y-4">
+<div class="flex justify-between items-end">
+<h2 class="text-headline-md font-headline-md text-primary">Tiến độ tuần</h2>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Lv. 42</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full w-3/4 bg-gradient-to-r from-primary-container to-tertiary shadow-[0_0_8px_rgba(124,58,237,0.5)]"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="glass-panel h-32 rounded-xl"></div>
+<div class="glass-panel h-32 rounded-xl"></div>
+</div>
+</main>
+<!-- BOTTOM SHEET OVERLAY -->
+<div class="absolute inset-0 z-40 bg-black/60 backdrop-blur-sm transition-opacity duration-300"></div>
+<!-- THE BOTTOM SHEET -->
+<div class="absolute bottom-0 left-0 w-full h-[85%] z-50 bg-surface-container-low rounded-t-[32px] border-t border-glass-border shadow-[0_-8px_40px_rgba(0,0,0,0.6)] flex flex-col bottom-sheet-transition" id="bottomSheet">
+<!-- Handle -->
+<div class="w-full flex justify-center py-4">
+<div class="w-12 h-1.5 bg-outline/30 rounded-full"></div>
+</div>
+<!-- Header -->
+<div class="px-6 pb-4">
+<h1 class="text-headline-md font-headline-md text-white">Chọn Nhiệm Vụ Hôm Nay</h1>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1">Hoàn thành nhiệm vụ để thăng cấp Scholar.</p>
+</div>
+<!-- Content Area -->
+<div class="flex-1 overflow-y-auto scrolling-container px-6 space-y-5 pb-24">
+<!-- Quest Card 1 -->
+<button class="w-full text-left group active:scale-[0.98] transition-transform">
+<div class="glass-panel p-4 rounded-2xl border-l-4 border-l-primary relative overflow-hidden group-hover:bg-white/10 transition-colors">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2.5 rounded-xl bg-primary-container/20 text-primary-fixed-dim">
+<span class="material-symbols-outlined text-[28px]">translate</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-badge-xs font-badge-xs bg-surface-container-highest px-2 py-0.5 rounded text-primary border border-primary/20">DÀNH CHO BẠN</span>
+</div>
+</div>
+<h3 class="text-body-lg font-body-lg text-white mb-1">DQ-01 Từ Vựng</h3>
+<div class="flex items-center gap-3 text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 15p</span>
+<span class="flex items-center gap-1 text-tertiary-fixed"><span class="material-symbols-outlined text-[14px]">military_tech</span> +80 KP</span>
+<span class="bg-surface-variant px-2 py-0.5 rounded-full text-[10px] text-white">#Vocabulary</span>
+</div>
+<!-- Decorative background glow -->
+<div class="absolute -right-8 -bottom-8 w-24 h-24 bg-primary/10 blur-3xl rounded-full"></div>
+</div>
+</button>
+<!-- Quest Card 2 -->
+<button class="w-full text-left group active:scale-[0.98] transition-transform">
+<div class="glass-panel p-4 rounded-2xl border-l-4 border-l-secondary relative overflow-hidden group-hover:bg-white/10 transition-colors">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2.5 rounded-xl bg-secondary-container/10 text-secondary">
+<span class="material-symbols-outlined text-[28px]">headphones</span>
+</div>
+</div>
+<h3 class="text-body-lg font-body-lg text-white mb-1">DQ-02 Nghe Hiểu</h3>
+<div class="flex items-center gap-3 text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 20p</span>
+<span class="flex items-center gap-1 text-tertiary-fixed"><span class="material-symbols-outlined text-[14px]">military_tech</span> +120 KP</span>
+<span class="bg-surface-variant px-2 py-0.5 rounded-full text-[10px] text-white">#Listening</span>
+</div>
+</div>
+</button>
+<!-- Quest Card 3 -->
+<button class="w-full text-left group active:scale-[0.98] transition-transform">
+<div class="glass-panel p-4 rounded-2xl border-l-4 border-l-tertiary-fixed-dim relative overflow-hidden group-hover:bg-white/10 transition-colors">
+<div class="flex justify-between items-start mb-3">
+<div class="p-2.5 rounded-xl bg-tertiary-container/10 text-tertiary">
+<span class="material-symbols-outlined text-[28px]">menu_book</span>
+</div>
+</div>
+<h3 class="text-body-lg font-body-lg text-white mb-1">DQ-03 Ngữ Pháp</h3>
+<div class="flex items-center gap-3 text-label-sm font-label-sm text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 10p</span>
+<span class="flex items-center gap-1 text-tertiary-fixed"><span class="material-symbols-outlined text-[14px]">military_tech</span> +50 KP</span>
+<span class="bg-surface-variant px-2 py-0.5 rounded-full text-[10px] text-white">#Grammar</span>
+</div>
+</div>
+</button>
+<!-- Special Challenge Section -->
+<div class="pt-4 space-y-4">
+<div class="flex items-center gap-2">
+<span class="text-lg">🏆</span>
+<h2 class="text-body-lg font-body-lg text-secondary">Thử Thách Đặc Biệt</h2>
+</div>
+<div class="relative overflow-hidden p-4 rounded-2xl bg-gradient-to-br from-[#2a1700] to-[#12121d] border border-secondary/30">
+<div class="flex items-center justify-between">
+<div class="space-y-1 z-10">
+<h4 class="text-body-md font-body-md text-secondary-fixed">PvP Survival 1v1</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Phần thưởng: 2x KP &amp; Huy chương hiếm</p>
+</div>
+<span class="material-symbols-outlined text-secondary text-[32px] animate-pulse">swords</span>
+</div>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border border-background bg-slate-700"></div>
+<div class="w-6 h-6 rounded-full border border-background bg-slate-600"></div>
+<div class="w-6 h-6 rounded-full border border-background bg-slate-500"></div>
+<div class="pl-3 text-[10px] text-on-surface-variant flex items-center">42 người đang ghép đội</div>
+</div>
+<button class="bg-secondary text-on-secondary px-4 py-1.5 rounded-full text-label-sm font-bold neon-glow-green">Tham gia</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Shell (Fixed within sheet or floating) -->
+<div class="absolute bottom-0 w-full h-16 bg-surface-container-high/90 backdrop-blur-lg border-t border-glass-border flex justify-around items-center rounded-t-xl z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">home</span>
+<span class="text-label-sm font-label-sm">Trang Chủ</span>
+</button>
+<button class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">assignment</span>
+<span class="text-label-sm font-label-sm">Nhiệm Vụ</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm">Skill Tree</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm">Guild</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Hồ Sơ</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+        // Simple drag interaction simulator for the bottom sheet
+        const sheet = document.getElementById('bottomSheet');
+        let startY = 0;
+        let currentY = 0;
+
+        sheet.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+        });
+
+        sheet.addEventListener('touchmove', (e) => {
+            currentY = e.touches[0].clientY;
+            const deltaY = currentY - startY;
+            if (deltaY > 0) {
+                sheet.style.transform = `translateY(${deltaY}px)`;
+            }
+        });
+
+        sheet.addEventListener('touchend', (e) => {
+            const deltaY = currentY - startY;
+            if (deltaY > 150) {
+                // In a real app, this would close the sheet
+                sheet.style.transform = `translateY(100%)`;
+                setTimeout(() => {
+                    sheet.style.transform = `translateY(0)`; // Re-open for demo
+                }, 1000);
+            } else {
+                sheet.style.transform = `translateY(0)`;
+            }
+        });
+
+        // Micro-interaction for cards
+        const cards = document.querySelectorAll('.glass-panel');
+        cards.forEach(card => {
+            card.addEventListener('mousedown', () => {
+                card.style.transform = 'scale(0.98)';
+            });
+            card.addEventListener('mouseup', () => {
+                card.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body></html>

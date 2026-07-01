@@ -1,0 +1,487 @@
+<!DOCTYPE html><html class="dark" lang="vi"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport">
+<title>Skill Tree - TOEIC QUEST</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "primary": "#d2bbff",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-dim": "#12121d",
+                    "text-primary": "#F1F5F9",
+                    "on-primary-fixed": "#25005a",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#003824",
+                    "text-muted": "#94A3B8",
+                    "surface-container-lowest": "#0d0d18",
+                    "on-error": "#690005",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "inverse-primary": "#732ee4",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#002113",
+                    "outline-variant": "#4a4455",
+                    "streak-orange": "#F97316",
+                    "on-primary-container": "#ede0ff",
+                    "inverse-on-surface": "#302f3b",
+                    "error-red": "#EF4444",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-error-container": "#ffdad6",
+                    "surface-container": "#1f1e2a",
+                    "primary-fixed-dim": "#d2bbff",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "background": "#12121d",
+                    "primary-fixed": "#eaddff",
+                    "tertiary-container": "#007650",
+                    "surface-container-low": "#1b1a26",
+                    "secondary-container": "#ee9800",
+                    "surface-container-high": "#292935",
+                    "on-surface-variant": "#ccc3d8",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-surface": "#e3e0f1",
+                    "inverse-surface": "#e3e0f1",
+                    "on-primary": "#3f008e",
+                    "outline": "#958da1",
+                    "surface-variant": "#343440",
+                    "surface": "#12121d",
+                    "on-background": "#e3e0f1",
+                    "surface-bright": "#383845",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#343440",
+                    "boss-purple": "#7C3AED",
+                    "success-green": "#10B981",
+                    "gold-active": "#F59E0B"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "xl": "32px",
+                    "xs": "8px",
+                    "margin-desktop": "32px",
+                    "sm": "12px",
+                    "lg": "24px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "badge-xs": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #12121d;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .skill-map-container {
+            background: transparent;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        #shader-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Node Animations */
+        .node-active { animation: pulse-green 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse-green {
+            0%, 100% { box-shadow: 0 0 10px 2px rgba(16, 185, 129, 0.4); transform: scale(1); }
+            50% { box-shadow: 0 0 25px 8px rgba(16, 185, 129, 0.6); transform: scale(1.05); }
+        }
+
+        .node-gold { animation: shimmer-gold 4s linear infinite; position: relative; overflow: hidden; }
+        @keyframes shimmer-gold {
+            0% { filter: brightness(1) saturate(1); }
+            50% { filter: brightness(1.2) saturate(1.2); }
+            100% { filter: brightness(1) saturate(1); }
+        }
+        .node-gold::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -100%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(25deg);
+            animation: shine 4s infinite;
+        }
+        @keyframes shine {
+            0% { left: -100%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .node-boss { animation: float-main 4s ease-in-out infinite; }
+        @keyframes float-main {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .stagger-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInStagger 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        }
+        @keyframes fadeInStagger {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Node Interactivity */
+        .skill-node-btn {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .skill-node-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* Connecting Lines */
+        .flowing-path {
+            stroke-dasharray: 20, 20;
+            animation: flow 3s linear infinite;
+        }
+        @keyframes flow {
+            from { stroke-dashoffset: 80; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .city-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: brightness(0.25) contrast(1.2);
+            background-size: cover;
+            background-position: center;
+            opacity: 0.4;
+        }
+
+        body { min-height: 100dvh; }
+    </style>
+</head>
+<body class="font-body-md text-on-surface skill-map-container">
+<!-- Background Layers -->
+<canvas id="shader-canvas" width="390" height="1510"></canvas>
+<div class="city-bg" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCGfKTZ-bG4emoKBdKOvAKryUtgXlSzuxU0hMi75m0VsiLGQhzg1sgQh8J1kSq9FtEAq4M0iqZDXNEAsaxhLt9fQzq7T3e-f44w4rO7g0DXSeCqzzbe91ZL3RrOZLZlK15Nd9pBPyDaa9cJroYM2y3fH4yE34QRukgqmOYQq1OcPlh5eRuULHIRzi79B70Vdp9APav3PLsMhr_nZ51NnBpD8W5mJL2XdOUNSgXrUdjBwCSP5fU4XIgec-X3gsUgmuFgRATtsbAP5vpl')"></div>
+<!-- Sticky Top Bar -->
+<header class="fixed top-0 w-full z-50 h-16 glass-panel flex items-center justify-between px-margin-mobile shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<h1 class="text-headline-sm font-headline-sm text-primary">Lộ Trình Kỹ Năng</h1>
+</div>
+<button class="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full border border-glass-border">
+<span class="material-symbols-outlined text-label-sm">filter_list</span>
+<span class="text-label-sm font-label-sm">Bộ lọc</span>
+</button>
+</header>
+<!-- Main Map Body -->
+<main class="pt-24 pb-32 px-4 relative overflow-y-auto scroll-smooth">
+<!-- SVG for lines connecting nodes -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" style="min-height: 1200px;">
+<defs>
+<linearGradient id="grad-gold" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#F59E0B;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1"></stop>
+</linearGradient>
+<linearGradient id="grad-unlocking" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#10B981;stop-opacity:1"></stop>
+<stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1"></stop>
+</linearGradient>
+<linearGradient id="grad-locked" x1="0%" x2="0%" y1="0%" y2="100%">
+<stop offset="0%" style="stop-color:#374151;stop-opacity:0.5"></stop>
+<stop offset="100%" style="stop-color:#374151;stop-opacity:0.5"></stop>
+</linearGradient>
+</defs>
+<!-- Lines (Conceptual paths) -->
+<path class="drop-shadow-[0_0_8px_rgba(245,158,11,0.6)] flowing-path" d="M 50% 1120 L 25% 1000 L 25% 850 L 25% 700 L 25% 550 L 50% 400" fill="none" stroke="url(#grad-gold)" stroke-width="4"></path>
+<path class="drop-shadow-[0_0_8px_rgba(16,185,129,0.6)] flowing-path" d="M 50% 1120 L 75% 1000 L 75% 850 L 75% 700 L 75% 550 L 50% 400" fill="none" stroke="url(#grad-unlocking)" stroke-width="4" style="animation-duration: 2s;"></path>
+<path d="M 50% 400 L 50% 150" fill="none" stroke="url(#grad-locked)" stroke-dasharray="8,8" stroke-width="4"></path>
+</svg>
+<div class="relative flex flex-col items-center gap-32 py-10" style="min-height: 1000px;">
+<!-- FINAL BOSS (Top) -->
+<div class="flex flex-col items-center z-10 -mt-8 stagger-in" style="animation-delay: 0.3s;">
+<div class="w-24 h-24 rounded-full glass-panel border-boss-purple bg-boss-purple/20 flex items-center justify-center node-boss shadow-[0_0_35px_rgba(124,58,237,0.8)] skill-node-btn">
+<span class="material-symbols-outlined text-5xl text-boss-purple" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<div class="node-boss flex flex-col items-center">
+<span class="mt-4 text-headline-sm font-headline-sm text-center text-on-surface uppercase tracking-[0.2em] drop-shadow-lg">TOEIC CHAMPION</span>
+<span class="text-label-sm font-label-sm text-boss-purple bg-boss-purple/10 border border-boss-purple/20 px-4 py-1.5 rounded-full mt-2 backdrop-blur-md">Dungeon: Level 990</span>
+</div>
+</div>
+<!-- Path Middle Bosses -->
+<div class="w-full flex justify-between px-4 z-10" style="animation-delay: 0.25s;">
+<!-- Listening Boss -->
+<div class="flex flex-col items-center w-1/2 stagger-in" style="animation-delay: 0.6s;">
+<div class="w-16 h-16 rounded-full glass-panel border-boss-purple/50 bg-boss-purple/10 flex items-center justify-center shadow-[0_0_15px_rgba(124,58,237,0.4)] skill-node-btn">
+<span class="material-symbols-outlined text-3xl text-boss-purple">swords</span>
+</div>
+<span class="mt-2 text-label-sm font-bold text-center">L-Star Trial</span>
+</div>
+<!-- Reading Boss -->
+<div class="flex flex-col items-center w-1/2 stagger-in" style="animation-delay: 0.6s;">
+<div class="w-16 h-16 rounded-full glass-panel border-boss-purple/50 bg-boss-purple/10 flex items-center justify-center opacity-60 skill-node-btn">
+<span class="material-symbols-outlined text-3xl text-boss-purple">lock</span>
+</div>
+<span class="mt-2 text-label-sm font-bold text-center text-muted">R-Star Trial</span>
+</div>
+</div>
+<!-- Paths Layer 3 -->
+<div class="w-full flex justify-between px-2 z-10" style="animation-delay: 0.2s;">
+<div class="flex flex-col items-center w-1/2 stagger-in" style="animation-delay: 0.4s;">
+<div class="w-14 h-14 rounded-full bg-gold-active flex items-center justify-center shadow-[0_0_20px_#F59E0B] node-gold skill-node-btn">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">L-03 Hội Thoại</span>
+</div>
+<div class="flex flex-col items-center w-1/2 stagger-in" style="animation-delay: 0.4s;">
+<div class="w-14 h-14 rounded-full glass-panel border-success-green flex items-center justify-center node-active shadow-[0_0_15px_#10B981] skill-node-btn">
+<span class="material-symbols-outlined text-success-green">play_arrow</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">R-03 Đoạn Văn</span>
+</div>
+</div>
+<!-- Paths Layer 2 -->
+<div class="w-full flex justify-between px-2 z-10" style="animation-delay: 0.15s;">
+<div class="flex flex-col items-center w-1/2 stagger-in" style="animation-delay: 0.2s;">
+<div class="w-14 h-14 rounded-full bg-gold-active flex items-center justify-center shadow-[0_0_20px_#F59E0B] node-gold skill-node-btn">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">L-02 Câu Hỏi</span>
+</div>
+<div class="flex flex-col items-center w-1/2 stagger-in" style="animation-delay: 0.2s;">
+<div class="w-14 h-14 rounded-full bg-surface-variant border border-glass-border flex items-center justify-center opacity-60 skill-node-btn">
+<span class="material-symbols-outlined text-muted">lock</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center text-muted">R-02 Từ Vựng</span>
+</div>
+</div>
+<!-- Paths Layer 1 -->
+<div class="w-full flex justify-between px-2 z-10" style="animation-delay: 0.1s;">
+<div class="flex flex-col items-center w-1/2 stagger-in">
+<div class="w-14 h-14 rounded-full bg-gold-active flex items-center justify-center shadow-[0_0_20px_#F59E0B] node-gold skill-node-btn">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center">L-01 Nền Tảng</span>
+</div>
+<div class="flex flex-col items-center w-1/2 stagger-in">
+<div class="w-14 h-14 rounded-full bg-surface-variant border border-glass-border flex items-center justify-center opacity-60 skill-node-btn">
+<span class="material-symbols-outlined text-muted">lock</span>
+</div>
+<span class="mt-2 text-label-sm font-label-sm text-center text-muted">R-01 Ngữ Pháp</span>
+</div>
+</div>
+<!-- START POINT (Bottom) -->
+<div class="flex flex-col items-center z-10 stagger-in" style="animation-delay: 0.05s;">
+<div class="w-16 h-16 rounded-full glass-panel border-primary flex items-center justify-center shadow-[0_0_25px_rgba(210,187,255,0.5)] skill-node-btn">
+<span class="material-symbols-outlined text-3xl text-primary" style="font-variation-settings: 'FILL' 1;">flag</span>
+</div>
+<span class="mt-3 text-label-sm font-bold text-primary tracking-tighter">ĐIỂM XUẤT PHÁT</span>
+</div>
+</div>
+</main>
+<!-- Path Titles Overlay -->
+<div class="fixed top-24 left-0 w-full flex justify-between px-6 pointer-events-none z-40">
+<div class="glass-panel px-3 py-1 rounded-lg border-primary/20">
+<span class="text-badge-xs font-badge-xs text-primary uppercase">Listening Path</span>
+</div>
+<div class="glass-panel px-3 py-1 rounded-lg border-tertiary/20">
+<span class="text-badge-xs font-badge-xs text-tertiary uppercase">Reading Path</span>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 bg-surface-container-high/80 backdrop-blur-xl border-t border-glass-border pb-safe px-2 shadow-[0_-8px_32px_rgba(0,0,0,0.4)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer skill-node-btn">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-label-sm font-label-sm mt-1">Trang Chủ</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer skill-node-btn">
+<span class="material-symbols-outlined text-[24px]">swords</span>
+<span class="text-label-sm font-label-sm mt-1">PvP Battle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-all cursor-pointer skill-node-btn">
+<span class="material-symbols-outlined text-[28px]" style="font-variation-settings: 'FILL' 1;">account_tree</span>
+<span class="text-label-sm font-label-sm mt-1">Skill Tree</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer skill-node-btn">
+<span class="material-symbols-outlined text-[24px]">groups</span>
+<span class="text-label-sm font-label-sm mt-1">Guild</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary transition-all cursor-pointer skill-node-btn">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="text-label-sm font-label-sm mt-1">Hồ Sơ</span>
+</div>
+</nav>
+<script>
+    // WebGL Shader Setup
+    const canvas = document.getElementById('shader-canvas');
+    const gl = canvas.getContext('webgl');
+
+    if (gl) {
+        const vertexShaderSource = `
+            attribute vec2 a_position;
+            varying vec2 v_texCoord;
+            void main() {
+                v_texCoord = a_position * 0.5 + 0.5;
+                gl_Position = vec4(a_position, 0, 1);
+            }
+        `;
+
+        const fragmentShaderSource = `
+            precision highp float;
+            varying vec2 v_texCoord;
+            uniform float u_time;
+            uniform vec2 u_resolution;
+
+            float hash(vec2 p) {
+                p = fract(p * vec2(123.34, 456.21));
+                p += dot(p, p + 45.32);
+                return fract(p.x * p.y);
+            }
+
+            float noise(vec2 p) {
+                vec2 i = floor(p);
+                vec2 f = fract(p);
+                float a = hash(i);
+                float b = hash(i + vec2(1.0, 0.0));
+                float c = hash(i + vec2(0.0, 1.0));
+                float d = hash(i + vec2(1.0, 1.0));
+                vec2 u = f * f * (3.0 - 2.0 * f);
+                return mix(a, b, u.x) + (c - a) * u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+            }
+
+            void main() {
+                vec2 uv = v_texCoord;
+                float n = noise(uv * 3.0 + u_time * 0.2);
+                n += noise(uv * 6.0 - u_time * 0.1) * 0.5;
+                
+                vec3 color1 = vec3(0.05, 0.05, 0.1); 
+                vec3 color2 = vec3(0.48, 0.22, 0.93); 
+                vec3 color3 = vec3(0.1, 0.05, 0.2); 
+                
+                vec3 finalColor = mix(color1, color2, n * 0.3);
+                finalColor = mix(finalColor, color3, noise(uv * 10.0 + u_time * 0.5) * 0.2);
+                
+                float scanline = sin(uv.y * 800.0 + u_time * 5.0) * 0.02;
+                finalColor += scanline;
+                
+                gl_FragColor = vec4(finalColor, 1.0);
+            }
+        `;
+
+        function createShader(gl, type, source) {
+            const shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            return shader;
+        }
+
+        const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+        const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+        const program = gl.createProgram();
+        gl.attachShader(program, vertexShader);
+        gl.attachShader(program, fragmentShader);
+        gl.linkProgram(program);
+        gl.useProgram(program);
+
+        const positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW);
+
+        const positionLocation = gl.getAttribLocation(program, 'a_position');
+        gl.enableVertexAttribArray(positionLocation);
+        gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+
+        const timeLocation = gl.getUniformLocation(program, 'u_time');
+        const resolutionLocation = gl.getUniformLocation(program, 'u_resolution');
+
+        function render(time) {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+            gl.uniform1f(timeLocation, time * 0.001);
+            gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
+            gl.drawArrays(gl.TRIANGLES, 0, 6);
+            requestAnimationFrame(render);
+        }
+        requestAnimationFrame(render);
+    }
+
+    // Scroll behavior
+    window.onload = () => {
+        setTimeout(() => {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: 'smooth'
+            });
+        }, 100);
+    };
+</script>
+
+
+</body></html>

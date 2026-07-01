@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quest Complete - Rank Up</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "text-primary": "#F1F5F9",
+                        "tertiary-fixed": "#6ffbbe",
+                        "background": "#12121d",
+                        "error": "#ffb4ab",
+                        "inverse-on-surface": "#302f3b",
+                        "tertiary-container": "#007650",
+                        "on-tertiary-fixed-variant": "#005236",
+                        "on-primary-fixed-variant": "#5a00c6",
+                        "on-primary-fixed": "#25005a",
+                        "surface-container-high": "#292935",
+                        "on-secondary": "#472a00",
+                        "secondary-fixed": "#ffddb8",
+                        "inverse-surface": "#e3e0f1",
+                        "on-error-container": "#ffdad6",
+                        "on-surface": "#e3e0f1",
+                        "surface-tint": "#d2bbff",
+                        "tertiary": "#4edea3",
+                        "on-tertiary": "#003824",
+                        "outline-variant": "#4a4455",
+                        "on-surface-variant": "#ccc3d8",
+                        "on-primary-container": "#ede0ff",
+                        "text-muted": "#94A3B8",
+                        "glass-surface": "rgba(255, 255, 255, 0.08)",
+                        "secondary-container": "#ee9800",
+                        "on-background": "#e3e0f1",
+                        "primary-fixed": "#eaddff",
+                        "surface-container": "#1f1e2a",
+                        "error-red": "#EF4444",
+                        "surface-container-lowest": "#0d0d18",
+                        "surface-container-low": "#1b1a26",
+                        "tertiary-fixed-dim": "#4edea3",
+                        "surface-variant": "#343440",
+                        "outline": "#958da1",
+                        "surface-bright": "#383845",
+                        "secondary": "#ffb95f",
+                        "surface": "#12121d",
+                        "on-secondary-container": "#5b3800",
+                        "streak-orange": "#F97316",
+                        "on-secondary-fixed": "#2a1700",
+                        "primary": "#d2bbff",
+                        "surface-container-highest": "#343440",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "on-primary": "#3f008e",
+                        "on-secondary-fixed-variant": "#653e00",
+                        "secondary-fixed-dim": "#ffb95f",
+                        "on-tertiary-fixed": "#002113",
+                        "on-tertiary-container": "#76ffc2",
+                        "inverse-primary": "#732ee4",
+                        "glass-border": "rgba(255, 255, 255, 0.15)",
+                        "primary-container": "#7c3aed",
+                        "primary-fixed-dim": "#d2bbff",
+                        "surface-dim": "#12121d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "md": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "xs": "8px",
+                        "margin-mobile": "16px",
+                        "sm": "12px",
+                        "lg": "24px",
+                        "margin-desktop": "32px"
+                    },
+                    "fontFamily": {
+                        "display-lg-mobile": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "badge-xs": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                        "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                        "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 10px rgba(210,187,255,0.4)); }
+            50% { opacity: 1; filter: drop-shadow(0 0 25px rgba(210,187,255,0.8)); }
+        }
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+        .glow-pulse { animation: pulse-glow 3s ease-in-out infinite; }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .cta-shine {
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-shine::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg);
+            animation: shine 3s infinite;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen overflow-x-hidden">
+<!-- Top AppBar - Suppressed because it's a Success/Reward screen, but implemented for identity as requested by JSON -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface/80 dark:bg-surface/80 backdrop-blur-xl border-b border-glass-border shadow-2xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 transition-transform" data-icon="close">close</span>
+<h1 class="text-headline-sm-mobile font-headline-sm-mobile uppercase tracking-widest text-primary drop-shadow-[0_0_10px_rgba(210,187,255,0.5)]">QUEST COMPLETE</h1>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors cursor-pointer" data-icon="home">home</span>
+</header>
+<!-- Background Atmospheric Layer -->
+<div class="fixed inset-0 z-0">
+
+<div class="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background"></div>
+</div>
+<!-- Main Content Canvas -->
+<main class="relative z-10 pt-20 pb-32 px-gutter flex flex-col items-center">
+<!-- Hero Rank Up Section -->
+<div class="w-full max-w-lg mt-8 text-center space-y-6">
+<div class="relative inline-block">
+<!-- Outer Glow Rings -->
+<div class="absolute inset-0 bg-primary/20 rounded-full blur-[40px] glow-pulse"></div>
+<!-- Rank Icon/Badge -->
+<div class="relative w-40 h-40 mx-auto bg-surface-container-highest rounded-full border-4 border-primary flex items-center justify-center shadow-[0_0_30px_rgba(210,187,255,0.4)] float-animation">
+<span class="material-symbols-outlined text-7xl text-primary" data-icon="military_tech" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<div class="absolute -bottom-2 bg-secondary text-on-secondary px-4 py-1 rounded-full text-badge-xs font-badge-xs shadow-lg">
+                        RANK UP!
+                    </div>
+</div>
+</div>
+<div class="space-y-1">
+<h2 class="font-display-lg-mobile text-display-lg-mobile uppercase text-text-primary tracking-tight">MENTOR LEVEL</h2>
+<p class="font-headline-md text-headline-md text-tertiary glow-pulse">RANK: SCHOLAR III</p>
+</div>
+</div>
+<!-- Character & Stats Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-4xl mt-10">
+<!-- Character Preview Card -->
+<div class="glass-panel rounded-xl p-6 flex flex-col items-center justify-center text-center overflow-hidden h-64">
+<div class="relative w-full h-full flex items-center justify-center">
+<img alt="Character Avatar" class="h-full object-contain filter drop-shadow-[0_0_15px_rgba(111,251,190,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBUA_OoAd5QZf4fMbAMz9qVMTHZYSNtMAWkFMDnWVrXbbVK5gUt3zeSqjjm2xOIZwUFoIHYFpDfvZlzJNQfW-MDiyNt4LG8tlsGMa0kL_GNURXCKJdjD6vWQJsx07IIzWEB8R0xkOJuCNikSlzW3nmornGqYBVqXop5-papFLaSApU9V3geJIhs5cEEuAORFDYt9lp7j50HwIxB5eKvs6xyIhalACqxr4LbyJuHh4zdN14iWHjkaae7N0wEfkb5eGXEr_2mhp-uKssb"/>
+<div class="absolute bottom-0 right-0 glass-panel px-3 py-1 rounded-lg border-tertiary/30">
+<span class="text-tertiary font-bold text-label-sm uppercase">Equipped: Lexicon Blade</span>
+</div>
+</div>
+</div>
+<!-- Stats & Progress -->
+<div class="glass-panel rounded-xl p-6 flex flex-col justify-between space-y-4">
+<div>
+<h3 class="font-label-sm text-label-sm uppercase text-text-muted mb-3 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="insights">insights</span>
+                        Attributes Mastery
+                    </h3>
+<div class="space-y-4">
+<div class="space-y-2">
+<div class="flex justify-between text-label-sm">
+<span class="text-on-surface">Listening</span>
+<span class="text-primary">340/495</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary-container to-tertiary-container shadow-[0_0_10px_rgba(124,58,237,0.5)]" style="width: 68%;"></div>
+</div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between text-label-sm">
+<span class="text-on-surface">Reading</span>
+<span class="text-primary">260/495</span>
+</div>
+<div class="h-2 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary-container to-tertiary-container shadow-[0_0_10px_rgba(124,58,237,0.5)]" style="width: 52%;"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 border border-primary/20 p-3 rounded-lg flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" data-icon="workspace_premium">workspace_premium</span>
+<div>
+<p class="text-label-sm font-bold text-primary">TOEIC PREDICTION</p>
+<p class="text-headline-sm text-text-primary">600+ PTS</p>
+</div>
+</div>
+</div>
+<!-- Rewards / Unlocks Card -->
+<div class="md:col-span-2 glass-panel rounded-xl p-6">
+<h3 class="font-label-sm text-label-sm uppercase text-text-muted mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="card_giftcard">card_giftcard</span>
+                    Rank Rewards Unlocked
+                </h3>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<!-- Reward Node -->
+<div class="flex flex-col items-center gap-2 p-3 glass-panel rounded-lg border-primary/20 hover:border-primary transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(124,58,237,0.3)]">
+<span class="material-symbols-outlined" data-icon="sword">swords</span>
+</div>
+<span class="text-label-sm font-bold text-on-surface text-center">Elite Quests</span>
+</div>
+<!-- Reward Node -->
+<div class="flex flex-col items-center gap-2 p-3 glass-panel rounded-lg border-tertiary/20 hover:border-tertiary transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-tertiary-container flex items-center justify-center text-on-tertiary-container group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(0,118,80,0.3)]">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+</div>
+<span class="text-label-sm font-bold text-on-surface text-center">Mental Gym</span>
+</div>
+<!-- Reward Node -->
+<div class="flex flex-col items-center gap-2 p-3 glass-panel rounded-lg border-secondary/20 hover:border-secondary transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(238,152,0,0.3)]">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+</div>
+<span class="text-label-sm font-bold text-on-surface text-center">Skill Branch</span>
+</div>
+<!-- Reward Node -->
+<div class="flex flex-col items-center gap-2 p-3 glass-panel rounded-lg border-glass-border opacity-50 grayscale">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="lock">lock</span>
+</div>
+<span class="text-label-sm font-bold text-on-surface-variant text-center">Level 50</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Action Area -->
+<div class="w-full max-w-lg mt-10 space-y-4">
+<button class="w-full h-[52px] rounded-full bg-gradient-to-r from-primary-container to-[#9333ea] text-text-primary font-body-lg text-body-lg shadow-[0_0_20px_rgba(124,58,237,0.5)] cta-shine active:scale-95 transition-transform">
+                CLAIM REWARDS &amp; CONTINUE
+            </button>
+<button class="w-full h-[52px] rounded-full border-2 border-primary text-primary font-body-lg text-body-lg hover:bg-primary/10 transition-colors active:scale-95">
+                SHARE TO SQUAD
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation - Fixed Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe px-4 bg-surface-container/90 dark:bg-surface-container/90 backdrop-blur-xl border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="sword">swords</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">QUESTS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_8px_rgba(210,187,255,0.6)]" href="#">
+<span class="material-symbols-outlined" data-icon="military_tech" style="font-variation-settings: 'FILL' 1;">military_tech</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">RANK</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">MENTOR</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant opacity-70 hover:opacity-100 transition-opacity" href="#">
+<span class="material-symbols-outlined" data-icon="Account_tree">account_tree</span>
+<span class="font-label-sm text-label-sm uppercase font-bold mt-1">SKILLS</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions for reward nodes
+        document.querySelectorAll('.group').forEach(node => {
+            node.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 150);
+                
+                // Trigger a confetti or sparkle effect could go here
+            });
+        });
+
+        // Simple parallax effect for shader opacity on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY;
+            const opacity = Math.max(0.2, 0.4 - scrolled / 1000);
+            document.querySelector('webgl-shader').style.opacity = opacity;
+        });
+    </script>
+</body></html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #12121d;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            color: #e3e0f1;
+        }
+
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .neon-glow-purple {
+            box-shadow: 0 0 20px rgba(124, 58, 237, 0.4);
+        }
+
+        .input-focus-ring:focus-within {
+            border-color: #d2bbff;
+            box-shadow: 0 0 0 2px rgba(210, 187, 255, 0.2);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(210, 187, 255, 0.3);
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-high": "#292935",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-surface-variant": "#ccc3d8",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-primary": "#3f008e",
+                    "inverse-surface": "#e3e0f1",
+                    "on-surface": "#e3e0f1",
+                    "outline": "#958da1",
+                    "on-background": "#e3e0f1",
+                    "surface-bright": "#383845",
+                    "surface-variant": "#343440",
+                    "surface": "#12121d",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#343440",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "surface-container": "#1f1e2a",
+                    "tertiary": "#4edea3",
+                    "surface-tint": "#d2bbff",
+                    "primary-fixed-dim": "#d2bbff",
+                    "background": "#12121d",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650",
+                    "secondary-container": "#ee9800",
+                    "inverse-primary": "#732ee4",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "on-error": "#690005",
+                    "primary-container": "#7c3aed",
+                    "on-tertiary-fixed": "#002113",
+                    "on-primary-container": "#ede0ff",
+                    "streak-orange": "#F97316",
+                    "outline-variant": "#4a4455",
+                    "error-red": "#EF4444",
+                    "inverse-on-surface": "#302f3b",
+                    "secondary": "#ffb95f",
+                    "on-secondary-container": "#5b3800",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-secondary": "#472a00",
+                    "secondary-fixed": "#ffddb8",
+                    "primary": "#d2bbff",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-tertiary-container": "#76ffc2",
+                    "surface-dim": "#12121d",
+                    "on-primary-fixed": "#25005a",
+                    "text-primary": "#F1F5F9",
+                    "error-container": "#93000a",
+                    "on-tertiary": "#003824",
+                    "text-muted": "#94A3B8",
+                    "surface-container-lowest": "#0d0d18"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "sm": "12px",
+                    "margin-desktop": "32px",
+                    "xs": "8px",
+                    "xl": "32px",
+                    "base": "4px",
+                    "md": "16px",
+                    "gutter": "16px",
+                    "margin-mobile": "16px",
+                    "lg": "24px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "badge-xs": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen relative overflow-hidden">
+<!-- Atmospheric Background Animation -->
+<div class="fixed inset-0 z-0">
+
+<!-- Overlay for additional depth -->
+<div class="absolute inset-0 bg-gradient-to-b from-surface/20 via-surface/60 to-surface"></div>
+</div>
+<!-- Main Container -->
+<main class="relative z-10 w-[390px] px-margin-mobile flex flex-col items-center justify-center">
+<!-- Brand Logo / Identity -->
+<div class="mb-lg text-center">
+<h1 class="font-display-lg-mobile text-display-lg-mobile text-primary tracking-tight">TOEIC QUEST</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Chinh phục đỉnh cao tri thức</p>
+</div>
+<!-- Auth GlassPanel -->
+<div class="glass-panel w-full rounded-xl p-lg flex flex-col gap-lg shadow-2xl">
+<!-- Tabs Navigation -->
+<div class="flex border-b border-glass-border">
+<button class="flex-1 pb-md font-body-lg text-body-lg text-primary border-b-2 border-primary transition-all">
+                    Đăng nhập
+                </button>
+<button class="flex-1 pb-md font-body-lg text-body-lg text-on-surface-variant hover:text-on-surface transition-all">
+                    Đăng ký
+                </button>
+</div>
+<!-- Login Form -->
+<form class="flex flex-col gap-md">
+<!-- Email Input -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Email</label>
+<div class="glass-panel input-focus-ring flex items-center px-md py-sm rounded-lg transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">enable</span>
+<input class="bg-transparent border-none outline-none flex-1 text-on-surface placeholder:text-outline text-body-md font-body-md focus:ring-0 p-0" placeholder="example@gmail.com" type="email"/>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-xs">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1">Mật khẩu</label>
+<div class="glass-panel input-focus-ring flex items-center px-md py-sm rounded-lg transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-sm">lock</span>
+<input class="bg-transparent border-none outline-none flex-1 text-on-surface placeholder:text-outline text-body-md font-body-md focus:ring-0 p-0" placeholder="••••••••" type="password"/>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary transition-colors" type="button">visibility</button>
+</div>
+</div>
+<!-- CTA Button -->
+<button class="mt-xs h-[52px] w-full rounded-full bg-primary-container text-on-primary-container font-body-lg text-body-lg flex items-center justify-center neon-glow-purple hover:scale-[1.02] active:scale-95 transition-all" type="submit">
+                    Đăng nhập
+                </button>
+</form>
+<!-- Forgot Password Link -->
+<div class="text-center">
+<a class="font-label-sm text-label-sm text-primary hover:underline transition-all" href="#">Quên mật khẩu?</a>
+</div>
+<!-- Divider -->
+<div class="flex items-center gap-md py-sm">
+<div class="flex-1 h-[1px] bg-glass-border"></div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Hoặc</span>
+<div class="flex-1 h-[1px] bg-glass-border"></div>
+</div>
+<!-- Social Auth -->
+<div class="flex flex-col gap-sm">
+<button class="h-[52px] w-full rounded-full glass-panel flex items-center justify-center gap-md hover:bg-white/10 transition-all">
+<img class="w-5 h-5" data-alt="The Google company logo in its official vibrant four-color palette, designed with a clean, high-resolution vector style. The logo is set against a dark, futuristic UI background with soft purple glows and glassmorphism elements, maintaining a professional and modern aesthetic consistent with the Cyber-Scholar design system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAoeIgqPK92DWG4iiKk0UaT4rnZUZr9De8mUQurzGIGovyXSRzEbQFk2v5U5L3zexGpPeAaoLL-_wkMm22AztDHGiBGZunDagCKnHn8ERNXfbBOfHnGM4wLxkdzOkGUQSw7jxUExKVcwRHhwqC9m1DsQRWOyW3eIzDWbmmUt9vOJiYRNKOGkU8i6aTRq6-d-KT9_h_amT6DP6BT1UBKGvOcKwyK7qPnTIded8k1C2lKzBz_RELL2jU_d2lRguQqfi-ZEhxWOA-eenJA"/>
+<span class="font-body-md text-body-md text-on-surface">Đăng nhập với Google</span>
+</button>
+<button class="h-[52px] w-full rounded-full glass-panel flex items-center justify-center gap-md hover:bg-white/10 transition-all">
+<img class="w-5 h-5" data-alt="The Facebook brand icon, featuring the iconic white letter f on a blue circular background, rendered in a high-fidelity modern digital style. The icon is placed within a dark-mode user interface that uses translucent glass panels, neon purple accents, and high-tech typography, creating an integrated and cohesive visual experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcS7l9fiEFZkIFzFS8zCySul4Jgl-JfBShjnM9O1O_xx7XwFQW3g0GHVpUiF1VkeZFzYQG5mXii5hStRBuBsrY0oXged-mIZPgef_8p2BX6mu07KtI7hg6TQ1y1U526kbM6abX1F_ED8TZozpTNVw_qOpFxMXPW4gnl-3HlA84crGW3imMCR8_j6lif50jjI8HlkfhTYg507ouKQPbpDv_Jh7Nf5y4GNe0iIoqHrHXeBtBtK0h-COY1HxDLj_tLD-ORfCoYohTNyX6"/>
+<span class="font-body-md text-body-md text-on-surface">Đăng nhập với Facebook</span>
+</button>
+</div>
+</div>
+<!-- Footer Note -->
+<p class="mt-xl font-label-sm text-label-sm text-on-surface-variant text-center px-md opacity-70">
+            Bằng cách tiếp tục, bạn đồng ý với <a class="text-primary hover:underline" href="#">Điều khoản Dịch vụ</a> và <a class="text-primary hover:underline" href="#">Chính sách Bảo mật</a> của chúng tôi.
+        </p>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        // Simple visual feedback for button clicks
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = '';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = '';
+            });
+        });
+
+        // Form submit prevention for demo
+        document.querySelector('form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log("Auth attempt triggered");
+        });
+    </script>
+</body></html>

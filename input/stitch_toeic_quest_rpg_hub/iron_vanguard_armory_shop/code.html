@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Iron Vanguard Armory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0d0d18",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "on-secondary-fixed": "#2a1700",
+                    "on-tertiary-fixed": "#002113",
+                    "surface-container": "#1f1e2a",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "tertiary-container": "#007650",
+                    "outline": "#958da1",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "outline-variant": "#4a4455",
+                    "streak-orange": "#F97316",
+                    "inverse-surface": "#e3e0f1",
+                    "on-error-container": "#ffdad6",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-tertiary-container": "#76ffc2",
+                    "error": "#ffb4ab",
+                    "inverse-on-surface": "#302f3b",
+                    "background": "#12121d",
+                    "surface": "#12121d",
+                    "on-surface-variant": "#ccc3d8",
+                    "primary-container": "#7c3aed",
+                    "on-secondary": "#472a00",
+                    "primary-fixed": "#eaddff",
+                    "surface-container-low": "#1b1a26",
+                    "primary": "#d2bbff",
+                    "inverse-primary": "#732ee4",
+                    "tertiary": "#4edea3",
+                    "surface-container-highest": "#343440",
+                    "surface-container-high": "#292935",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "secondary-fixed": "#ffddb8",
+                    "secondary": "#ffb95f",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "surface-bright": "#383845",
+                    "secondary-container": "#ee9800",
+                    "on-background": "#e3e0f1",
+                    "error-red": "#EF4444",
+                    "text-primary": "#F1F5F9",
+                    "on-error": "#690005",
+                    "on-primary-fixed": "#25005a",
+                    "on-primary-container": "#ede0ff",
+                    "on-surface": "#e3e0f1",
+                    "on-primary": "#3f008e",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-tint": "#d2bbff",
+                    "tertiary-fixed": "#6ffbbe",
+                    "surface-dim": "#12121d",
+                    "error-container": "#93000a",
+                    "surface-variant": "#343440",
+                    "on-tertiary": "#003824",
+                    "on-secondary-container": "#5b3800",
+                    "text-muted": "#94A3B8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-desktop": "32px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "xs": "8px",
+                    "margin-mobile": "16px",
+                    "base": "4px",
+                    "sm": "12px",
+                    "gutter": "16px",
+                    "md": "16px"
+            },
+            "fontFamily": {
+                    "headline-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "display-lg-mobile": ["Inter"],
+                    "badge-xs": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .cta-primary {
+            background: linear-gradient(135deg, #7C3AED, #9F67FF);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .cta-primary:hover {
+            box-shadow: 0 0 25px rgba(124, 58, 237, 0.6);
+            transform: translateY(-2px);
+        }
+        .particle-bg {
+            background-image: radial-gradient(circle at 50% 50%, #1a1a2e 0%, #12121d 100%);
+        }
+        /* Hide scrollbar but keep functionality */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen pb-24 overflow-x-hidden">
+<!-- Atmospheric Background Animation -->
+
+<!-- Floating Particle Effect -->
+<div class="fixed inset-0 pointer-events-none -z-5">
+<div class="w-full h-full" id="particles"></div>
+</div>
+<!-- Top AppBar -->
+<header class="fixed top-0 left-0 w-full h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop shadow-2xl shadow-black/40">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">menu</span>
+<h1 class="font-headline-sm text-headline-sm-mobile md:text-headline-sm uppercase tracking-wider text-primary">ARMORY</h1>
+</div>
+<div class="flex items-center gap-4">
+<!-- Currency Display -->
+<div class="flex gap-3 bg-black/40 px-3 py-1.5 rounded-full border border-glass-border">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary scale-75" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="font-label-sm text-label-sm text-secondary">12.4K</span>
+</div>
+<div class="w-[1px] h-4 bg-white/10 self-center"></div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-streak-orange scale-75" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="font-label-sm text-label-sm text-on-background">850</span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full border border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A stylized portrait of a high-tech Guild Master in a cyber-fantasy armor, glowing purple eye visors, sleek black helmet, cinematic dramatic lighting with purple and teal neon accents, professional digital art style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuATPaJ94aTmnNqRqOhH5FAZS87fiaH2n4ew7_BPkDhSPC8DHDSuVJDzuI5iOdJdL0WYSNP2GlXnw1GJMLeoo3X96avm9FtDficpRI3VQU-TSWRE9hb6yKty_Yv3CM5i4oSg4D7aMxgAEuRwVcj9OE__LOdoCeozh_e47oBq_dxgLWbGkKxdANgIb_9_LuAbYneLKlykVLG84KIHUGtf9CH6qgh6asLytpKYD_wQafbacbMaDXkrXRuGW0ekzhKNjf7UKd_5NDsiksll"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pt-20 px-margin-mobile md:px-margin-desktop max-w-7xl mx-auto space-y-8">
+<!-- Hero Section: Item of the Day -->
+<section class="mt-4">
+<div class="glass-panel rounded-xl overflow-hidden relative group">
+<!-- Background Glow -->
+<div class="absolute -right-20 -top-20 w-80 h-80 bg-primary/20 blur-[100px] rounded-full"></div>
+<div class="flex flex-col md:flex-row p-6 md:p-8 items-center gap-8 relative z-10">
+<div class="w-full md:w-1/2 aspect-square md:aspect-video rounded-lg overflow-hidden glass-panel border-primary/30 flex items-center justify-center relative">
+<img class="object-cover w-full h-full" data-alt="A futuristic holographic interface representing a Premium AI Tutor. A spectral, intelligent-looking figure made of glowing purple light data particles, wearing a scholar's robe. Floating digital screens with language grammar nodes surround the figure in a dark, high-tech void. Cinematic cyberpunk aesthetics." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMQxRHdX_N3fg1y4jxiI3XYK4azKkE5XCb1Q3qjqxv18xFh8i4ZFPgvGk5sPTvgvAg2mDp16KTGC5_M86KHCmMkeZU83KcOYHIc6MNyhbYh2hmUeXaKLMnd8QOMUbIFb3SFOARhVtwD0B0aZLi3PJLkKSjuHRwGShtq1F7H6KijL-rN2LRrMmxJSt5mZUf2qFBgfwzzA1TN16jDlySuq7YHhRbUxyojVqz8Syv3dAPv_fkEruhMbPVnyJvEuXWm6pOqLYsHcHmsQAU"/>
+<div class="absolute top-4 left-4 bg-primary text-on-primary px-3 py-1 rounded-full font-badge-xs text-badge-xs uppercase tracking-tighter animate-pulse">Featured</div>
+</div>
+<div class="w-full md:w-1/2 space-y-4">
+<div>
+<span class="text-tertiary font-label-sm text-label-sm uppercase tracking-widest">Item of the Day</span>
+<h2 class="font-display-lg-mobile md:font-display-lg text-display-lg-mobile md:text-display-lg text-primary mt-1">Premium AI Tutor</h2>
+</div>
+<p class="text-on-surface-variant text-body-lg font-body-lg">Accelerate your mastery with 1:1 real-time feedback, personalized quest paths, and advanced pronunciation analysis.</p>
+<ul class="space-y-2">
+<li class="flex items-center gap-2 text-on-background">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+<span class="text-body-md font-body-md">24/7 Unlimited Conversational Practice</span>
+</li>
+<li class="flex items-center gap-2 text-on-background">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+<span class="text-body-md font-body-md">Personalized Grammar Remediation</span>
+</li>
+</ul>
+<div class="pt-4">
+<button class="cta-primary w-full md:w-auto px-8 h-[52px] rounded-full flex items-center justify-center gap-3 text-on-primary font-body-lg">
+<span>Unlock Now</span>
+<span class="material-symbols-outlined">bolt</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Categories Tabs -->
+<nav class="flex gap-4 overflow-x-auto no-scrollbar pb-2">
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-full font-body-lg whitespace-nowrap">Consumables</button>
+<button class="glass-surface border border-glass-border text-on-surface-variant px-6 py-2.5 rounded-full font-body-lg whitespace-nowrap hover:bg-glass-surface">Artifacts</button>
+<button class="glass-surface border border-glass-border text-on-surface-variant px-6 py-2.5 rounded-full font-body-lg whitespace-nowrap hover:bg-glass-surface">Premium</button>
+<button class="glass-surface border border-glass-border text-on-surface-variant px-6 py-2.5 rounded-full font-body-lg whitespace-nowrap hover:bg-glass-surface">Skins</button>
+</nav>
+<!-- Consumables Grid -->
+<section class="space-y-4">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-sm text-headline-sm text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">inventory_2</span>
+                    Consumables
+                </h3>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Streak Freeze -->
+<div class="glass-panel p-5 rounded-xl border-primary/20 flex flex-col items-center text-center group hover:border-primary/50 transition-all duration-300">
+<div class="w-20 h-20 bg-blue-500/10 rounded-2xl flex items-center justify-center mb-4 relative">
+<span class="text-4xl">🧊</span>
+<div class="absolute inset-0 bg-blue-400/5 blur-xl group-hover:blur-2xl transition-all"></div>
+</div>
+<h4 class="font-headline-sm text-on-background text-base">Streak Freeze</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1 mb-4">Protect your daily streak for one missed day.</p>
+<button class="mt-auto w-full h-11 border border-glass-border bg-glass-surface hover:bg-glass-surface/20 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-streak-orange text-sm" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="font-body-md">500</span>
+</button>
+</div>
+<!-- Stamina Potion -->
+<div class="glass-panel p-5 rounded-xl border-primary/20 flex flex-col items-center text-center group hover:border-primary/50 transition-all duration-300">
+<div class="w-20 h-20 bg-green-500/10 rounded-2xl flex items-center justify-center mb-4 relative">
+<span class="text-4xl">🧪</span>
+<div class="absolute inset-0 bg-green-400/5 blur-xl group-hover:blur-2xl transition-all"></div>
+</div>
+<h4 class="font-headline-sm text-on-background text-base">Stamina Potion</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1 mb-4">Instantly restore 5 Hearts for practice.</p>
+<button class="mt-auto w-full h-11 border border-glass-border bg-glass-surface hover:bg-glass-surface/20 rounded-lg flex items-center justify-center gap-2 transition-all active:scale-95">
+<span class="material-symbols-outlined text-streak-orange text-sm" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<span class="font-body-md">200</span>
+</button>
+</div>
+<!-- Repeat for layout demo -->
+<div class="glass-panel p-5 rounded-xl border-primary/20 flex flex-col items-center text-center group opacity-50">
+<div class="w-20 h-20 bg-surface-container rounded-2xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">lock</span>
+</div>
+<h4 class="font-headline-sm text-on-background text-base">Double XP Scroll</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1 mb-4">Locked: Reach Rank Silver Guard</p>
+</div>
+<div class="glass-panel p-5 rounded-xl border-primary/20 flex flex-col items-center text-center group opacity-50">
+<div class="w-20 h-20 bg-surface-container rounded-2xl flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant">lock</span>
+</div>
+<h4 class="font-headline-sm text-on-background text-base">Arena Ticket</h4>
+<p class="text-label-sm font-label-sm text-on-surface-variant mt-1 mb-4">Locked: Available during Events</p>
+</div>
+</div>
+</section>
+<!-- Artifacts Section -->
+<section class="space-y-4">
+<h3 class="font-headline-sm text-headline-sm text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary">military_tech</span>
+                Permanent Artifacts
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Grammar Shield -->
+<div class="glass-panel p-6 rounded-xl border-secondary/20 flex gap-6 items-center group hover:bg-white/5 transition-all">
+<div class="w-24 h-24 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-5xl text-secondary" style="font-variation-settings: 'FILL' 1;">shield</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-on-background">Grammar Shield</h4>
+<p class="text-tertiary text-label-sm font-label-sm uppercase">+5% Accuracy Buff</p>
+<p class="text-on-surface-variant text-body-md mt-2">Protects your rank points even if you fail a difficult grammar quest.</p>
+</div>
+<div class="flex-shrink-0">
+<button class="px-6 h-12 bg-secondary/10 border border-secondary text-secondary rounded-lg font-bold flex items-center gap-2 hover:bg-secondary hover:text-on-secondary transition-all">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            2000
+                        </button>
+</div>
+</div>
+<!-- Reading Goggles -->
+<div class="glass-panel p-6 rounded-xl border-secondary/20 flex gap-6 items-center group hover:bg-white/5 transition-all">
+<div class="w-24 h-24 bg-secondary/10 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-5xl text-secondary" style="font-variation-settings: 'FILL' 1;">visibility</span>
+</div>
+<div class="flex-grow">
+<h4 class="font-headline-md text-on-background">Reading Goggles</h4>
+<p class="text-tertiary text-label-sm font-label-sm uppercase">+5% Speed Bonus</p>
+<p class="text-on-surface-variant text-body-md mt-2">Highlights key transition words in long TOEIC reading passages.</p>
+</div>
+<div class="flex-shrink-0">
+<button class="px-6 h-12 bg-secondary/10 border border-secondary text-secondary rounded-lg font-bold flex items-center gap-2 hover:bg-secondary hover:text-on-secondary transition-all">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">bolt</span>
+                            2000
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<!-- Premium Section (Bento Style) -->
+<section class="space-y-4">
+<h3 class="font-headline-sm text-headline-sm text-on-background flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">workspace_premium</span>
+                Vanguard Premium
+            </h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="md:col-span-2 glass-panel p-8 rounded-xl border-primary/30 flex flex-col justify-center bg-gradient-to-br from-primary/10 to-transparent">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 rounded-lg bg-primary-container flex items-center justify-center shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-on-primary-container">psychology</span>
+</div>
+<h4 class="font-display-lg-mobile text-primary">AI Mentor Pro</h4>
+</div>
+<p class="text-body-lg text-on-surface-variant max-w-lg">The ultimate companion for high-scorers. Gain access to the full suite of AI diagnostics, private mock exams, and the Elite Guild lounge.</p>
+<div class="mt-8 flex flex-col sm:flex-row gap-4">
+<button class="cta-primary h-[52px] px-10 rounded-full font-bold text-on-primary">Subscribe Monthly</button>
+<button class="h-[52px] px-10 rounded-full border border-glass-border font-bold text-on-background hover:bg-glass-surface">Learn More</button>
+</div>
+</div>
+<div class="glass-panel p-8 rounded-xl border-tertiary/30 flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-6xl text-tertiary mb-4" style="font-variation-settings: 'FILL' 1;">stars</span>
+<h4 class="font-headline-md text-on-background">Founder's Pack</h4>
+<p class="text-label-sm text-on-surface-variant mt-2">Exclusive avatar skins and gold border effects.</p>
+<button class="mt-6 text-tertiary font-bold hover:underline">View Pack Details</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full bg-glass-surface/90 backdrop-blur-lg border-t border-glass-border h-16 flex justify-around items-center px-4 pb-safe z-50">
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">fort</span>
+<span class="font-label-sm text-label-sm">Dungeon</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">swords</span>
+<span class="font-label-sm text-label-sm">Arena</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-label-sm text-label-sm">Guild</span>
+</a>
+<a class="flex flex-col items-center justify-center text-secondary scale-110 drop-shadow-[0_0_10px_rgba(255,185,95,0.6)]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shopping_bag</span>
+<span class="font-label-sm text-label-sm">Armory</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant/70 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<!-- Simple Micro-interactions Script -->
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Particle effect background
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'absolute bg-primary/20 rounded-full blur-[2px] pointer-events-none';
+                
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Animation
+                const duration = Math.random() * 20 + 10;
+                particle.style.animation = `float ${duration}s infinite linear`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        });
+
+        // Add float animation keyframes
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes float {
+                0% { transform: translateY(0) translateX(0); opacity: 0; }
+                10% { opacity: 0.5; }
+                90% { opacity: 0.5; }
+                100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+    </script>
+</body></html>

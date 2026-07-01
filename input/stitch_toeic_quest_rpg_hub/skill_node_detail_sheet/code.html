@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<title>TOEIC QUEST - Node Detail</title>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .neon-glow-purple {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+        }
+        .neon-glow-green {
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+        }
+        @keyframes slide-up {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+        .animate-slide-up {
+            animation: slide-up 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                "glass-border": "rgba(255, 255, 255, 0.15)",
+                "primary": "#d2bbff",
+                "surface-dim": "#12121d",
+                "text-primary": "#F1F5F9",
+                "text-muted": "#94A3B8",
+                "primary-container": "#7c3aed",
+                "on-primary-container": "#ede0ff",
+                "error-red": "#EF4444",
+                "success-green": "#10B981",
+                "glass-surface": "rgba(255, 255, 255, 0.08)",
+                "surface-container-high": "#292935",
+                "on-surface-variant": "#ccc3d8",
+                "background": "#12121d",
+                "surface": "#12121d"
+              },
+              "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+              "spacing": {
+                "base": "4px",
+                "xl": "32px",
+                "xs": "8px",
+                "margin-desktop": "32px",
+                "sm": "12px",
+                "lg": "24px",
+                "margin-mobile": "16px",
+                "gutter": "16px",
+                "md": "16px"
+              },
+              "fontFamily": {
+                "headline-sm": ["Inter"],
+                "headline-md": ["Inter"],
+                "body-lg": ["Inter"],
+                "label-sm": ["Inter"],
+                "body-md": ["Inter"]
+              },
+              "fontSize": {
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md overflow-hidden antialiased">
+<!-- Background Skill Tree Map (Blurred Background) -->
+<div class="fixed inset-0 z-0">
+<div class="w-full h-full bg-cover bg-center brightness-50 blur-sm scale-110" data-alt="A sprawling, futuristic cybernetic skill tree map in a dark atmosphere. Glowing lines connect holographic nodes shaped like hex-tiles. The lighting is dominated by deep blues and purples, reflecting off a metallic grid floor. Minimalist high-tech aesthetic for a professional language learning RPG." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDKhm1wIEVr5Or0lgfH_M1m7VlLzpoleGQWIIVjMek_zOmstnKWPsSdPGCWdMY4X8qWx-osryiktjK2jGCA3yXVHzToPaTtONOnlCYd-jmHnVEblnMI5M5951FHol8xtRxqwbyR4v4ifULf1W-sOmIevl4d4T2Pssff94mZ5EMzZtNFHV-WeQgqwCHzWZo_dMDupI6aubWLrYg45pEaEX0fEk0c9tHJI5QE_AAWbrqB4CQgNji_P1fgfuHos3uM6pioVEr48Wm9vmb5')"></div>
+</div>
+<!-- Header Overlay (From JSON Guidance) -->
+<header class="fixed top-0 w-full z-40 flex justify-between items-center px-margin-mobile h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A detailed digital painting of a youthful scholar in futuristic tech-wear, wearing a glowing visor and a high-collar jacket. The character has a determined expression and is surrounded by floating data fragments and rank badges in a cyber-scholar aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAf1QiFE0I0mopndvTQ7kKAp7bXqLmRE10J6emGDnFckBw6bPvANa-ZJ9htPHr40YlLki3qTPiOy97QIPRU6Yw-Y0Y8NGbRz9EXHSpdX1t0PxkvgHgdwbhkuwythnTQMRLtm8ebXd4GIZGb8OhfiuX_NletnLi8d-eJy4u24r0T_VSREW-v61KNkJ7PpCm5IySCHg3zSoM4McpMRYD2-0xvQg6jZhB3sswO7fA9v9k8gQG_msYBZmRzLWHUZhIMn1iBQ41jKLfhvC8"/>
+</div>
+<span class="text-headline-md font-headline-md font-bold text-primary">TOEIC QUEST</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer style_universal_hover" data-icon="notifications">notifications</span>
+</div>
+</header>
+<!-- Modal Backdrop -->
+<div class="fixed inset-0 bg-black/60 z-40 backdrop-blur-sm transition-opacity duration-300"></div>
+<!-- Bottom Sheet (SCR-16) -->
+<div class="fixed bottom-0 left-0 right-0 z-50 h-[65%] glass-panel bg-surface-container-high/90 border-t border-glass-border rounded-t-[32px] shadow-[0_-8px_32px_rgba(0,0,0,0.4)] animate-slide-up flex flex-col">
+<!-- Pull Handle -->
+<div class="w-full flex justify-center py-3">
+<div class="w-12 h-1 bg-white/20 rounded-full"></div>
+</div>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto px-margin-mobile pb-24">
+<!-- Header Section -->
+<div class="flex items-start justify-between mb-6">
+<div class="flex gap-4">
+<div class="w-14 h-14 rounded-2xl bg-primary-container flex items-center justify-center neon-glow-purple">
+<span class="material-symbols-outlined text-white text-3xl" data-icon="headphones">headphones</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm text-text-primary">L-03 · Hội Thoại Ngắn</h2>
+<p class="text-label-sm font-label-sm text-primary uppercase tracking-widest">(Part 2)</p>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors">
+<span class="material-symbols-outlined text-text-primary text-xl" data-icon="close">close</span>
+</button>
+</div>
+<!-- Description -->
+<div class="mb-6">
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed">
+                    Luyện kỹ năng nhận diện câu trả lời đúng từ cặp hội thoại ngắn 3–4 giây. Tập trung vào từ khóa và ngữ điệu tự nhiên.
+                </p>
+</div>
+<!-- Reward Badge -->
+<div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-success-green/10 border border-success-green/30 mb-8">
+<span class="material-symbols-outlined text-success-green text-lg" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="text-label-sm font-label-sm text-success-green font-bold">+350 KP khi hoàn thành</span>
+</div>
+<!-- Grid Layout for Stats and Requirements -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+<!-- Requirements Glass Card -->
+<div class="p-4 rounded-xl border border-glass-border bg-glass-surface">
+<h3 class="text-label-sm font-label-sm font-bold text-text-muted mb-3 uppercase tracking-wider">Điều Kiện Mở Khóa</h3>
+<div class="space-y-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success-green text-lg" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-body-md text-text-primary">Hoàn thành L-02</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg" data-icon="bolt" style="font-variation-settings: 'FILL' 1;">bolt</span>
+<span class="text-body-md text-text-primary">Grammar Power ≥ 30</span>
+</div>
+</div>
+</div>
+<!-- Content Stats Glass Card -->
+<div class="p-4 rounded-xl border border-glass-border bg-glass-surface">
+<h3 class="text-label-sm font-label-sm font-bold text-text-muted mb-3 uppercase tracking-wider">Thông Tin Khóa Học</h3>
+<div class="flex flex-wrap gap-4">
+<div class="flex flex-col">
+<span class="text-headline-sm text-text-primary">12</span>
+<span class="text-label-sm text-on-surface-variant">Bài học</span>
+</div>
+<div class="w-px h-8 bg-glass-border self-center"></div>
+<div class="flex flex-col">
+<span class="text-headline-sm text-text-primary">8</span>
+<span class="text-label-sm text-on-surface-variant">Quiz</span>
+</div>
+<div class="w-px h-8 bg-glass-border self-center"></div>
+<div class="flex flex-col">
+<span class="text-headline-sm text-text-primary">2</span>
+<span class="text-label-sm text-on-surface-variant">Mini test</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Progress Section -->
+<div class="space-y-3 mb-8">
+<div class="flex justify-between items-end">
+<span class="text-body-lg font-body-lg text-text-primary">Tiến độ hiện tại</span>
+<span class="text-label-sm font-label-sm text-primary font-bold">4/12 bài hoàn thành</span>
+</div>
+<div class="w-full h-3 bg-white/10 rounded-full overflow-hidden">
+<div class="h-full w-1/3 bg-gradient-to-r from-primary-container to-success-green rounded-full relative">
+<div class="absolute right-0 top-0 h-full w-2 bg-white/40 blur-[2px] neon-glow-green"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Fixed Bottom CTA Area -->
+<div class="absolute bottom-0 w-full p-margin-mobile bg-gradient-to-t from-surface-container-high via-surface-container-high/90 to-transparent pt-8">
+<button class="w-full h-[52px] bg-gradient-to-r from-[#7C3AED] to-[#9D67FF] rounded-full text-white font-bold text-body-lg shadow-[0_0_20px_rgba(124,58,237,0.5)] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
+                Tiếp Tục Học
+                <span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Bottom Nav Bar (From JSON Guidance) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe px-2 bg-surface-container-high backdrop-blur-lg border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl opacity-40 pointer-events-none">
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-label-sm font-label-sm">Trang Chủ</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="swords">swords</span>
+<span class="text-label-sm font-label-sm">PvP Battle</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)]">
+<span class="material-symbols-outlined" data-icon="account_tree">account_tree</span>
+<span class="text-label-sm font-label-sm">Skill Tree</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="text-label-sm font-label-sm">Guild</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-label-sm font-label-sm">Hồ Sơ</span>
+</div>
+</nav>
+<script>
+        // Simple Interaction logic
+        document.querySelector('.material-symbols-outlined[data-icon="close"]').parentElement.addEventListener('click', () => {
+            document.querySelector('.animate-slide-up').style.transform = 'translateY(100%)';
+            document.querySelector('.bg-black/60').style.opacity = '0';
+            setTimeout(() => {
+                document.querySelector('.bg-black/60').classList.add('hidden');
+            }, 300);
+        });
+    </script>
+</body></html>

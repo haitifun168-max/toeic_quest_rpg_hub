@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TOEIC QUEST - Correct State</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-high": "#292935",
+                "glass-surface": "rgba(255, 255, 255, 0.08)",
+                "on-surface-variant": "#ccc3d8",
+                "tertiary-fixed": "#6ffbbe",
+                "on-secondary-fixed-variant": "#653e00",
+                "on-primary": "#3f008e",
+                "inverse-surface": "#e3e0f1",
+                "on-surface": "#e3e0f1",
+                "outline": "#958da1",
+                "on-background": "#e3e0f1",
+                "surface-bright": "#383845",
+                "surface-variant": "#343440",
+                "surface": "#12121d",
+                "error": "#ffb4ab",
+                "surface-container-highest": "#343440",
+                "on-tertiary-fixed-variant": "#005236",
+                "on-error-container": "#ffdad6",
+                "tertiary-fixed-dim": "#4edea3",
+                "secondary-fixed-dim": "#ffb95f",
+                "surface-container": "#1f1e2a",
+                "tertiary": "#4edea3",
+                "surface-tint": "#d2bbff",
+                "primary-fixed-dim": "#d2bbff",
+                "background": "#12121d",
+                "primary-fixed": "#eaddff",
+                "surface-container-low": "#1b1a26",
+                "tertiary-container": "#007650",
+                "secondary-container": "#ee9800",
+                "inverse-primary": "#732ee4",
+                "on-primary-fixed-variant": "#5a00c6",
+                "on-error": "#690005",
+                "primary-container": "#7c3aed",
+                "on-tertiary-fixed": "#002113",
+                "on-primary-container": "#ede0ff",
+                "streak-orange": "#F97316",
+                "outline-variant": "#4a4455",
+                "error-red": "#EF4444",
+                "inverse-on-surface": "#302f3b",
+                "secondary": "#ffb95f",
+                "on-secondary-container": "#5b3800",
+                "glass-border": "rgba(255, 255, 255, 0.15)",
+                "on-secondary": "#472a00",
+                "secondary-fixed": "#ffddb8",
+                "primary": "#d2bbff",
+                "on-secondary-fixed": "#2a1700",
+                "on-tertiary-container": "#76ffc2",
+                "surface-dim": "#12121d",
+                "on-primary-fixed": "#25005a",
+                "text-primary": "#F1F5F9",
+                "error-container": "#93000a",
+                "on-tertiary": "#003824",
+                "text-muted": "#94A3B8",
+                "surface-container-lowest": "#0d0d18",
+                "success-green": "#10B981"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "sm": "12px",
+                "margin-desktop": "32px",
+                "xs": "8px",
+                "xl": "32px",
+                "base": "4px",
+                "md": "16px",
+                "gutter": "16px",
+                "margin-mobile": "16px",
+                "lg": "24px"
+            },
+            "fontFamily": {
+                "body-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "headline-sm": ["Inter"],
+                "body-lg": ["Inter"],
+                "headline-md": ["Inter"],
+                "display-lg": ["Inter"],
+                "display-lg-mobile": ["Inter"],
+                "badge-xs": ["Inter"]
+            },
+            "fontSize": {
+                "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #12121d;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            width: 390px;
+            height: 844px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .neon-glow-primary {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.5);
+        }
+
+        .neon-glow-success {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+        }
+
+        .progress-glow {
+            box-shadow: 0 0 8px rgba(16, 185, 129, 0.8);
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+        }
+
+        /* Material Icon Adjustment */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="flex flex-col text-on-surface">
+<!-- Background Shader -->
+
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-glass-surface backdrop-blur-xl border-b border-glass-border shadow-lg shadow-primary/10">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-primary overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A detailed digital portrait of a futuristic scholar character wearing sleek neon-lined tech goggles and a high-collar jacket. The character has a determined expression and is set against a backdrop of glowing binary code and soft purple ambient light, embodying a professional yet cyber-punk aesthetic consistent with a high-end educational RPG." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQhtVz6d1SE1HAfzWKh2Y4qoLu5wQ2HvHmaYvGGAKQ6wnhSactSYGoBFT_gclROjFkadXGDsqlqs3FboihYaJxTJYmu6DCKctzZ8jCMViobq4A74llkc8_axCEwzf4db0BqE3arDFwO_sVyMvGNfMxHT_BsKz-4HDqqC_jd3YtZCtA6iZ5aYdpOcPBwcnq-ytiKB576TPFTGBBkHqL_E6u4tAb3OGBmio1YenRNv6HiD3NjWgkzDFr9MPsceevU5vaNnhkN703zjDw"/>
+</div>
+<div class="flex flex-col">
+<span class="text-label-sm font-label-sm text-primary uppercase tracking-wider">Hạng: Vàng II</span>
+<span class="text-headline-sm font-headline-sm text-primary leading-none">QUESTER</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center gap-1 bg-surface-container-highest/50 px-3 py-1 rounded-full border border-glass-border">
+<span class="material-symbols-outlined text-streak-orange fill-icon" style="font-size: 18px;">local_fire_department</span>
+<span class="text-label-sm font-label-sm font-bold">12</span>
+</div>
+<button class="material-symbols-outlined text-primary hover:opacity-80 transition-opacity">notifications</button>
+</div>
+</header>
+<!-- Main Quiz Area (Blurred Content) -->
+<main class="flex-1 mt-16 px-margin-mobile pt-lg filter blur-md pointer-events-none">
+<!-- Progress -->
+<div class="mb-lg">
+<div class="flex justify-between items-end mb-2">
+<span class="text-label-sm font-label-sm text-on-surface-variant">Question 14/20</span>
+<span class="text-label-sm font-label-sm text-tertiary">Grammar Mastery</span>
+</div>
+<div class="h-2 w-full bg-surface-variant rounded-full overflow-hidden">
+<div class="h-full w-[70%] bg-gradient-to-r from-primary-container to-success-green progress-glow"></div>
+</div>
+</div>
+<!-- Question Card -->
+<div class="glass-panel rounded-xl p-lg mb-md">
+<p class="font-body-lg text-body-lg text-text-primary mb-4">
+                The marketing department _______ the new campaign results before the next board meeting starts.
+            </p>
+<div class="flex flex-col gap-sm">
+<!-- Option A -->
+<div class="glass-panel border-glass-border p-md rounded-xl flex items-center justify-between">
+<span class="text-body-md font-body-md text-on-surface-variant">A. finishes</span>
+</div>
+<!-- Option B (Correct) -->
+<div class="bg-[rgba(16,185,129,0.2)] border-success-green border-2 p-md rounded-xl flex items-center justify-between neon-glow-success">
+<span class="text-body-md font-body-md text-success-green font-bold">B. will have finished</span>
+<span class="material-symbols-outlined text-success-green fill-icon">check_circle</span>
+</div>
+<!-- Option C -->
+<div class="glass-panel border-glass-border p-md rounded-xl flex items-center justify-between">
+<span class="text-body-md font-body-md text-on-surface-variant">C. finished</span>
+</div>
+<!-- Option D -->
+<div class="glass-panel border-glass-border p-md rounded-xl flex items-center justify-between">
+<span class="text-body-md font-body-md text-on-surface-variant">D. has finished</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Overlay Feedback Panel (The Main Focus) -->
+<div class="absolute inset-0 z-[60] flex items-end justify-center pb-24 bg-black/40 px-4">
+<div class="glass-panel w-full rounded-2xl p-lg flex flex-col gap-lg animate-in slide-in-from-bottom duration-500 shadow-[0_-8px_48px_rgba(16,185,129,0.3)] border-success-green/30">
+<!-- Success Status -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-success-green/20 flex items-center justify-center border border-success-green/40">
+<span class="material-symbols-outlined text-success-green fill-icon" style="font-size: 32px;">verified</span>
+</div>
+<div>
+<h2 class="text-headline-md font-headline-md text-success-green tracking-tight leading-tight">CHÍNH XÁC!</h2>
+<span class="text-label-sm font-label-sm text-tertiary-fixed font-bold tracking-widest">+50 KP • +12 GEM</span>
+</div>
+</div>
+<div class="animate-bounce">
+<span class="material-symbols-outlined text-tertiary-fixed fill-icon" style="font-size: 32px;">keyboard_double_arrow_up</span>
+</div>
+</div>
+<!-- Rule Explanation -->
+<div class="bg-white/5 border-l-4 border-success-green p-4 rounded-r-lg">
+<p class="text-body-md font-body-md text-on-surface">
+<span class="text-success-green font-bold">Quy tắc:</span> Dùng "Future Perfect" (will have + V3) cho hành động hoàn thành trước một thời điểm/sự kiện khác trong tương lai.
+                </p>
+</div>
+<!-- Actions -->
+<div class="flex flex-col gap-3">
+<button class="w-full h-[52px] rounded-full cta-primary text-white font-bold text-body-lg flex items-center justify-center gap-2 group hover:scale-[1.02] active:scale-95 transition-all">
+                    Tiếp theo
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="w-full h-[52px] rounded-full border-2 border-primary text-primary font-bold text-body-md hover:bg-primary/10 transition-colors">
+                    Xem phân tích sâu
+                </button>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation (Shared Component) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-16 pb-safe px-2 bg-surface-container-high backdrop-blur-lg border-t border-glass-border shadow-[0_-8px_32px_rgba(0,0,0,0.4)] rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-primary scale-110 drop-shadow-[0_0_10px_rgba(210,187,255,0.5)] transition-transform duration-200" href="#">
+<span class="material-symbols-outlined fill-icon">home</span>
+<span class="text-label-sm font-label-sm">Trang Chủ</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">swords</span>
+<span class="text-label-sm font-label-sm">PvP Battle</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">account_tree</span>
+<span class="text-label-sm font-label-sm">Skill Tree</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-sm font-label-sm">Guild</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:text-primary/80 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-label-sm font-label-sm">Hồ Sơ</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for the feedback panel entry
+        document.addEventListener('DOMContentLoaded', () => {
+            const panel = document.querySelector('.glass-panel.animate-in');
+            panel.style.transform = 'translateY(20px)';
+            panel.style.opacity = '0';
+            
+            setTimeout(() => {
+                panel.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+                panel.style.transform = 'translateY(0)';
+                panel.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body></html>

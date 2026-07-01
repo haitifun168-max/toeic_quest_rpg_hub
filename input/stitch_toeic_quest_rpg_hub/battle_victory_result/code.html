@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TOEIC QUEST - Kết Quả Trận Đấu</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Design System Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-primary-fixed": "#25005a",
+                    "secondary-container": "#ee9800",
+                    "on-error-container": "#ffdad6",
+                    "tertiary-fixed-dim": "#4edea3",
+                    "on-tertiary": "#003824",
+                    "on-secondary-container": "#5b3800",
+                    "surface-bright": "#383845",
+                    "primary-container": "#7c3aed",
+                    "surface-dim": "#12121d",
+                    "streak-orange": "#F97316",
+                    "on-primary": "#3f008e",
+                    "glass-surface": "rgba(255, 255, 255, 0.08)",
+                    "on-background": "#e3e0f1",
+                    "surface-container-highest": "#343440",
+                    "outline-variant": "#4a4455",
+                    "surface": "#12121d",
+                    "secondary-fixed": "#ffddb8",
+                    "text-primary": "#F1F5F9",
+                    "surface-container-high": "#292935",
+                    "on-secondary-fixed": "#2a1700",
+                    "glass-border": "rgba(255, 255, 255, 0.15)",
+                    "on-primary-fixed-variant": "#5a00c6",
+                    "inverse-surface": "#e3e0f1",
+                    "surface-container-lowest": "#0d0d18",
+                    "primary-fixed": "#eaddff",
+                    "text-muted": "#94A3B8",
+                    "error": "#ffb4ab",
+                    "secondary": "#ffb95f",
+                    "on-surface-variant": "#ccc3d8",
+                    "on-error": "#690005",
+                    "error-container": "#93000a",
+                    "tertiary-fixed": "#6ffbbe",
+                    "on-tertiary-container": "#76ffc2",
+                    "tertiary": "#4edea3",
+                    "on-secondary": "#472a00",
+                    "error-red": "#EF4444",
+                    "background": "#12121d",
+                    "inverse-on-surface": "#302f3b",
+                    "on-primary-container": "#ede0ff",
+                    "surface-tint": "#d2bbff",
+                    "secondary-fixed-dim": "#ffb95f",
+                    "on-surface": "#e3e0f1",
+                    "on-secondary-fixed-variant": "#653e00",
+                    "surface-variant": "#343440",
+                    "primary-fixed-dim": "#d2bbff",
+                    "surface-container-low": "#1b1a26",
+                    "tertiary-container": "#007650",
+                    "surface-container": "#1f1e2a",
+                    "outline": "#958da1",
+                    "primary": "#d2bbff",
+                    "inverse-primary": "#732ee4",
+                    "on-tertiary-fixed-variant": "#005236",
+                    "on-tertiary-fixed": "#002113"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "lg": "24px",
+                    "margin-desktop": "32px",
+                    "xl": "32px",
+                    "md": "16px",
+                    "xs": "8px",
+                    "base": "4px",
+                    "sm": "12px",
+                    "margin-mobile": "16px",
+                    "gutter": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "badge-xs": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "display-lg-mobile": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+                    "badge-xs": ["11px", {"lineHeight": "14px", "letterSpacing": "0.05em", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "display-lg-mobile": ["28px", {"lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .victory-glow {
+            text-shadow: 0 0 20px rgba(78, 222, 163, 0.6), 0 0 40px rgba(78, 222, 163, 0.3);
+        }
+
+        .cta-primary {
+            height: 52px;
+            background: linear-gradient(135deg, #7C3AED 0%, #A78BFA 100%);
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .cta-primary:active {
+            transform: scale(0.95);
+        }
+
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        .confetti {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .gold-particle {
+            position: absolute;
+            background: radial-gradient(circle, #FFD700 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md relative overflow-hidden">
+<!-- Background Shader -->
+
+<!-- Content Wrapper -->
+<div class="relative z-20 flex flex-col min-h-screen px-margin-mobile pt-12 pb-8">
+<!-- Victory Header Section -->
+<header class="flex flex-col items-center justify-center mb-8 animate-[bounce_2s_infinite]">
+<span class="text-tertiary font-display-lg-mobile md:text-display-lg uppercase tracking-widest victory-glow">
+                CHIẾN THẮNG!
+            </span>
+<div class="mt-4 flex items-center gap-6">
+<div class="flex flex-col items-center">
+<div class="w-16 h-16 rounded-full border-2 border-primary overflow-hidden mb-2">
+<img class="w-full h-full object-cover" data-alt="A futuristic cyber-scholar character portrait, heroic pose, glowing purple neon accents on tech-armor, stylized digital painting, high-stakes RPG aesthetic, dark atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFmVmEe_dx5pZuOzin5ZdY35MwOd4wNfgW_yAQvO5nwBrzPILP6A8H47nyzu1o1ueBYJCODGugJZE2zQVi-FGKGz9jvyxeUtpNlyKOSHwb3KwD1KN22vJ4ZKNE4qfFXg7kEHFDVsbZM4Qo-gVJGcIqOot3m_06plfuaKxhizwxS34gK5Jj2mDDPTV73yu7O3P1zKDPqjEHlEP4Zs-6hUhtFPlGwneZ03vpSYda-NfC3FM6ZaqrKqjfM3qIw3TnO2uXP6rWhpgDiATX"/>
+</div>
+<span class="text-label-sm font-label-sm text-primary">Bạn</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-display-lg font-display-lg text-text-primary">85</span>
+<span class="text-headline-md font-headline-md text-text-muted opacity-50">VS</span>
+<span class="text-display-lg font-display-lg text-text-muted">72</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-16 h-16 rounded-full border-2 border-outline-variant overflow-hidden mb-2 grayscale opacity-70">
+<img class="w-full h-full object-cover" data-alt="A shadowy rival character portrait, futuristic tactical gear, neon red atmospheric lighting, dark sci-fi background, high detail digital art." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5KUXLko5xSbCa_rkjq0ZmH9Ur3gGT2m5-MLVv5Her980Mx5OUq99hsdT2BVUEA5n5c4jtfuDt76FDHv4R4JPVz7PMEQYxFtL5j-YiKnHXg9lqur804oqiXwWPjT35bOhumynL1VDdVAkXoXi7hY1rrNtz8pcTc9kSHY4dEri_c6bx677a0XjZklYPXj1s2g3HU2ilDA_fI-h3BhoAmYF758ef7WViu5crwOggM0nBlnzCXtztPubf4UFTgy0g1nwRdnjOoCZszFYb"/>
+</div>
+<span class="text-label-sm font-label-sm text-text-muted">Đối thủ</span>
+</div>
+</div>
+</header>
+<!-- Main Stats Panel -->
+<main class="flex-1 flex flex-col gap-gutter">
+<!-- ELO Update Card -->
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center text-center animate-[fadeIn_0.6s_ease-out]">
+<span class="text-label-sm font-label-sm text-text-muted mb-2 uppercase tracking-tight">Thứ hạng ELO</span>
+<div class="flex items-center gap-3">
+<span class="text-headline-md font-headline-md text-text-muted line-through">1,150</span>
+<span class="material-symbols-outlined text-primary">trending_up</span>
+<span class="text-display-lg-mobile font-display-lg-mobile text-primary">1,180</span>
+</div>
+<div class="mt-2 px-3 py-1 bg-primary-container rounded-full text-white text-badge-xs font-badge-xs">
+                    +30 ĐIỂM CHIẾN TÍCH
+                </div>
+</div>
+<!-- Rewards Section -->
+<div class="grid grid-cols-2 gap-gutter">
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center animate-[fadeIn_0.8s_ease-out]">
+<div class="w-12 h-12 bg-secondary-container/20 rounded-full flex items-center justify-center mb-2 shadow-[0_0_15px_rgba(238,152,0,0.3)]">
+<span class="material-symbols-outlined text-secondary-container fill-icon text-3xl">token</span>
+</div>
+<span class="text-headline-sm font-headline-sm text-secondary-container">+300 KP</span>
+<span class="text-label-sm font-label-sm text-text-muted">Kinh nghiệm</span>
+</div>
+<div class="glass-panel rounded-xl p-md flex flex-col items-center justify-center animate-[fadeIn_1s_ease-out]">
+<div class="w-12 h-12 bg-streak-orange/20 rounded-full flex items-center justify-center mb-2 shadow-[0_0_15px_rgba(249,115,22,0.3)]">
+<span class="material-symbols-outlined text-streak-orange fill-icon text-3xl">ac_unit</span>
+</div>
+<span class="text-headline-sm font-headline-sm text-streak-orange">Streak Freeze</span>
+<span class="text-label-sm font-label-sm text-text-muted">Số lượng: x1</span>
+</div>
+</div>
+<!-- Performance Radar/Bento Hint -->
+<div class="glass-panel rounded-xl p-md flex flex-col animate-[fadeIn_1.2s_ease-out]">
+<div class="flex justify-between items-center mb-4">
+<span class="text-body-lg font-body-lg">Hiệu suất kỹ năng</span>
+<span class="text-label-sm font-label-sm text-tertiary">VƯỢT TRỘI</span>
+</div>
+<div class="h-40 w-full relative flex items-center justify-center">
+<!-- Placeholder for radar chart visualization -->
+<div class="absolute inset-0 flex items-center justify-center">
+<svg class="w-full h-full max-w-[160px]" viewbox="0 0 100 100">
+<polygon fill="none" points="50,10 90,40 80,85 20,85 10,40" stroke="rgba(255,255,255,0.2)" stroke-width="1"></polygon>
+<polygon fill="rgba(210,187,255,0.3)" points="50,20 80,45 75,75 30,70 15,45" stroke="#d2bbff" stroke-width="2"></polygon>
+<circle cx="50" cy="20" fill="#ee9800" r="2"></circle>
+<circle cx="80" cy="45" fill="#ee9800" r="2"></circle>
+<circle cx="75" cy="75" fill="#ee9800" r="2"></circle>
+<circle cx="30" cy="70" fill="#ee9800" r="2"></circle>
+<circle cx="15" cy="45" fill="#ee9800" r="2"></circle>
+</svg>
+</div>
+<div class="absolute inset-0 grid grid-cols-2 grid-rows-3 gap-2 opacity-60">
+<span class="text-label-sm font-label-sm self-start justify-self-center">Listening</span>
+<span class="text-label-sm font-label-sm self-center justify-self-end">Grammar</span>
+<span class="text-label-sm font-label-sm self-end justify-self-end">Vocab</span>
+<span class="text-label-sm font-label-sm self-end justify-self-start">Reading</span>
+<span class="text-label-sm font-label-sm self-center justify-self-start">Speed</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Buttons -->
+<footer class="mt-8 flex flex-col gap-3">
+<button class="cta-primary w-full rounded-full flex items-center justify-center gap-2 text-white font-body-lg">
+<span class="material-symbols-outlined">swords</span>
+                Tái đấu
+            </button>
+<button class="w-full h-[52px] rounded-full border border-primary text-primary font-body-lg flex items-center justify-center gap-2 hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">search</span>
+                Tìm trận mới
+            </button>
+<button class="w-full h-[40px] text-on-surface-variant font-label-sm flex items-center justify-center gap-1 opacity-70 hover:opacity-100">
+<span class="material-symbols-outlined text-[18px]">home</span>
+                Về trang chủ
+            </button>
+</footer>
+</div>
+<!-- Celebration Layer Scripts -->
+<script>
+        function createParticles() {
+            const container = document.body;
+            const colors = ['#7C3AED', '#4EDE A3', '#FFD700', '#F1F5F9'];
+            
+            // Create Confetti
+            for(let i = 0; i < 40; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animation = `confetti-fall ${2 + Math.random() * 3}s linear forwards`;
+                confetti.style.delay = Math.random() * 2 + 's';
+                container.appendChild(confetti);
+                
+                setTimeout(() => confetti.remove(), 5000);
+            }
+
+            // Create Gold Particles
+            for(let i = 0; i < 20; i++) {
+                const gold = document.createElement('div');
+                gold.className = 'gold-particle';
+                const size = 2 + Math.random() * 4;
+                gold.style.width = size + 'px';
+                gold.style.height = size + 'px';
+                gold.style.left = Math.random() * 100 + 'vw';
+                gold.style.top = Math.random() * 100 + 'vh';
+                gold.style.opacity = Math.random();
+                
+                // Floating animation
+                gold.animate([
+                    { transform: 'translateY(0) scale(1)', opacity: 0 },
+                    { transform: `translateY(-${50 + Math.random() * 100}px) scale(1.5)`, opacity: 0.8 },
+                    { transform: `translateY(-${150 + Math.random() * 100}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: 3000 + Math.random() * 3000,
+                    iterations: Infinity,
+                    delay: Math.random() * 2000
+                });
+                
+                container.appendChild(gold);
+            }
+        }
+
+        window.onload = createParticles;
+    </script>
+</body></html>
