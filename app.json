@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "name": "TOEIC Quest RPG Hub",
+    "slug": "toeic-quest-rpg-hub",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "com.haitifun168.toeic_quest_rpg_hub"
+    }
+  }
+}
