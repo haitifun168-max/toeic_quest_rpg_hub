@@ -93,12 +93,14 @@ router.post('/login', async (req, res) => {
 
     const user = await User.findByEmail(email);
     if (!user || !user.password_hash) {
+      console.error(`Login failed: User not found for email ${email}`);
       return sendError(res, 'INVALID_CREDENTIALS', 'Invalid email or password');
     }
 
     // Compare bcrypt passwords
     const isMatch = await bcrypt.compare(password, user.password_hash);
     if (!isMatch) {
+      console.error(`Login failed: Password mismatch for email ${email}`);
       return sendError(res, 'INVALID_CREDENTIALS', 'Invalid email or password');
     }
 
