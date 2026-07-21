@@ -6,6 +6,7 @@ const placementRouter = require('./api/placement');
 const questRouter = require('./api/quest');
 const pvpRouter = require('./api/pvp');
 const dungeonRouter = require('./api/dungeon');
+const leaderboardRouter = require('./api/leaderboard');
 
 const app = express();
 
@@ -18,6 +19,19 @@ app.use(cors({
 
 app.use(express.json());
 
+// Request logging middleware — ghi log mọi request từ client
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  console.log(`[${timestamp}] ${req.method} ${req.originalUrl}`);
+  if (req.body && Object.keys(req.body).length > 0) {
+    // Log body nhưng che password
+    const logBody = { ...req.body };
+    if (logBody.password) logBody.password = '***';
+    console.log(`  Body: ${JSON.stringify(logBody)}`);
+  }
+  next();
+});
+
 // Routes
 app.use('/api/auth', authRouter);
 app.use('/api/users', userRouter);
@@ -25,6 +39,7 @@ app.use('/api/placement', placementRouter);
 app.use('/api/quests', questRouter);
 app.use('/api/pvp', pvpRouter);
 app.use('/api/dungeons', dungeonRouter);
+app.use('/api/leaderboard', leaderboardRouter);
 
 // Root path check
 app.get('/', (req, res) => {
