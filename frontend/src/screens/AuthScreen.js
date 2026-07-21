@@ -14,45 +14,7 @@ import {
   Platform
 } from 'react-native';
 
-// Fallback secure storage interface that works correctly on Web and Native
-let SecureStore;
-if (Platform.OS === 'web') {
-  SecureStore = {
-    setItemAsync: async (key, val) => {
-      try {
-        localStorage.setItem(key, val);
-      } catch (e) {
-        console.warn('localStorage.setItem failed:', e);
-      }
-    },
-    getItemAsync: async (key) => {
-      try {
-        return localStorage.getItem(key);
-      } catch (e) {
-        console.warn('localStorage.getItem failed:', e);
-        return null;
-      }
-    },
-    deleteItemAsync: async (key) => {
-      try {
-        localStorage.removeItem(key);
-      } catch (e) {
-        console.warn('localStorage.removeItem failed:', e);
-      }
-    }
-  };
-} else {
-  try {
-    SecureStore = require('expo-secure-store');
-  } catch (e) {
-    const store = {};
-    SecureStore = {
-      setItemAsync: async (key, val) => { store[key] = val; },
-      getItemAsync: async (key) => store[key] || null,
-      deleteItemAsync: async (key) => { delete store[key]; }
-    };
-  }
-}
+import SecureStore from '../utils/storage';
 
 import { BACKEND_URL } from '../config'; // Default API Host
 
@@ -167,6 +129,12 @@ export default function AuthScreen({ navigation }) {
         );
       }
     } catch (error) {
+      console.error('=== AUTH ERROR ===');
+      console.error('endpoint:', endpoint);
+      console.error('body:', JSON.stringify(body));
+      console.error('error name:', error.name);
+      console.error('error message:', error.message);
+      console.error('error stack:', error.stack);
       showAlert('Thất bại', error.message || 'Lỗi kết nối máy chủ');
     } finally {
       setLoading(false);
@@ -351,6 +319,11 @@ export default function AuthScreen({ navigation }) {
           {/* Footer Note */}
           <Text style={styles.footerText}>
             Bằng cách tiếp tục, bạn đồng ý với Điều khoản Dịch vụ và Chính sách Bảo mật của chúng tôi.
+          </Text>
+
+          {/* Hiển thị URL Backend để debug */}
+          <Text style={[styles.footerText, { color: '#7c3aed', marginTop: 10, fontWeight: 'bold' }]}>
+            Đang kết nối: {BACKEND_URL}
           </Text>
         </ScrollView>
       </KeyboardAvoidingView>

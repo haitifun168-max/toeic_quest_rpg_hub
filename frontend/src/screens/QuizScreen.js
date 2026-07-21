@@ -22,46 +22,9 @@ import {
   Animated,
 } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
+import { trackEvent } from '../utils/analytics';
 
-// Fallback secure storage interface that works correctly on Web and Native
-let SecureStore;
-if (typeof window !== 'undefined' && typeof localStorage !== 'undefined') {
-  SecureStore = {
-    setItemAsync: async (key, val) => {
-      try {
-        localStorage.setItem(key, val);
-      } catch (e) {
-        console.warn('localStorage.setItem failed:', e);
-      }
-    },
-    getItemAsync: async (key) => {
-      try {
-        return localStorage.getItem(key);
-      } catch (e) {
-        console.warn('localStorage.getItem failed:', e);
-        return null;
-      }
-    },
-    deleteItemAsync: async (key) => {
-      try {
-        localStorage.removeItem(key);
-      } catch (e) {
-        console.warn('localStorage.removeItem failed:', e);
-      }
-    }
-  };
-} else {
-  try {
-    SecureStore = require('expo-secure-store');
-  } catch (e) {
-    const store = {};
-    SecureStore = {
-      setItemAsync: async (key, val) => { store[key] = val; },
-      getItemAsync: async (key) => store[key] || null,
-      deleteItemAsync: async (key) => { delete store[key]; }
-    };
-  }
-}
+import SecureStore from '../utils/storage';
 
 import { BACKEND_URL } from '../config';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -303,6 +266,11 @@ export default function QuizScreen() {
 
         const result = await response.json();
         if (response.ok && result.ok) {
+          trackEvent('quiz_completed', {
+            questId,
+            kpEarned: result.data.score.kpEarned,
+            rankUp: result.data.rankUp
+          });
           navigation.navigate('SessionSummary', {
             score: result.data.score,
             recommendations: result.data.recommendations,
