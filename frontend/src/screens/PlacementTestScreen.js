@@ -96,10 +96,17 @@ export default function PlacementTestScreen({ navigation }) {
 
   const handleSelectOption = (option) => {
     const currentQuestion = questions[currentIndex];
-    setSelectedAnswers(prev => ({
-      ...prev,
+    const newAnswers = {
+      ...selectedAnswers,
       [currentQuestion.id]: option
-    }));
+    };
+    setSelectedAnswers(newAnswers);
+
+    // Auto-submit when user selects an answer on the LAST question
+    if (currentIndex === questions.length - 1) {
+      // Brief delay so user sees their selection, then auto-submit
+      setTimeout(() => executeSubmit(newAnswers), 600);
+    }
   };
 
   const handleNext = () => {
@@ -133,9 +140,11 @@ export default function PlacementTestScreen({ navigation }) {
     await executeSubmit();
   };
 
-  const executeSubmit = async () => {
+  const executeSubmit = async (answersOverride = null) => {
     setSubmitting(true);
     try {
+      const finalAnswers = answersOverride || selectedAnswers;
+
       const token = await SecureStore.getItemAsync('user_token');
       if (!token) {
         throw new Error('Phiên làm việc hết hạn. Vui lòng đăng nhập lại.');
@@ -144,7 +153,7 @@ export default function PlacementTestScreen({ navigation }) {
       // Format user answers payload
       const formattedAnswers = questions.map(q => ({
         questionId: q.id,
-        answer: selectedAnswers[q.id] || ''
+        answer: finalAnswers[q.id] || ''
       }));
 
       const response = await fetch(`${BACKEND_URL}/api/placement/submit`, {
@@ -171,39 +180,59 @@ export default function PlacementTestScreen({ navigation }) {
         await SecureStore.setItemAsync('user_profile', JSON.stringify(cached));
       }
 
-      const { correctCount, simScore, rank } = result.data;
-      const rankNames = [
-        'Không xác định',
-        'Thực Tập Sinh',
-        'Học Việc',
-        'Chiến Binh',
-        'Tinh Anh',
-        'Huyền Thoại',
-        'Thần Thoại'
-      ];
-
-      Alert.alert(
-        'Kết quả Placement Test',
-        `Bạn trả lời đúng: ${correctCount}/${questions.length} câu.\nĐiểm ước lượng: ~${simScore} TOEIC.\nXếp hạng khởi điểm: ${rankNames[rank]}!`,
-        [
-          {
-            text: 'Tiếp tục',
-            onPress: () => {
-              if (navigation) {
-                // Navigate to next screen e.g. character customization
-                navigation.replace('PlacementResult', { correctCount, simScore, rank });
-              } else {
-                console.log('Navigation trigger: PlacementResult');
-              }
-            }
-          }
-        ]
-      );
+      navigateToResult(result.data);
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      // Offline/local fallback: tự chấm điểm ngay trên máy
+      console.log('Placement submit API failed, using local scoring:', err.message);
+
+      let correct = 0;
+      questions.forEach(q => {
+        if (finalAnswers[q.id] === q.correct_option) {
+          correct++;
+        }
+      });
+      const wrong = questions.length - correct;
+      const simScore = Math.round((correct / questions.length) * 990);
+      let rank = 1;
+      if (simScore >= 900) rank = 6;
+      else if (simScore >= 750) rank = 5;
+      else if (simScore >= 600) rank = 4;
+      else if (simScore >= 400) rank = 3;
+      else if (simScore >= 200) rank = 2;
+
+      navigateToResult({ correctCount: correct, simScore, rank });
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const navigateToResult = ({ correctCount, simScore, rank }) => {
+    const rankNames = [
+      'Không xác định',
+      'Thực Tập Sinh',
+      'Học Việc',
+      'Chiến Binh',
+      'Tinh Anh',
+      'Huyền Thoại',
+      'Thần Thoại'
+    ];
+
+    Alert.alert(
+      'Kết quả Placement Test',
+      `Bạn trả lời đúng: ${correctCount}/${questions.length} câu.\nĐiểm ước lượng: ~${simScore} TOEIC.\nXếp hạng khởi điểm: ${rankNames[rank]}!`,
+      [
+        {
+          text: 'Tiếp tục',
+          onPress: () => {
+            if (navigation) {
+              navigation.replace('PlacementResult', { correctCount, simScore, rank });
+            } else {
+              console.log('Navigation trigger: PlacementResult');
+            }
+          }
+        }
+      ]
+    );
   };
 
   // Helper to format remaining time to MM:SS
