@@ -142,9 +142,9 @@ export default function PlacementTestScreen({ navigation }) {
 
   const executeSubmit = async (answersOverride = null) => {
     setSubmitting(true);
+    // Declare finalAnswers OUTSIDE try so it's accessible in catch
+    const finalAnswers = answersOverride || selectedAnswers;
     try {
-      const finalAnswers = answersOverride || selectedAnswers;
-
       const token = await SecureStore.getItemAsync('user_token');
       if (!token) {
         throw new Error('Phiên làm việc hết hạn. Vui lòng đăng nhập lại.');
@@ -156,14 +156,20 @@ export default function PlacementTestScreen({ navigation }) {
         answer: finalAnswers[q.id] || ''
       }));
 
+      // Use AbortController for timeout (handles Render cold start, etc.)
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000); // 30s timeout
+
       const response = await fetch(`${BACKEND_URL}/api/placement/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ answers: formattedAnswers })
+        body: JSON.stringify({ answers: formattedAnswers }),
+        signal: controller.signal
       });
+      clearTimeout(timeoutId);
 
       const result = await response.json();
 
@@ -182,25 +188,25 @@ export default function PlacementTestScreen({ navigation }) {
 
       navigateToResult(result.data);
     } catch (err) {
-      // Offline/local fallback: tự chấm điểm ngay trên máy
-      console.log('Placement submit API failed, using local scoring:', err.message);
+      console.log('Placement submit API failed:', err.message);
 
-      let correct = 0;
-      questions.forEach(q => {
-        if (finalAnswers[q.id] === q.correct_option) {
-          correct++;
-        }
-      });
-      const wrong = questions.length - correct;
-      const simScore = Math.round((correct / questions.length) * 990);
-      let rank = 1;
-      if (simScore >= 900) rank = 6;
-      else if (simScore >= 750) rank = 5;
-      else if (simScore >= 600) rank = 4;
-      else if (simScore >= 400) rank = 3;
-      else if (simScore >= 200) rank = 2;
-
-      navigateToResult({ correctCount: correct, simScore, rank });
+      // Cannot compute local score because GET /api/placement/questions
+      // intentionally OMITS correct_option for security.
+      // Show a friendly retry dialog instead.
+      const answered = Object.keys(finalAnswers).length;
+      const total = questions.length;
+      Alert.alert(
+        'Lỗi kết nối',
+        `Không thể gửi kết quả lên máy chủ (${answered}/${total} câu đã trả lời).\n\nKiểm tra kết nối Internet và thử lại.`,
+        [
+          { text: 'Thử lại', onPress: () => executeSubmit(answersOverride) },
+          {
+            text: 'Về trang chủ',
+            onPress: () => navigation?.replace('MainHub'),
+            style: 'cancel'
+          }
+        ]
+      );
     } finally {
       setSubmitting(false);
     }
