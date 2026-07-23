@@ -306,7 +306,7 @@ router.post('/check-rank', authenticateToken, async (req, res) => {
   try {
     const userId = req.user.id;
     
-    const userQuery = 'SELECT total_kp, rank FROM users WHERE id = $1';
+    const userQuery = 'SELECT total_kp, current_rank FROM users WHERE id = $1';
     const userRes = await db.query(userQuery, [userId]);
     if (userRes.rows.length === 0) {
       return sendError(res, 'USER_NOT_FOUND', 'User record not found', 404);
@@ -314,7 +314,7 @@ router.post('/check-rank', authenticateToken, async (req, res) => {
     
     const user = userRes.rows[0];
     const kp = user.total_kp || 0;
-    const currentRankVal = user.rank || 1; // 1: Novice, 2: Apprentice, 3: Specialist, 4: Knight
+    const currentRankVal = user.current_rank || 1; // 1: Novice, 2: Apprentice, 3: Specialist, 4: Knight
 
     let calculatedRank = 1;
     if (kp >= 5000) {
@@ -329,7 +329,7 @@ router.post('/check-rank', authenticateToken, async (req, res) => {
       const kpReward = 200; // Thưởng nóng 200 KP khi thăng hạng
       const updateQuery = `
         UPDATE users 
-        SET rank = $1, total_kp = total_kp + $2 
+        SET current_rank = $1, total_kp = total_kp + $2 
         WHERE id = $3 
         RETURNING *
       `;
