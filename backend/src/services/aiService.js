@@ -1,4 +1,11 @@
-const fetch = require('node-fetch');
+const getFetch = () => {
+  if (typeof fetch !== 'undefined') return fetch;
+  try {
+    return require('node-fetch');
+  } catch (e) {
+    return globalThis.fetch;
+  }
+};
 
 const API_KEY = process.env.ANTHROPIC_API_KEY;
 const BASE_URL = process.env.ANTHROPIC_BASE_URL || 'https://api.leeh.dev';
@@ -12,7 +19,8 @@ async function callClaude(messages, maxTokens = 256) {
     throw new Error('ANTHROPIC_API_KEY is missing in environment variables');
   }
 
-  const response = await fetch(`${BASE_URL}/v1/messages`, {
+  const _fetch = getFetch();
+  const response = await _fetch(`${BASE_URL}/v1/messages`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

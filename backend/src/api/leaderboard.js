@@ -7,7 +7,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../db');
-const authMiddleware = require('../middleware/auth');
+const { authenticateToken } = require('../middleware/auth');
 
 // Mock memory fallback if db is not connected or in test mode
 const MOCK_LEADERBOARD = [
