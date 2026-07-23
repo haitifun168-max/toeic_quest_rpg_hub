@@ -226,7 +226,7 @@ describe('Authentication and Cryptography Tests', () => {
   });
 
   describe('POST /api/auth/oauth', () => {
-    it('should sign up and login an OAuth user', async () => {
+    it('should sign up and login an OAuth user with a valid mock token', async () => {
       // 1. Mock finding user (no user found)
       db.query.mockResolvedValueOnce({ rows: [] });
 
@@ -246,9 +246,8 @@ describe('Authentication and Cryptography Tests', () => {
       const res = await request(app)
         .post('/api/auth/oauth')
         .send({
-          email: 'google.user@gmail.com',
-          displayName: 'Google User',
-          provider: 'google'
+          provider: 'google',
+          token: 'mock-google-token'
         });
 
       expect(res.status).toBe(200);
@@ -256,6 +255,18 @@ describe('Authentication and Cryptography Tests', () => {
       expect(res.body.data.user.email).toBe('google.user@gmail.com');
       expect(res.body.data.user.password_hash).toBeUndefined();
       expect(res.body.data.token).toBeDefined();
+    });
+
+    it('should fail to authenticate if provider or token is missing', async () => {
+      const res = await request(app)
+        .post('/api/auth/oauth')
+        .send({
+          provider: 'google'
+        });
+
+      expect(res.status).toBe(400);
+      expect(res.body.ok).toBe(false);
+      expect(res.body.error.code).toBe('MISSING_FIELDS');
     });
   });
 });

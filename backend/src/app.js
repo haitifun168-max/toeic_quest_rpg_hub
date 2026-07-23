@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const rateLimiter = require('./middleware/rateLimiter');
 const authRouter = require('./api/auth');
 const userRouter = require('./api/user');
 const placementRouter = require('./api/placement');
@@ -10,6 +11,9 @@ const leaderboardRouter = require('./api/leaderboard');
 const aiRouter = require('./api/ai');
 
 const app = express();
+
+// Trust proxy for rate limiting behind reverse proxies (like Render, AWS ALB, Nginx)
+app.set('trust proxy', true);
 
 // CORS middleware — cho phép Expo web và các client khác gọi API
 app.use(cors({
@@ -33,15 +37,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// Configure Rate Limiters (disabled in test environment to prevent test suite 429 blockages)
+const authLimiter = process.env.NODE_ENV === 'test'
+  ? (req, res, next) => next()
+  : rateLimiter({ windowMs: 60 * 1000, max: 10 });
+
+const aiLimiter = process.env.NODE_ENV === 'test'
+  ? (req, res, next) => next()
+  : rateLimiter({ windowMs: 60 * 1000, max: 5 });
+
 // Routes
-app.use('/api/auth', authRouter);
+app.use('/api/auth', authLimiter, authRouter);
 app.use('/api/users', userRouter);
 app.use('/api/placement', placementRouter);
 app.use('/api/quests', questRouter);
 app.use('/api/pvp', pvpRouter);
 app.use('/api/dungeons', dungeonRouter);
 app.use('/api/leaderboard', leaderboardRouter);
-app.use('/api/ai', aiRouter);
+app.use('/api/ai', aiLimiter, aiRouter);
 
 // Root path check
 app.get('/', (req, res) => {

@@ -5,8 +5,6 @@
  * và Redis Sorted Sets (ZSET) khi USE_REDIS=true.
  */
 
-const { v4: uuidv4 } = require('uuid');
-
 // In-Memory Queue: Sắp xếp người chơi đang tìm trận theo thời gian và ELO
 // Cấu trúc item: { userId, socketId, elo, joinedAt, timerId }
 let memoryQueue = [];
@@ -20,10 +18,14 @@ const MOCK_BOTS = [
 ];
 
 class MatchmakingService {
-  constructor(io) {
-    this.io = io;
+  constructor() {
+    this.matchFoundCallback = null;
     this.lobbyInterval = null;
     this.startMatchmakingLoop();
+  }
+
+  onMatchFound(callback) {
+    this.matchFoundCallback = callback;
   }
 
   startMatchmakingLoop() {
@@ -113,57 +115,44 @@ class MatchmakingService {
    * Tạo trận đấu giữa 2 người chơi thật
    */
   createMatch(p1, p2) {
-    const roomId = `room_${uuidv4()}`;
-    console.log(`[Matchmaking] Match found! Room ${roomId} between user ${p1.userId} and ${p2.userId}`);
-
-    // Join sockets to room
-    const s1 = this.io.sockets.sockets.get(p1.socketId);
-    const s2 = this.io.sockets.sockets.get(p2.socketId);
-
-    if (s1) s1.join(roomId);
-    if (s2) s2.join(roomId);
-
-    // Notify clients
-    this.io.to(roomId).emit('matchFound', {
-      roomId,
-      isBotMatch: false,
-      players: {
-        playerA: { id: p1.userId, elo: p1.elo },
-        playerB: { id: p2.userId, elo: p2.elo }
-      }
-    });
+    if (this.matchFoundCallback) {
+      this.matchFoundCallback({
+        isBotMatch: false,
+        players: {
+          playerA: { id: p1.userId, socketId: p1.socketId, elo: p1.elo },
+          playerB: { id: p2.userId, socketId: p2.socketId, elo: p2.elo }
+        }
+      });
+    }
   }
 
   /**
    * Ghép người chơi với BOT giả lập
    */
   matchWithBot(p) {
-    const roomId = `room_${uuidv4()}`;
     const botElo = p.elo + (Math.random() > 0.5 ? 1 : -1) * Math.floor(Math.random() * 50);
     const randomBotInfo = MOCK_BOTS[Math.floor(Math.random() * MOCK_BOTS.length)];
 
     console.log(`[Matchmaking] Matchmaking timeout (15s). Matching user ${p.userId} with BOT ${randomBotInfo.display_name} (ELO: ${botElo})`);
 
-    const socket = this.io.sockets.sockets.get(p.socketId);
-    if (socket) {
-      socket.join(roomId);
-    }
-
-    // Notify client of BOT match
-    this.io.to(roomId).emit('matchFound', {
-      roomId,
-      isBotMatch: true,
-      players: {
-        playerA: { id: p.userId, elo: p.elo },
-        playerB: { 
-          id: 'bot_opponent_id', 
-          display_name: randomBotInfo.display_name,
-          avatar_id: randomBotInfo.avatar_id,
-          elo: botElo, 
-          isBot: true 
+    if (this.matchFoundCallback) {
+      this.matchFoundCallback({
+        isBotMatch: true,
+        players: {
+          playerA: { id: p.userId, socketId: p.socketId, elo: p.elo },
+          playerB: { 
+            id: 'bot_opponent_id', 
+            display_name: randomBotInfo.display_name,
+            avatar_id: randomBotInfo.avatar_id,
+            elo: botElo, 
+            isBot: true 
+          }
         }
-      }
-    });
+      });
+    }
+  }
+  clearQueue() {
+    memoryQueue = [];
   }
 }
 

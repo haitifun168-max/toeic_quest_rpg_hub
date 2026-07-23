@@ -19,7 +19,39 @@ const activeBattles = new Map();
 let matchmakingCoordinator = null;
 
 function setupPvpWebsocket(io) {
-  matchmakingCoordinator = new MatchmakingService(io);
+  matchmakingCoordinator = new MatchmakingService();
+
+  // Handle Match Found callback from the matchmaking service
+  matchmakingCoordinator.onMatchFound((matchResult) => {
+    const { isBotMatch, players } = matchResult;
+    const { playerA, playerB } = players;
+    const roomId = `room_${require('uuid').v4()}`;
+
+    // Join sockets to the room
+    const s1 = io.sockets.sockets.get(playerA.socketId);
+    if (s1) s1.join(roomId);
+
+    if (!isBotMatch) {
+      const s2 = io.sockets.sockets.get(playerB.socketId);
+      if (s2) s2.join(roomId);
+    }
+
+    // Notify clients in the room
+    io.to(roomId).emit('matchFound', {
+      roomId,
+      isBotMatch,
+      players: {
+        playerA: { id: playerA.id, elo: playerA.elo },
+        playerB: isBotMatch ? {
+          id: playerB.id,
+          display_name: playerB.display_name,
+          avatar_id: playerB.avatar_id,
+          elo: playerB.elo,
+          isBot: true
+        } : { id: playerB.id, elo: playerB.elo }
+      }
+    });
+  });
 
   io.on('connection', (socket) => {
     console.log(`[WebSocket] Client connected: ${socket.id}`);

@@ -147,7 +147,7 @@ async function main() {
         }
       }
     } catch (err) {
-      console.error(`  Lỗi xử lý Batch ${i + 1}:`, err.message);
+      console.error(`  Lỗi xử lý Batch ${i + 1}:`, err.message || err);
     }
 
     if (i < totalBatches - 1) {
