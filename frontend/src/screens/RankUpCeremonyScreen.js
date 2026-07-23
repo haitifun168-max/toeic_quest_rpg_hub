@@ -15,29 +15,9 @@ import {
   Dimensions,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import { RANK_NAMES, RANK_ICONS, RANK_COLORS } from '../constants/ranks';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
-
-const RANK_NAMES = {
-  1: 'TẬP SỰ (NOVICE)',
-  2: 'HỌC VIỆC (APPRENTICE)',
-  3: 'CHUYÊN VIÊN (SPECIALIST)',
-  4: 'HIỆP SĨ (KNIGHT)'
-};
-
-const RANK_ICONS = {
-  1: '🛡️',
-  2: '⚔️',
-  3: '🔮',
-  4: '👑'
-};
-
-const RANK_COLORS = {
-  1: '#94a3b8', // Slate
-  2: '#34d399', // Emerald
-  3: '#60a5fa', // Blue
-  4: '#f59e0b'  // Amber
-};
 
 export default function RankUpCeremonyScreen() {
   const navigation = useNavigation();

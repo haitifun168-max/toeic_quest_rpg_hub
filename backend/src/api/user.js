@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../db');
 const { User } = require('../models/user');
 const { authenticateToken } = require('../middleware/auth');
+const { getRankByKp, RANK_UP_KP_REWARD } = require('../utils/rankSystem');
 
 /**
  * REST API standard response helpers
@@ -314,19 +315,13 @@ router.post('/check-rank', authenticateToken, async (req, res) => {
     
     const user = userRes.rows[0];
     const kp = user.total_kp || 0;
-    const currentRankVal = user.current_rank || 1; // 1: Novice, 2: Apprentice, 3: Specialist, 4: Knight
+    const currentRankVal = user.current_rank || 1;
 
-    let calculatedRank = 1;
-    if (kp >= 5000) {
-      calculatedRank = 4;
-    } else if (kp >= 2500) {
-      calculatedRank = 3;
-    } else if (kp >= 1000) {
-      calculatedRank = 2;
-    }
+    // Nguồn chân lý duy nhất: rankSystem (6 hạng, ngưỡng theo BRD đã duyệt)
+    const calculatedRank = getRankByKp(kp);
 
     if (calculatedRank > currentRankVal) {
-      const kpReward = 200; // Thưởng nóng 200 KP khi thăng hạng
+      const kpReward = RANK_UP_KP_REWARD; // Thưởng nóng khi thăng hạng
       const updateQuery = `
         UPDATE users 
         SET current_rank = $1, total_kp = total_kp + $2 

@@ -123,8 +123,8 @@ describe('Placement Test API Tests', () => {
       expect(res.status).toBe(200);
       expect(res.body.ok).toBe(true);
       expect(res.body.data.correctCount).toBe(8);
-      expect(res.body.data.simScore).toBe(750); // 8 correct -> 750 (Rank 4)
-      expect(res.body.data.rank).toBe(4);
+      expect(res.body.data.simScore).toBe(750); // 8 correct -> 750 (đáng lẽ Rank 4, nhưng cap trần Rank 3)
+      expect(res.body.data.rank).toBe(3);
       expect(res.body.data.elo).toBe(1300);
 
       // Check database calls
@@ -140,7 +140,7 @@ describe('Placement Test API Tests', () => {
       const updateParams = db.query.mock.calls[1][1];
       expect(updateQuery).toContain('UPDATE users');
       expect(updateQuery).toContain('SET current_rank = $1, current_elo = $2');
-      expect(updateParams[0]).toBe(4); // Rank 4
+      expect(updateParams[0]).toBe(3); // Capped at Rank 3
       expect(updateParams[1]).toBe(1300); // ELO 1300
       expect(updateParams[2]).toBe(mockUserId);
     });

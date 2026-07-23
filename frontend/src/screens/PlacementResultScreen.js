@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import SecureStore from '../utils/storage';
+import { RANK_NAMES } from '../constants/ranks';
 
 // Fallback SVG rendering logic to avoid crash if react-native-svg is not installed
 let Svg, Polygon, Circle, Line;
@@ -68,16 +69,6 @@ const AVATAR_OPTIONS = [
     title: 'Nhà thám hiểm ngữ nghĩa',
     image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuANBlWwRITDceN24ylInAewL1Ns4szVIC2xVM9XrvXLX8iCvhg_FNCF0Q7X-QJsxHA5tpW0pmfJdVMGjmsKqs7WWspndKm918I5bJpp5amPaqGjGDsMZ_jXMRQxziYyFL7rehCytE9eKtf3dgdx4a2SwkPbdlU1hgxLeGCn0lkvTaYcLgpbSobIsT5J4WxP50q1HJ-F4r03Kf8ipz_UAeRdEyoTF28hoOcHeU12tlZP_apMO4IYfmY1ZklWlav-q_HoKLXEp4V4buM2'
   }
-];
-
-const RANK_NAMES = [
-  'Không xác định',
-  'Thực Tập Sinh',
-  'Học Việc',
-  'Chiến Binh',
-  'Tinh Anh',
-  'Huyền Thoại',
-  'Thần Thoại'
 ];
 
 export default function PlacementResultScreen({ route, navigation }) {

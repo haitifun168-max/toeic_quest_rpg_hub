@@ -17,6 +17,7 @@ import {
 
 import SecureStore from '../utils/storage';
 import { showAlert, showConfirm } from '../utils/alertHelper';
+import { RANK_NAMES } from '../constants/ranks';
 
 import { BACKEND_URL } from '../config'; // Default API Host
 
@@ -211,19 +212,9 @@ export default function PlacementTestScreen({ navigation }) {
   };
 
   const navigateToResult = ({ correctCount, simScore, rank }) => {
-    const rankNames = [
-      'Không xác định',
-      'Thực Tập Sinh',
-      'Học Việc',
-      'Chiến Binh',
-      'Tinh Anh',
-      'Huyền Thoại',
-      'Thần Thoại'
-    ];
-
     showAlert(
       '🎉 KẾT QUẢ PLACEMENT TEST',
-      `Bạn trả lời đúng: ${correctCount}/${questions.length} câu.\nĐiểm ước lượng: ~${simScore} TOEIC.\nXếp hạng khởi điểm: ${rankNames[rank]}!`,
+      `Bạn trả lời đúng: ${correctCount}/${questions.length} câu.\nĐiểm ước lượng: ~${simScore} TOEIC.\nXếp hạng khởi điểm: ${RANK_NAMES[rank]}!`,
       () => {
         if (navigation) {
           navigation.replace('PlacementResult', { correctCount, simScore, rank });

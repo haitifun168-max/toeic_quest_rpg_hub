@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 const { authenticateToken } = require('../middleware/auth');
+const { capPlacementRank } = require('../utils/rankSystem');
 
 /**
  * REST API standard response helpers
@@ -136,6 +137,10 @@ router.post('/submit', authenticateToken, async (req, res) => {
       rank = 6;
       elo = 1500;
     }
+
+    // Chặn đường tắt (quyết định 2b): bài test 10 câu chỉ gán tối đa Rank 3.
+    // simScore (điểm ước lượng) và elo giữ nguyên; chỉ trần hạng khởi điểm.
+    rank = capPlacementRank(rank);
 
     // Update user's rank and ELO in database
     const updateQuery = `

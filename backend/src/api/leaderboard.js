@@ -23,13 +23,13 @@ router.get('/', async (req, res, next) => {
     const type = req.query.type || 'elo'; // 'elo', 'kp', 'streak'
     const limit = parseInt(req.query.limit, 10) || 50;
 
-    let sortColumn = 'elo_rating';
-    if (type === 'kp') sortColumn = 'kp_score';
-    if (type === 'streak') sortColumn = 'streak';
+    let sortColumn = 'current_elo';
+    if (type === 'kp') sortColumn = 'total_kp';
+    if (type === 'streak') sortColumn = 'current_streak';
 
     try {
       const result = await db.query(
-        `SELECT id as user_id, display_name, avatar, elo_rating, kp_score, streak 
+        `SELECT id as user_id, display_name, avatar_id as avatar, current_elo as elo_rating, total_kp as kp_score, current_streak as streak 
          FROM users 
          ORDER BY ${sortColumn} DESC 
          LIMIT $1`,

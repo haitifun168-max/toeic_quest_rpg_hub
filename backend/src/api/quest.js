@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db');
 const { authenticateToken } = require('../middleware/auth');
+const { getRankByKp } = require('../utils/rankSystem');
 
 /**
  * REST API standard response helpers
@@ -318,14 +319,9 @@ router.post('/session/submit', authenticateToken, async (req, res) => {
 
       const newLongestStreak = Math.max(user.longest_streak || 0, newStreak);
       const newTotalKp = (user.total_kp || 0) + kpEarned;
-      
-      // Compute rank threshold (Rank 1: 0-999 KP, Rank 2: 1000-2499 KP, Rank 3: 2500+ KP)
-      let newRank = 1;
-      if (newTotalKp >= 2500) {
-        newRank = 3; // Senior Scholar
-      } else if (newTotalKp >= 1000) {
-        newRank = 2; // Apprentice
-      }
+
+      // Nguồn chân lý duy nhất: rankSystem (6 hạng, ngưỡng theo BRD đã duyệt)
+      const newRank = getRankByKp(newTotalKp);
 
       const updateUserQuery = `
         UPDATE users

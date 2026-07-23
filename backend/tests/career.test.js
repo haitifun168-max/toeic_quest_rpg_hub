@@ -31,7 +31,7 @@ describe('Career Milestones & Rank REST API Tests', () => {
   describe('POST /api/users/check-rank', () => {
     it('should return rankUpTriggered: false if KP is below next rank threshold', async () => {
       db.query.mockResolvedValueOnce({
-        rows: [{ total_kp: 400, rank: 1 }] // User has 400 KP, Rank 1
+        rows: [{ total_kp: 400, rank: 1 }] // User has 400 KP (ngưỡng mới cho Rank 2 là 500 KP)
       });
 
       const res = await request(app)
@@ -44,12 +44,12 @@ describe('Career Milestones & Rank REST API Tests', () => {
       expect(res.body.data.newRank).toBe(1);
     });
 
-    it('should trigger rank-up and return newRank: 2 if user accumulates >= 1000 KP', async () => {
+    it('should trigger rank-up and return newRank: 2 if user accumulates >= 500 KP', async () => {
       db.query.mockResolvedValueOnce({
-        rows: [{ total_kp: 1200, rank: 1 }] // User has 1200 KP, Rank 1
+        rows: [{ total_kp: 600, rank: 1 }] // User has 600 KP (lớn hơn 500 => thăng hạng)
       });
       db.query.mockResolvedValueOnce({
-        rows: [{ id: mockUserId, total_kp: 1400, rank: 2 }] // Updated user return
+        rows: [{ id: mockUserId, total_kp: 800, rank: 2 }] // Updated user return
       });
 
       const res = await request(app)

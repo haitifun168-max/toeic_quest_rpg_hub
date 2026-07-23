@@ -116,9 +116,9 @@ router.post('/checkpoint', authenticateToken, async (req, res) => {
       return sendError(res, 'VALIDATION_FAILED', 'Thiếu thông tin session hoặc answers');
     }
 
-    // Nếu dungeonSessionId là mock ID, trả về thành công ảo ngay lập tức (bỏ qua khi chạy test)
+    // Chặn đứng exploit ngoài môi trường test
     if (!isTest && !uuidRegex.test(dungeonSessionId)) {
-      return sendSuccess(res, { savedCount: answers.length });
+      return sendError(res, 'VALIDATION_FAILED', 'dungeonSessionId không đúng định dạng UUID');
     }
 
     await client.query('BEGIN');
@@ -243,30 +243,9 @@ router.post('/submit', authenticateToken, async (req, res) => {
       return sendError(res, 'VALIDATION_FAILED', 'Thiếu dungeonSessionId');
     }
 
-    // Nếu dungeonSessionId là mock ID (không phải UUID hợp lệ), trả về điểm giả lập thành công (bỏ qua khi chạy test)
+    // Chặn đứng exploit ngoài môi trường test
     if (!isTest && !uuidRegex.test(dungeonSessionId)) {
-      const mockScore = Math.round((Math.random() * 480 + 350) / 5) * 5; // Điểm ngẫu nhiên 350 -> 830
-      const correctCount = Math.round(mockScore / 9.8);
-      const kpReward = correctCount * 10 + 200;
-
-      // Tăng điểm thưởng KP cho User profile trong database để người dùng vẫn thấy tiến trình thật
-      try {
-        await db.query('UPDATE users SET total_kp = total_kp + $1 WHERE id = $2', [kpReward, userId]);
-      } catch (err) {
-        console.log('Update user KP for mock submit failed:', err.message);
-      }
-
-      return sendSuccess(res, {
-        estimatedScore: mockScore,
-        correctCount,
-        totalAnswered: 10,
-        totalQuestions: 100,
-        kpEarned: kpReward,
-        recommendations: [
-          'Phân tích cấu trúc câu điều kiện rút gọn (Conditional structure reductions)',
-          'Phân biệt giới từ chỉ thời gian và không gian (Prepositions of time vs place)'
-        ]
-      });
+      return sendError(res, 'VALIDATION_FAILED', 'dungeonSessionId không đúng định dạng UUID');
     }
 
     // 1. Kiểm tra session tồn tại
