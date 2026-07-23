@@ -26,6 +26,27 @@ function sendError(res, code, message, status = 400) {
   });
 }
 
+const PLACEMENT_TEST_SIZE = 10;
+
+const DIFFICULTY_WEIGHTS = {
+  easy: 0.8,
+  medium: 1.0,
+  hard: 1.25
+};
+
+function getDifficultyWeight(difficulty) {
+  return DIFFICULTY_WEIGHTS[String(difficulty || 'medium').toLowerCase()] || DIFFICULTY_WEIGHTS.medium;
+}
+
+function mapWeightedRatioToPlacement(ratio) {
+  if (ratio >= 0.95) return { simScore: 900, rank: 6, elo: 1500 };
+  if (ratio >= 0.85) return { simScore: 850, rank: 5, elo: 1400 };
+  if (ratio >= 0.70) return { simScore: 750, rank: 4, elo: 1300 };
+  if (ratio >= 0.50) return { simScore: 600, rank: 3, elo: 1200 };
+  if (ratio >= 0.30) return { simScore: 450, rank: 2, elo: 1100 };
+  return { simScore: 300, rank: 1, elo: 1000 };
+}
+
 /**
  * GET /api/placement/questions
  * Fetches 10 random placement test questions without disclosing the correct answer
@@ -88,59 +109,45 @@ router.post('/submit', authenticateToken, async (req, res) => {
     const uniqueAnswers = Array.from(uniqueAnswersMap.values());
     const questionIds = uniqueAnswers.map(a => a.questionId);
 
-    // Fetch the correct options from the database
+    // Fetch the correct options + difficulty from the database
     const query = `
-      SELECT id, correct_option 
+      SELECT id, correct_option, difficulty 
       FROM questions 
       WHERE id = ANY($1)
     `;
     const dbRes = await db.query(query, [questionIds]);
 
-    // Create a lookup map of correct options
+    // Create a lookup map of correct options + difficulty
     const correctMap = {};
     dbRes.rows.forEach(q => {
-      correctMap[q.id] = q.correct_option;
+      correctMap[q.id] = { correct_option: q.correct_option, difficulty: q.difficulty };
     });
 
-    // Score user answers using deduplicated list
+    // Score user answers using deduplicated list.
+    // FR-3: weighted scoring — mỗi câu đúng cộng điểm theo độ khó (easy 0.8 / medium 1.0 / hard 1.25).
     let correctCount = 0;
+    let weightedScore = 0;
     uniqueAnswers.forEach(item => {
-      const correctAns = correctMap[item.questionId];
-      if (correctAns && String(item.answer).trim().toUpperCase() === correctAns) {
+      const q = correctMap[item.questionId];
+      if (q && q.correct_option && String(item.answer).trim().toUpperCase() === q.correct_option) {
         correctCount++;
+        weightedScore += getDifficultyWeight(q.difficulty);
       }
     });
 
-    // Calculate score, rank, and ELO estimate mapping based on correct answers
-    let simScore = 300;
-    let rank = 1;
-    let elo = 1000;
+    // Mẫu số cố định theo thiết kế bài test (10 câu, chuẩn medium) để tỷ lệ ổn định,
+    // không phụ thuộc số câu trả về. Test toàn câu khó đúng -> ratio > 1 (được đôn hạng);
+    // test toàn câu dễ đúng -> ratio thấp hơn (phản ánh độ khó thật).
+    const maxWeightedScore = PLACEMENT_TEST_SIZE * DIFFICULTY_WEIGHTS.medium;
+    const ratio = maxWeightedScore > 0 ? weightedScore / maxWeightedScore : 0;
 
-    if (correctCount >= 3 && correctCount <= 4) {
-      simScore = 450;
-      rank = 2;
-      elo = 1100;
-    } else if (correctCount >= 5 && correctCount <= 6) {
-      simScore = 600;
-      rank = 3;
-      elo = 1200;
-    } else if (correctCount >= 7 && correctCount <= 8) {
-      simScore = 750;
-      rank = 4;
-      elo = 1300;
-    } else if (correctCount === 9) {
-      simScore = 850;
-      rank = 5;
-      elo = 1400;
-    } else if (correctCount === 10) {
-      simScore = 900;
-      rank = 6;
-      elo = 1500;
-    }
+    const placement = mapWeightedRatioToPlacement(ratio);
+    const simScore = placement.simScore;
+    const elo = placement.elo;
 
     // Chặn đường tắt (quyết định 2b): bài test 10 câu chỉ gán tối đa Rank 3.
     // simScore (điểm ước lượng) và elo giữ nguyên; chỉ trần hạng khởi điểm.
-    rank = capPlacementRank(rank);
+    const rank = capPlacementRank(placement.rank);
 
     // Update user's rank and ELO in database
     const updateQuery = `
@@ -157,6 +164,8 @@ router.post('/submit', authenticateToken, async (req, res) => {
 
     return sendSuccess(res, {
       correctCount,
+      weightedScore: Math.round(weightedScore * 100) / 100,
+      maxWeightedScore,
       simScore,
       rank,
       elo

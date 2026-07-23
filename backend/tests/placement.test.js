@@ -145,6 +145,77 @@ describe('Placement Test API Tests', () => {
       expect(updateParams[2]).toBe(mockUserId);
     });
 
+    it('[FR-3] should weight scoring by difficulty: 5 HARD correct outranks 5 EASY correct', async () => {
+      // 5 câu HARD, tất cả đúng -> weightedScore = 5 * 1.25 = 6.25, ratio 0.625 -> rank 3, simScore 600
+      const hardQuestions = Array.from({ length: 5 }, (_, i) => ({
+        id: `hard-${i}`,
+        correct_option: 'A',
+        difficulty: 'hard'
+      }));
+      const hardAnswers = hardQuestions.map(q => ({ questionId: q.id, answer: 'A' }));
+
+      db.query.mockResolvedValueOnce({ rows: hardQuestions });
+      db.query.mockResolvedValueOnce({ rows: [{ id: mockUserId, current_rank: 3, current_elo: 1200 }] });
+
+      const hardRes = await request(app)
+        .post('/api/placement/submit')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ answers: hardAnswers });
+
+      expect(hardRes.status).toBe(200);
+      expect(hardRes.body.data.correctCount).toBe(5);
+      expect(hardRes.body.data.weightedScore).toBe(6.25);
+      expect(hardRes.body.data.simScore).toBe(600);
+      expect(hardRes.body.data.rank).toBe(3);
+
+      // 5 câu EASY, tất cả đúng -> weightedScore = 5 * 0.8 = 4.0, ratio 0.40 -> rank 2, simScore 450
+      const easyQuestions = Array.from({ length: 5 }, (_, i) => ({
+        id: `easy-${i}`,
+        correct_option: 'A',
+        difficulty: 'easy'
+      }));
+      const easyAnswers = easyQuestions.map(q => ({ questionId: q.id, answer: 'A' }));
+
+      db.query.mockResolvedValueOnce({ rows: easyQuestions });
+      db.query.mockResolvedValueOnce({ rows: [{ id: mockUserId, current_rank: 2, current_elo: 1100 }] });
+
+      const easyRes = await request(app)
+        .post('/api/placement/submit')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ answers: easyAnswers });
+
+      expect(easyRes.status).toBe(200);
+      expect(easyRes.body.data.correctCount).toBe(5);
+      expect(easyRes.body.data.weightedScore).toBe(4);
+      expect(easyRes.body.data.simScore).toBe(450);
+      expect(easyRes.body.data.rank).toBe(2);
+
+      // Cùng 5 câu đúng nhưng HARD xếp hạng cao hơn EASY -> weighted scoring có hiệu lực
+      expect(hardRes.body.data.rank).toBeGreaterThan(easyRes.body.data.rank);
+    });
+
+    it('[FR-3] should default missing difficulty to medium weight', async () => {
+      // Câu không có cột difficulty -> mặc định medium (1.0). 4 đúng -> 4.0/10 = 0.40 -> rank 2
+      const questions = Array.from({ length: 4 }, (_, i) => ({
+        id: `q-${i}`,
+        correct_option: 'A'
+      }));
+      const answers = questions.map(q => ({ questionId: q.id, answer: 'A' }));
+
+      db.query.mockResolvedValueOnce({ rows: questions });
+      db.query.mockResolvedValueOnce({ rows: [{ id: mockUserId, current_rank: 2, current_elo: 1100 }] });
+
+      const res = await request(app)
+        .post('/api/placement/submit')
+        .set('Authorization', `Bearer ${validToken}`)
+        .send({ answers });
+
+      expect(res.status).toBe(200);
+      expect(res.body.data.correctCount).toBe(4);
+      expect(res.body.data.weightedScore).toBe(4);
+      expect(res.body.data.rank).toBe(2);
+    });
+
     it('should return 404 if user ID does not exist in DB during update', async () => {
       // Mock questions select
       db.query.mockResolvedValueOnce({ rows: [{ id: 'q1', correct_option: 'A' }] });
