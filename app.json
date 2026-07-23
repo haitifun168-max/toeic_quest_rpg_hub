@@ -7,6 +7,12 @@
     "userInterfaceStyle": "dark",
     "android": {
       "package": "com.haitifun168.toeic_quest_rpg_hub"
+    },
+    "plugins": [],
+    "extra": {
+      "eas": {
+        "projectId": "5c7a19d9-295e-418e-9df3-b50350d8a77c"
+      }
     }
   }
 }

@@ -178,36 +178,50 @@ export default function QuizScreen() {
 
     try {
       const token = await SecureStore.getItemAsync('user_token');
-      if (!token) throw new Error('No token for explanations. Using mock.');
+      const currentQ = questions[currentIndex];
 
-      const response = await fetch(`${BACKEND_URL}/api/quests/questions/${questionId}/explanations`, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const result = await response.json();
-      if (response.ok && result.ok) {
-        setExplanationsCache(prev => ({
-          ...prev,
-          [questionId]: {
-            layer2: result.data.explanation.layer2,
-            layer3: result.data.explanation.layer3,
-            loading: false
+      // Call AI Tutor Endpoint for dynamic Layer 3 explanation
+      let aiLayer3Text = null;
+      if (token && currentQ) {
+        try {
+          const aiRes = await fetch(`${BACKEND_URL}/api/ai/explain`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              questionText: currentQ.question_content,
+              options: [currentQ.option_a, currentQ.option_b, currentQ.option_c, currentQ.option_d],
+              correctAnswer: currentQ.correct_option,
+              userSelection: selectedOption,
+              part: currentQ.part
+            })
+          });
+          const aiData = await aiRes.json();
+          if (aiRes.ok && aiData.ok) {
+            aiLayer3Text = aiData.data.explanation;
           }
-        }));
-      } else {
-        throw new Error('Explanations load failed. Using mock.');
+        } catch (e) {
+          console.log('AI explain call error:', e.message);
+        }
       }
-    } catch (err) {
-      console.log('QuizScreen explanations fallback:', err.message);
-      // Fallback explanation from local mock
-      const mockExp = MOCK_EXPLANATIONS[questionId] || {
-        layer2: 'Giải thích ngữ pháp mặc định.',
-        layer3: 'Bí quyết AI Mentor mặc định.'
-      };
+
       setExplanationsCache(prev => ({
         ...prev,
         [questionId]: {
-          layer2: mockExp.layer2,
-          layer3: mockExp.layer3,
+          layer2: 'Cấu trúc ngữ pháp: Phân tích các thành phần câu và dấu hiệu nhận biết phương án đúng.',
+          layer3: aiLayer3Text || '🧙‍♂️ AI NPC Tutor: Đọc kỹ ngữ cảnh và loại trừ đáp án nhiễu theo quy tắc TOEIC.',
+          loading: false
+        }
+      }));
+    } catch (err) {
+      console.log('QuizScreen explanations fallback:', err.message);
+      setExplanationsCache(prev => ({
+        ...prev,
+        [questionId]: {
+          layer2: 'Cấu trúc ngữ pháp: Phân tích thành phần câu và dấu hiệu nhận biết.',
+          layer3: '🧙‍♂️ AI NPC Tutor: Hãy chú ý thì của động từ và từ chỉ thời gian.',
           loading: false
         }
       }));

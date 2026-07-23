@@ -4,6 +4,8 @@ jspm_packages/
 
 # Expo
 .expo/
+/android
+/ios
 
 # Environment files
 .env
@@ -24,6 +26,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+test_*.js
 
 # System Files
 .DS_Store

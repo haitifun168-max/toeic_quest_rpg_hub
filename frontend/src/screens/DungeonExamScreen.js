@@ -292,6 +292,29 @@ export default function DungeonExamScreen() {
         </TouchableOpacity>
       </View>
 
+      {/* Dungeon Boss HP Bar HUD */}
+      <View style={{ backgroundColor: 'rgba(239, 68, 68, 0.1)', paddingHorizontal: 16, paddingVertical: 10, borderBottomWidth: 1, borderColor: 'rgba(239, 68, 68, 0.2)', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+        <View style={{ flex: 1, marginRight: 12 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
+            <Text style={{ color: '#ef4444', fontWeight: '800', fontSize: 13 }}>👹 BOSS TOEIC 990</Text>
+            <Text style={{ color: '#f87171', fontWeight: '700', fontSize: 12 }}>
+              HP: {questions.length - Object.keys(answers).length} / {questions.length} ({Math.round(((questions.length - Object.keys(answers).length) / Math.max(1, questions.length)) * 100)}%)
+            </Text>
+          </View>
+          <View style={{ height: 8, backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: 4, overflow: 'hidden' }}>
+            <View style={{
+              height: '100%',
+              backgroundColor: '#ef4444',
+              width: `${Math.round(((questions.length - Object.keys(answers).length) / Math.max(1, questions.length)) * 100)}%`,
+              borderRadius: 4
+            }} />
+          </View>
+        </View>
+        <View style={{ backgroundColor: 'rgba(245, 158, 11, 0.2)', paddingHorizontal: 10, paddingVertical: 6, borderRadius: 6, borderWidth: 1, borderColor: '#f59e0b' }}>
+          <Text style={{ color: '#fbbf24', fontWeight: '800', fontSize: 11 }}>🔥 STREAK x{Object.keys(answers).length > 0 ? 3 : 1}</Text>
+        </View>
+      </View>
+
       {/* Main content grid */}
       <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         {currentQ && (

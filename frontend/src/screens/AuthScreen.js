@@ -68,9 +68,11 @@ export default function AuthScreen({ navigation }) {
     }
 
     setLoading(true);
+    let endpoint = '';
+    let body = {};
     try {
-      const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
-      const body = isLogin 
+      endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
+      body = isLogin 
         ? { email, password } 
         : { displayName, email, password };
 

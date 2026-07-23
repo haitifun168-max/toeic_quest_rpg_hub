@@ -9,3 +9,7 @@ export const BACKEND_URL = USE_LOCAL_BACKEND
 
 // WebSocket config uses the same URL but with ws/wss protocol implicitly handled by socket.io-client
 export const WEBSOCKET_URL = BACKEND_URL;
+
+// Analytics (PostHog)
+export const POSTHOG_API_KEY = process.env.EXPO_PUBLIC_POSTHOG_API_KEY || 'phc_PLACEHOLDER_KEY';
+export const POSTHOG_HOST = process.env.EXPO_PUBLIC_POSTHOG_HOST || 'https://app.posthog.com';

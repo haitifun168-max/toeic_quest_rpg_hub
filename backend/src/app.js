@@ -7,6 +7,7 @@ const questRouter = require('./api/quest');
 const pvpRouter = require('./api/pvp');
 const dungeonRouter = require('./api/dungeon');
 const leaderboardRouter = require('./api/leaderboard');
+const aiRouter = require('./api/ai');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/api/quests', questRouter);
 app.use('/api/pvp', pvpRouter);
 app.use('/api/dungeons', dungeonRouter);
 app.use('/api/leaderboard', leaderboardRouter);
+app.use('/api/ai', aiRouter);
 
 // Root path check
 app.get('/', (req, res) => {

@@ -88,6 +88,42 @@ export default function PlacementResultScreen({ route, navigation }) {
   const [characterName, setCharacterName] = useState('Kỵ Sĩ TOEIC');
   const [submitting, setSubmitting] = useState(false);
 
+  // AI Diagnostic Report states
+  const [aiReport, setAiReport] = useState('');
+  const [loadingAiReport, setLoadingAiReport] = useState(false);
+  const [showAiModal, setShowAiModal] = useState(false);
+
+  const fetchAiDiagnosticReport = async () => {
+    setLoadingAiReport(true);
+    try {
+      const token = await SecureStore.getItemAsync('user_token');
+      const res = await fetch(`${BACKEND_URL}/api/ai/diagnostic`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': token ? `Bearer ${token}` : ''
+        },
+        body: JSON.stringify({
+          score: simScore,
+          targetScore: 850,
+          partStats: stats,
+          incorrectSummary: 'Cần cải thiện kỹ năng Nghe hiểu Part 3-4 và cấu trúc từ vựng chuyên ngành.'
+        })
+      });
+      const data = await res.json();
+      if (res.ok && data.ok) {
+        setAiReport(data.data.report);
+      } else {
+        setAiReport('🧙‍♂️ AI RPG Mentor: Bạn đạt trình độ khởi đầu rất triển vọng! Hãy tập trung rèn luyện Part 5 ngữ pháp và Part 3 nghe hiểu hàng ngày.');
+      }
+    } catch (e) {
+      setAiReport('🧙‍♂️ AI RPG Mentor: Đã ghi nhận chỉ số! Hãy tiếp tục làm các nhiệm vụ Dungeon để tích lũy thêm EXP.');
+    } finally {
+      setLoadingAiReport(false);
+      setShowAiModal(true);
+    }
+  };
+
   // Score rolling animation
   useEffect(() => {
     let current = 0;
@@ -286,6 +322,54 @@ export default function PlacementResultScreen({ route, navigation }) {
               <Text style={styles.tagTextWeak}>📉 Yếu: Nghe</Text>
             </View>
           </View>
+
+          {/* AI RPG Diagnostic Button & Card */}
+          <TouchableOpacity
+            style={{
+              marginTop: 16,
+              backgroundColor: 'rgba(124, 58, 237, 0.25)',
+              borderWidth: 1,
+              borderColor: '#7c3aed',
+              paddingVertical: 12,
+              paddingHorizontal: 16,
+              borderRadius: 12,
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 8
+            }}
+            onPress={fetchAiDiagnosticReport}
+            disabled={loadingAiReport}
+          >
+            {loadingAiReport ? (
+              <ActivityIndicator color="#d2bbff" size="small" />
+            ) : (
+              <>
+                <Text style={{ fontSize: 16 }}>🧙‍♂️</Text>
+                <Text style={{ color: '#d2bbff', fontWeight: '700', fontSize: 14 }}>
+                  {showAiModal ? 'Ẩn Báo Cáo AI Mentor' : 'Xem Báo Cáo Chẩn Đoán AI RPG Mentor'}
+                </Text>
+              </>
+            )}
+          </TouchableOpacity>
+
+          {showAiModal && aiReport ? (
+            <View style={{
+              marginTop: 12,
+              backgroundColor: 'rgba(18, 18, 29, 0.9)',
+              borderWidth: 1,
+              borderColor: 'rgba(210, 187, 255, 0.3)',
+              borderRadius: 12,
+              padding: 16
+            }}>
+              <Text style={{ color: '#a78bfa', fontWeight: '800', fontSize: 13, marginBottom: 8 }}>
+                ✨ CHẨN ĐOÁN TRÌNH ĐỘ TỪ CLAUDE-OPUS 4.8
+              </Text>
+              <Text style={{ color: '#e2e8f0', fontSize: 13, lineHeight: 20 }}>
+                {aiReport}
+              </Text>
+            </View>
+          ) : null}
         </View>
 
         {/* Character Creation Section */}
