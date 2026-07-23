@@ -155,7 +155,7 @@ router.get('/:id/questions', authenticateToken, async (req, res) => {
              qe.layer1 as explanation_layer1
       FROM questions q
       LEFT JOIN questions_explanation qe ON q.id = qe.question_id
-      WHERE q.part = $1
+      WHERE q.part = $1 AND q.status = 'approved'
       ORDER BY q.id
       LIMIT $2
     `;

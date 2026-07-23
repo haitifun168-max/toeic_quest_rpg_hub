@@ -242,6 +242,7 @@ async function initializeBattleSession(io, roomId) {
               qe.layer1, qe.layer2, qe.layer3
        FROM questions q
        LEFT JOIN questions_explanation qe ON q.id = qe.question_id
+       WHERE q.status = 'approved'
        ORDER BY RANDOM()
        LIMIT 10`
     );

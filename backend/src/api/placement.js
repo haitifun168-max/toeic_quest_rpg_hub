@@ -34,6 +34,7 @@ router.get('/questions', async (req, res) => {
     const query = `
       SELECT id, part, question_content, option_a, option_b, option_c, option_d 
       FROM questions 
+      WHERE status = 'approved'
       ORDER BY RANDOM() 
       LIMIT 10
     `;

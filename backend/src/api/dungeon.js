@@ -63,6 +63,7 @@ router.post('/start', authenticateToken, async (req, res) => {
       const qRes = await db.query(
         `SELECT id, part, question_content, option_a, option_b, option_c, option_d 
          FROM questions 
+         WHERE status = 'approved'
          ORDER BY RANDOM() 
          LIMIT $1`,
         [limit]
@@ -193,6 +194,7 @@ router.get('/resume', authenticateToken, async (req, res) => {
       const qRes = await db.query(
         `SELECT id, part, question_content, option_a, option_b, option_c, option_d 
          FROM questions 
+         WHERE status = 'approved'
          ORDER BY RANDOM() 
          LIMIT $1`,
         [limit]
