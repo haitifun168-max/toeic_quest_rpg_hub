@@ -315,7 +315,7 @@ export default function CharacterProfileScreen({ navigation }) {
           <Text style={styles.navIcon}>🛍️</Text>
           <Text style={styles.navLabel}>Armory</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => Alert.alert('Đang phát triển', 'Bang hội Guild sẽ được mở ở Phase tiếp theo.')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Guild')}>
           <Text style={styles.navIcon}>👥</Text>
           <Text style={styles.navLabel}>Guild</Text>
         </TouchableOpacity>

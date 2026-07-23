@@ -347,11 +347,11 @@ export default function HomeDashboardScreen({ navigation }) {
           <Text style={styles.navIcon}>⚔️</Text>
           <Text style={styles.navLabel}>PvP Battle</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => Alert.alert('Đang phát triển', 'Nhánh kỹ năng Skill Tree sẽ được mở trong các phase sau.')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('SkillTreeMap')}>
           <Text style={styles.navIcon}>🌳</Text>
           <Text style={styles.navLabel}>Skill Tree</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => Alert.alert('Đang phát triển', 'Hệ thống bang hội Guild đang được phát triển.')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Guild')}>
           <Text style={styles.navIcon}>👥</Text>
           <Text style={styles.navLabel}>Guild</Text>
         </TouchableOpacity>

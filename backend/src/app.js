@@ -9,6 +9,7 @@ const pvpRouter = require('./api/pvp');
 const dungeonRouter = require('./api/dungeon');
 const leaderboardRouter = require('./api/leaderboard');
 const aiRouter = require('./api/ai');
+const skillTreeRouter = require('./api/skillTree');
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use('/api/pvp', pvpRouter);
 app.use('/api/dungeons', dungeonRouter);
 app.use('/api/leaderboard', leaderboardRouter);
 app.use('/api/ai', aiLimiter, aiRouter);
+app.use('/api/skill-tree', skillTreeRouter);
 
 // Root path check
 app.get('/', (req, res) => {

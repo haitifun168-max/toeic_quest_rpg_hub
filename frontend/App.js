@@ -41,6 +41,8 @@ import AuthScreen from './src/screens/AuthScreen';
 import GoalSettingScreen from './src/screens/GoalSettingScreen';
 import PlacementTestScreen from './src/screens/PlacementTestScreen';
 import PlacementResultScreen from './src/screens/PlacementResultScreen';
+import SkillTreeMapScreen from './src/screens/SkillTreeMapScreen';
+import GuildScreen from './src/screens/GuildScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -76,6 +78,8 @@ export default function App() {
             <Stack.Screen name="RankUpCeremony" component={RankUpCeremonyScreen} />
             <Stack.Screen name="CareerMilestones" component={CareerMilestonesScreen} />
             <Stack.Screen name="Leaderboard" component={LeaderboardScreen} />
+            <Stack.Screen name="SkillTreeMap" component={SkillTreeMapScreen} />
+            <Stack.Screen name="Guild" component={GuildScreen} />
           </Stack.Navigator>
         </SafePostHogProvider>
       </NavigationContainer>
