@@ -25,6 +25,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { trackEvent } from '../utils/analytics';
 
 import SecureStore from '../utils/storage';
+import { showConfirm } from '../utils/alertHelper';
 
 import { BACKEND_URL } from '../config';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -333,13 +334,10 @@ export default function QuizScreen() {
   };
 
   const handleQuitPrompt = () => {
-    Alert.alert(
+    showConfirm(
       'Thoát bài học?',
-      'Nếu thoát lúc này, tiến trình học của nhiệm vụ hôm nay sẽ không được lưu và bạn vẫn bị trừ Stamina.',
-      [
-        { text: 'Tiếp tục học', style: 'cancel' },
-        { text: 'Thoát', style: 'destructive', onPress: () => navigation.goBack() }
-      ]
+      'Nếu thoát lúc này, tiến trình học của nhiệm vụ hôm nay sẽ không được lưu.',
+      () => navigation.goBack()
     );
   };
 

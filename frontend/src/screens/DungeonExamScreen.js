@@ -19,36 +19,8 @@ import {
 import { useNavigation, useRoute } from '@react-navigation/native';
 
 import SecureStore from '../utils/storage';
-
+import { showAlert, showConfirm } from '../utils/alertHelper';
 import { BACKEND_URL } from '../config';
-
-/**
- * Cross-platform alert/confirm helpers for Web browser support
- */
-function showAlert(title, message, onPress) {
-  if (Platform.OS === 'web') {
-    window.alert(`${title}\n\n${message}`);
-    if (onPress) onPress();
-  } else {
-    Alert.alert(title, message, [{ text: 'OK', onPress }]);
-  }
-}
-
-function showConfirm(title, message, onConfirm, onCancel) {
-  if (Platform.OS === 'web') {
-    const isConfirmed = window.confirm(`${title}\n\n${message}`);
-    if (isConfirmed) {
-      if (onConfirm) onConfirm();
-    } else {
-      if (onCancel) onCancel();
-    }
-  } else {
-    Alert.alert(title, message, [
-      { text: 'Hủy', style: 'cancel', onPress: onCancel },
-      { text: 'Đồng ý', onPress: onConfirm }
-    ]);
-  }
-}
 
 export default function DungeonExamScreen() {
   const navigation = useNavigation();
