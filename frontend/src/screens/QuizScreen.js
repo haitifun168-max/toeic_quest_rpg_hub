@@ -179,43 +179,38 @@ export default function QuizScreen() {
 
     try {
       const token = await SecureStore.getItemAsync('user_token');
-      const currentQ = questions[currentIndex];
 
-      // Call AI Tutor Endpoint for dynamic Layer 3 explanation
-      let aiLayer3Text = null;
-      if (token && currentQ) {
-        try {
-          const aiRes = await fetch(`${BACKEND_URL}/api/ai/explain`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              questionText: currentQ.question_content,
-              options: [currentQ.option_a, currentQ.option_b, currentQ.option_c, currentQ.option_d],
-              correctAnswer: currentQ.correct_option,
-              userSelection: selectedOption,
-              part: currentQ.part
-            })
-          });
-          const aiData = await aiRes.json();
-          if (aiRes.ok && aiData.ok) {
-            aiLayer3Text = aiData.data.explanation;
+      // AD-5: Tải giải thích tiền sinh (offline) từ DB, KHÔNG gọi LLM realtime.
+      const res = await fetch(`${BACKEND_URL}/api/quests/questions/${questionId}/explanations`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const result = await res.json();
+
+      if (res.ok && result.ok && result.data && result.data.explanation) {
+        const { layer2, layer3 } = result.data.explanation;
+        setExplanationsCache(prev => ({
+          ...prev,
+          [questionId]: {
+            layer2: layer2 || 'Cấu trúc ngữ pháp: Phân tích các thành phần câu và dấu hiệu nhận biết phương án đúng.',
+            layer3: layer3 || '🧙‍♂️ AI NPC Tutor: Đọc kỹ ngữ cảnh và loại trừ đáp án nhiễu theo quy tắc TOEIC.',
+            loading: false
           }
-        } catch (e) {
-          console.log('AI explain call error:', e.message);
-        }
+        }));
+      } else {
+        // Câu chưa có giải thích tiền sinh trong DB -> hiển thị fallback tĩnh, vẫn không gọi LLM realtime.
+        setExplanationsCache(prev => ({
+          ...prev,
+          [questionId]: {
+            layer2: 'Cấu trúc ngữ pháp: Phân tích các thành phần câu và dấu hiệu nhận biết phương án đúng.',
+            layer3: '🧙‍♂️ AI NPC Tutor: Đọc kỹ ngữ cảnh và loại trừ đáp án nhiễu theo quy tắc TOEIC.',
+            loading: false
+          }
+        }));
       }
-
-      setExplanationsCache(prev => ({
-        ...prev,
-        [questionId]: {
-          layer2: 'Cấu trúc ngữ pháp: Phân tích các thành phần câu và dấu hiệu nhận biết phương án đúng.',
-          layer3: aiLayer3Text || '🧙‍♂️ AI NPC Tutor: Đọc kỹ ngữ cảnh và loại trừ đáp án nhiễu theo quy tắc TOEIC.',
-          loading: false
-        }
-      }));
     } catch (err) {
       console.log('QuizScreen explanations fallback:', err.message);
       setExplanationsCache(prev => ({
