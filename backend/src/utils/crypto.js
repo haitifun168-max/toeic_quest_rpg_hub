@@ -1,13 +1,18 @@
 const crypto = require('crypto');
+const config = require('../config');
 
 const ALGORITHM = 'aes-256-cbc';
 
-// In production, ENCRYPTION_KEY must be exactly 32 bytes and ENCRYPTION_IV must be exactly 16 bytes.
-const KEY_STRING = process.env.ENCRYPTION_KEY || 'default_secret_key_32_bytes_long_!'; // 32 bytes fallback
-const IV_STRING = process.env.ENCRYPTION_IV || 'default_iv_16byte'; // 16 bytes fallback
+// KEY/IV được đọc tại thời điểm sử dụng (không capture cứng lúc load module),
+// đảm bảo lấy đúng giá trị đã được validateEnv() xác thực. Không còn fallback:
+// nếu thiếu secret, ứng dụng đã fail-fast từ trước khi tới đây.
+function getKey() {
+    return Buffer.from(config.ENCRYPTION_KEY.substring(0, 32), 'utf-8');
+}
 
-const KEY = Buffer.from(KEY_STRING.substring(0, 32), 'utf-8');
-const IV = Buffer.from(IV_STRING.substring(0, 16), 'utf-8');
+function getIv() {
+    return Buffer.from(config.ENCRYPTION_IV.substring(0, 16), 'utf-8');
+}
 
 /**
  * Encrypts cleartext using AES-256-CBC
@@ -16,7 +21,7 @@ const IV = Buffer.from(IV_STRING.substring(0, 16), 'utf-8');
  */
 function encrypt(text) {
     if (!text) return null;
-    const cipher = crypto.createCipheriv(ALGORITHM, KEY, IV);
+    const cipher = crypto.createCipheriv(ALGORITHM, getKey(), getIv());
     let encrypted = cipher.update(text, 'utf8', 'hex');
     encrypted += cipher.final('hex');
     return encrypted;
@@ -34,7 +39,7 @@ function decrypt(ciphertext) {
         return ciphertext;
     }
     try {
-        const decipher = crypto.createDecipheriv(ALGORITHM, KEY, IV);
+        const decipher = crypto.createDecipheriv(ALGORITHM, getKey(), getIv());
         let decrypted = decipher.update(ciphertext, 'hex', 'utf8');
         decrypted += decipher.final('utf8');
         return decrypted;

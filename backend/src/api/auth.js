@@ -3,8 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { User } = require('../models/user');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'default_jwt_secret_key_change_me_in_prod';
+const config = require('../config');
 
 /**
  * REST API standard response helper for success
@@ -64,7 +63,7 @@ router.post('/register', async (req, res) => {
     }
 
     // Sign JWT
-    const token = jwt.sign({ id: newUser.id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ id: newUser.id }, config.JWT_SECRET, { expiresIn: '7d' });
 
     return sendSuccess(res, {
       user: newUser,
@@ -105,7 +104,7 @@ router.post('/login', async (req, res) => {
     }
 
     // Sign JWT
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ id: user.id }, config.JWT_SECRET, { expiresIn: '7d' });
 
     // Format user (removes password_hash)
     const formattedUser = User.formatUser(user);
@@ -140,7 +139,7 @@ router.post('/oauth', async (req, res) => {
     });
 
     // Sign JWT
-    const token = jwt.sign({ id: user.id }, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign({ id: user.id }, config.JWT_SECRET, { expiresIn: '7d' });
 
     return sendSuccess(res, {
       user,

@@ -13,8 +13,13 @@ jspm_packages/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.production
 backend/.env
+backend/.env.production
 frontend/.env
+
+# Secrets / local tool config
+opencode.json
 
 # Production build
 dist/

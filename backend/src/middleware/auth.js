@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'default_jwt_secret_key_change_me_in_prod';
+const config = require('../config');
 
 /**
  * Middleware to verify user JWT token
@@ -22,7 +21,7 @@ function authenticateToken(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, config.JWT_SECRET);
     req.user = decoded; // Contains { id: userId }
     next();
   } catch (err) {

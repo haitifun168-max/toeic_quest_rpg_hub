@@ -8,8 +8,7 @@
 const jwt = require('jsonwebtoken');
 const db = require('../db');
 const MatchmakingService = require('../services/matchmaking');
-
-const JWT_SECRET = process.env.JWT_SECRET || 'default_jwt_secret_key_change_me_in_prod';
+const config = require('../config');
 
 // Active battle rooms mapping
 // Key: roomId, Value: { roomId, playerA, playerB, questions, currentRoundIndex, answers, roundTimer, isBotMatch }
@@ -36,7 +35,7 @@ function setupPvpWebsocket(io) {
         // Authenticate JWT
         let decoded;
         try {
-          decoded = jwt.verify(token, JWT_SECRET);
+          decoded = jwt.verify(token, config.JWT_SECRET);
         } catch (e) {
           return socket.emit('matchmakingError', { message: 'Phiên đăng nhập hết hạn.' });
         }

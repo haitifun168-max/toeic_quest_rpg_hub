@@ -1,3 +1,9 @@
+const config = require('./config');
+
+// Fail-fast: từ chối khởi động nếu thiếu secret bắt buộc, thay vì âm thầm
+// chạy bằng giá trị mặc định không an toàn.
+config.validateEnv();
+
 const app = require('./app');
 const http = require('http');
 const { Server } = require('socket.io');
