@@ -8,13 +8,13 @@ import {
   SafeAreaView,
   Image,
   ActivityIndicator,
-  Alert,
   Platform,
   Dimensions
 } from 'react-native';
 import QuestSelectionSheet from '../components/QuestSelectionSheet';
 
 import SecureStore from '../utils/storage';
+import { showAlert, showConfirm } from '../utils/alertHelper';
 
 // Fallback SVG rendering logic to avoid crash if react-native-svg is not installed
 let Svg, Polygon, Circle;
@@ -111,7 +111,7 @@ export default function HomeDashboardScreen({ navigation }) {
         }
       }
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      showAlert('Thất bại', err.message);
       // Clean invalid session data and redirect to login
       SecureStore.deleteItemAsync('user_token').catch(() => {});
       SecureStore.deleteItemAsync('user_profile').catch(() => {});
@@ -124,45 +124,39 @@ export default function HomeDashboardScreen({ navigation }) {
   const handlePurchaseStreakFreeze = async () => {
     if (!profile) return;
     if (profile.total_kp < 500) {
-      Alert.alert('Không đủ KP', 'Bạn cần tối thiểu 500 KP để mua Đóng băng Streak.');
+      showAlert('Không đủ KP', 'Bạn cần tối thiểu 500 KP để mua Đóng băng Streak.');
       return;
     }
 
-    Alert.alert(
+    showConfirm(
       'Mua Đóng băng Streak',
       'Bạn có chắc chắn muốn dùng 500 KP để mua vật phẩm Đóng băng Streak? (Giới hạn 1 lần/tuần)',
-      [
-        { text: 'Hủy', style: 'cancel' },
-        {
-          text: 'Mua',
-          onPress: async () => {
-            try {
-              const token = await SecureStore.getItemAsync('user_token');
-              if (!token) {
-                throw new Error('Phiên làm việc hết hạn. Vui lòng đăng nhập lại.');
-              }
-
-              const response = await fetch(`${BACKEND_URL}/api/users/streak/freeze`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`
-                }
-              });
-
-              const result = await response.json();
-              if (response.ok && result.ok) {
-                Alert.alert('Thành công', `Đã mua Đóng băng Streak! Chuỗi ngày học của bạn được khôi phục thành ${result.data.streakRestored} ngày.`);
-                setProfile(result.data.user);
-              } else {
-                throw new Error(result.error?.message || 'Không thể mua Streak Freeze');
-              }
-            } catch (err) {
-              Alert.alert('Thất bại', err.message);
-            }
+      async () => {
+        try {
+          const token = await SecureStore.getItemAsync('user_token');
+          if (!token) {
+            throw new Error('Phiên làm việc hết hạn. Vui lòng đăng nhập lại.');
           }
+
+          const response = await fetch(`${BACKEND_URL}/api/users/streak/freeze`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          const result = await response.json();
+          if (response.ok && result.ok) {
+            showAlert('Thành công', `Đã mua Đóng băng Streak! Chuỗi ngày học của bạn được khôi phục thành ${result.data.streakRestored} ngày.`);
+            setProfile(result.data.user);
+          } else {
+            throw new Error(result.error?.message || 'Không thể mua Streak Freeze');
+          }
+        } catch (err) {
+          showAlert('Thất bại', err.message);
         }
-      ]
+      }
     );
   };
 
@@ -213,7 +207,7 @@ export default function HomeDashboardScreen({ navigation }) {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.notificationBtn} onPress={() => Alert.alert('Thông báo', 'Hôm nay bạn không có thông báo mới.')}>
+        <TouchableOpacity style={styles.notificationBtn} onPress={() => showAlert('Thông báo', 'Hôm nay bạn không có thông báo mới.')}>
           <Text style={styles.bellIcon}>🔔</Text>
         </TouchableOpacity>
       </View>
@@ -321,7 +315,7 @@ export default function HomeDashboardScreen({ navigation }) {
               {profile?.total_kp ? `Cần ôn lại ${Math.round(profile.total_kp / 50) || 5} từ khó hôm nay` : 'Bắt đầu học để lưu từ vựng ôn tập'}
             </Text>
           </View>
-          <TouchableOpacity style={styles.playButton} onPress={() => Alert.alert('Học từ vựng', 'Chức năng học từ vựng Flashcard đang được phát triển.')}>
+          <TouchableOpacity style={styles.playButton} onPress={() => showAlert('Học từ vựng', 'Chức năng học từ vựng Flashcard đang được phát triển.')}>
             <Text style={styles.playIcon}>▶️</Text>
           </TouchableOpacity>
         </View>
