@@ -347,7 +347,11 @@ export default function HomeDashboardScreen({ navigation }) {
           >
             <View style={styles.orbGlow} pointerEvents="none" />
             <View style={styles.orbCore} pointerEvents="none">
-              <Text style={styles.brainIcon}>🧠</Text>
+              <Text style={styles.aiOrbLabel}>AI</Text>
+              <Text style={styles.aiOrbSubLabel}>Mentor</Text>
+            </View>
+            <View style={styles.orbSparkle} pointerEvents="none">
+              <Text style={styles.orbSparkleText}>✦</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -790,16 +794,18 @@ const styles = StyleSheet.create({
   },
   orbGlow: {
     position: 'absolute',
-    width: 60,
-    height: 60,
+    width: 72,
+    height: 72,
     backgroundColor: 'rgba(124, 58, 237, 0.35)',
-    borderRadius: 30,
+    borderRadius: 36,
   },
   orbCore: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 58,
+    height: 58,
+    borderRadius: 29,
     backgroundColor: '#7c3aed',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.35)',
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#7c3aed',
@@ -808,8 +814,38 @@ const styles = StyleSheet.create({
     shadowRadius: 15,
     elevation: 6,
   },
-  brainIcon: {
-    fontSize: 24,
+  aiOrbLabel: {
+    fontSize: 18,
+    lineHeight: 20,
+    color: '#ffffff',
+    fontWeight: '900',
+    letterSpacing: 0.5,
+  },
+  aiOrbSubLabel: {
+    fontSize: 8,
+    lineHeight: 10,
+    color: 'rgba(255, 255, 255, 0.88)',
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 0.4,
+  },
+  orbSparkle: {
+    position: 'absolute',
+    top: 18,
+    right: 17,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    backgroundColor: '#facc15',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.8)',
+  },
+  orbSparkleText: {
+    fontSize: 11,
+    color: '#4c1d95',
+    fontWeight: '900',
   },
   bottomBar: {
     position: 'absolute',
