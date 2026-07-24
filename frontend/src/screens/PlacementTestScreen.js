@@ -9,7 +9,6 @@ import {
   TextInput,
   Image,
   ActivityIndicator,
-  Alert,
   Platform,
   Dimensions,
   BackHandler
@@ -38,10 +37,9 @@ export default function PlacementTestScreen({ navigation }) {
   // Prevent going back via hardware back button (Android) and gesture (iOS)
   useEffect(() => {
     const backAction = () => {
-      Alert.alert(
+      showAlert(
         'Không thể quay lại',
-        'Bạn đang trong quá trình thực hiện bài kiểm tra đầu vào. Vui lòng hoàn thành để xếp Rank.',
-        [{ text: 'Tiếp tục làm bài', style: 'cancel' }]
+        'Bạn đang trong quá trình thực hiện bài kiểm tra đầu vào. Vui lòng hoàn thành để xếp Rank.'
       );
       return true; // Blocks the back action
     };
@@ -65,10 +63,10 @@ export default function PlacementTestScreen({ navigation }) {
     if (questions.length === 0 || !startTime) return;
 
     if (timeLeft <= 0) {
-      Alert.alert(
+      showAlert(
         'Hết thời gian',
         'Thời gian làm bài 5 phút đã hết. Hệ thống tự động nộp bài làm của bạn!',
-        [{ text: 'Đồng ý', onPress: () => handleSubmit(true) }]
+        () => handleSubmit(true)
       );
       return;
     }
@@ -93,7 +91,7 @@ export default function PlacementTestScreen({ navigation }) {
       setQuestions(result.data.questions);
       setStartTime(Date.now());
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      showAlert('Thất bại', err.message);
     } finally {
       setLoading(false);
     }

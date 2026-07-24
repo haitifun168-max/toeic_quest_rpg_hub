@@ -9,12 +9,12 @@ import {
   TextInput,
   Image,
   ActivityIndicator,
-  Alert,
   Platform,
   Dimensions
 } from 'react-native';
 
 import SecureStore from '../utils/storage';
+import { showAlert } from '../utils/alertHelper';
 import { RANK_NAMES } from '../constants/ranks';
 
 // Fallback SVG rendering logic to avoid crash if react-native-svg is not installed
@@ -180,7 +180,7 @@ export default function PlacementResultScreen({ route, navigation }) {
   const handleStartAdventure = async () => {
     const trimmedName = characterName.trim();
     if (trimmedName.length < 2 || trimmedName.length > 30) {
-      Alert.alert('Tên không hợp lệ', 'Tên nhân vật phải có độ dài từ 2 đến 30 ký tự.');
+      showAlert('Tên không hợp lệ', 'Tên nhân vật phải có độ dài từ 2 đến 30 ký tự.');
       return;
     }
 
@@ -218,24 +218,19 @@ export default function PlacementResultScreen({ route, navigation }) {
         await SecureStore.setItemAsync('user_profile', JSON.stringify(cached));
       }
 
-      Alert.alert(
+      showAlert(
         'Thành công',
         'Anh hùng của bạn đã được khởi tạo! Hãy bắt đầu cuộc hành trình.',
-        [
-          {
-            text: 'Bắt đầu ngay 🚀',
-            onPress: () => {
-              if (navigation) {
-                navigation.replace('HomeDashboard');
-              } else {
-                console.log('Navigation trigger: HomeDashboard');
-              }
-            }
+        () => {
+          if (navigation) {
+            navigation.replace('HomeDashboard');
+          } else {
+            console.log('Navigation trigger: HomeDashboard');
           }
-        ]
+        }
       );
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      showAlert('Thất bại', err.message);
     } finally {
       setSubmitting(false);
     }

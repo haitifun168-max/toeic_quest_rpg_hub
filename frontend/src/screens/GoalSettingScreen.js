@@ -7,11 +7,11 @@ import {
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
-  Alert,
   Platform
 } from 'react-native';
 
 import SecureStore from '../utils/storage';
+import { showAlert } from '../utils/alertHelper';
 
 import { BACKEND_URL } from '../config'; // Default API Host
 
@@ -101,24 +101,19 @@ export default function GoalSettingScreen({ navigation }) {
         await SecureStore.setItemAsync('user_profile', JSON.stringify(cached));
       }
 
-      Alert.alert(
+      showAlert(
         'Đã thiết lập mục tiêu',
         `Mục tiêu đạt ${targetScore} TOEIC trong ${durationMonths} tháng đã được lưu!`,
-        [
-          {
-            text: 'Bắt đầu kiểm tra trình độ',
-            onPress: () => {
-              if (navigation) {
-                navigation.replace('PlacementTest');
-              } else {
-                console.log('Navigation trigger: PlacementTest');
-              }
-            }
+        () => {
+          if (navigation) {
+            navigation.replace('PlacementTest');
+          } else {
+            console.log('Navigation trigger: PlacementTest');
           }
-        ]
+        }
       );
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      showAlert('Thất bại', err.message);
     } finally {
       setLoading(false);
     }
