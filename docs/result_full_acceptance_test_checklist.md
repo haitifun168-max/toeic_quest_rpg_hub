@@ -29,7 +29,7 @@
 | Leaderboard | Bảng xếp hạng tải và sắp xếp đúng | Dana | **Pass** | 0 | |
 | Security | Token, rate limit, quyền truy cập dữ liệu | Vex | **Pass** | 0 | Chặn spoofed X-Forwarded-For |
 | UI/UX | Không màn trắng, không loading vô hạn, responsive | Dana | **Pass** | 0 | |
-| Automation | Unit/integration/export/smoke scripts | Dana | **Pass** | 0 | 107 test cases pass |
+| Automation | Unit/integration/export/smoke scripts | Dana | **Pass** | 0 | 107 Jest tests & Playwright E2E smoke tests passed on Prod |
 
 ### Tổng kết quyết định
 
@@ -186,6 +186,7 @@
 ### 14. Regression automation
 - [x] `npm test` hoặc `npx jest --runInBand --silent` pass (107/107 tests pass).
 - [x] `npx expo export --platform web --output-dir dist-web-smoke` pass.
+- [x] Chạy Playwright smoke script (`email-release-gate.js`) vượt qua toàn bộ luồng Auth, Dashboard, Skill Tree, Guild, PvP locked check, và Hồ Sơ trên môi trường Production thành công.
 
 ---
 
