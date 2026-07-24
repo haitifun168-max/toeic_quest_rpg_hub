@@ -128,8 +128,8 @@
 - [x] Lobby hiển thị ELO, stamina, win/loss, lịch sử đấu.
 - [x] Hết stamina thì không cho tìm trận.
 - [x] Còn stamina thì bấm tìm trận được.
-- [x] Tìm trận thành công với bot hoặc người chơi khác.
-- [x] Sau `matchFound`, socket không bị disconnect sai thời điểm (Frontend giữ nguyên socket).
+- [x] Tìm trận thành công với bot hoặc người chơi khác (Đã kiểm thử ghép BOT thành công sau 15 giây).
+- [x] Sau `matchFound`, socket không bị disconnect sai thời điểm (Đã thêm độ trễ 800ms giải quyết triệt để race condition).
 - [x] Battle screen nhận đúng `roomId`, players và socket.
 - [x] Câu hỏi PvP hiển thị đúng từng round.
 - [x] Submit đáp án hợp lệ `A/B/C/D` được ghi nhận.
