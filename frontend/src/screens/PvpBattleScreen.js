@@ -112,6 +112,12 @@ export default function PvpBattleScreen() {
   const connectToBattleSocket = async () => {
     try {
       const token = await SecureStore.getItemAsync('user_token');
+      const cachedProfileStr = await SecureStore.getItemAsync('user_profile');
+      let currentUserId = '';
+      if (cachedProfileStr) {
+        currentUserId = JSON.parse(cachedProfileStr).id;
+      }
+
       const socket = existingSocket || io(BACKEND_URL, {
         transports: ['polling', 'websocket'],
         forceNew: true
@@ -121,11 +127,15 @@ export default function PvpBattleScreen() {
 
       socket.on('connect', () => {
         console.log('[Battle] Socket connected to room', roomId);
-        socket.emit('joinMatchmaking', { token, roomId });
+        setTimeout(() => {
+          socket.emit('joinMatchmaking', { token, roomId });
+        }, 800);
       });
 
       if (existingSocket?.connected) {
-        socket.emit('joinMatchmaking', { token, roomId });
+        setTimeout(() => {
+          socket.emit('joinMatchmaking', { token, roomId });
+        }, 800);
       }
 
       socket.on('newQuestion', (data) => {
@@ -163,7 +173,7 @@ export default function PvpBattleScreen() {
         setShowRoundResult(true);
 
         // Update scores
-        const isPlayerA = players.playerA.id === socketRef.current.userId;
+        const isPlayerA = players.playerA.id === currentUserId;
         const myResult = isPlayerA ? data.playerAResult : data.playerBResult;
         const oppResult = isPlayerA ? data.playerBResult : data.playerAResult;
 
