@@ -805,6 +805,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingBottom: Platform.OS === 'ios' ? 12 : 0,
+    zIndex: 999,
+    elevation: 10,
   },
   navItem: {
     alignItems: 'center',
