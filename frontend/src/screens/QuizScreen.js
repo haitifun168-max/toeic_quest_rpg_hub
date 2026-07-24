@@ -26,6 +26,7 @@ import { trackEvent } from '../utils/analytics';
 
 import SecureStore from '../utils/storage';
 import { showConfirm } from '../utils/alertHelper';
+import AudioPlayer from '../components/AudioPlayer';
 
 import { BACKEND_URL } from '../config';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
@@ -397,7 +398,17 @@ export default function QuizScreen() {
       <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
         {/* Question Panel */}
         <Animated.View style={[styles.questionPanel, { transform: [{ translateX: shakeAnim }] }]}>
-          <Text style={styles.questionPartTag}>PART {currentQuestion.part} — NGỮ PHÁP & TỪ VỰNG</Text>
+          <Text style={styles.questionPartTag}>
+            {currentQuestion.part <= 4
+              ? `PART ${currentQuestion.part} — NGHE HIỂU`
+              : `PART ${currentQuestion.part} — NGỮ PHÁP & TỪ VỰNG`}
+          </Text>
+          {currentQuestion.part <= 4 && (
+            <AudioPlayer
+              text={currentQuestion.audio_transcript || currentQuestion.question_content}
+              title="Nội dung bài nghe TOEIC"
+            />
+          )}
           <Text style={styles.questionContent}>{currentQuestion.question_content}</Text>
         </Animated.View>
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const db = require('../db');
 const { authenticateToken } = require('../middleware/auth');
 const { getRankByKp } = require('../utils/rankSystem');
+const { analyzeWeaknesses } = require('../services/aiService');
 
 /**
  * REST API standard response helpers
@@ -233,10 +234,11 @@ router.post('/session/submit', authenticateToken, async (req, res) => {
     let correctCount = 0;
     let wrongCount = 0;
     const weakTopics = new Set();
+    const wrongItems = [];
 
     if (questionIds.length > 0) {
       const dbQuestionsRes = await db.query(
-        'SELECT id, correct_option, question_content FROM questions WHERE id = ANY($1)',
+        'SELECT id, part, correct_option, question_content FROM questions WHERE id = ANY($1)',
         [questionIds]
       );
 
@@ -254,8 +256,13 @@ router.post('/session/submit', authenticateToken, async (req, res) => {
             correctCount++;
           } else {
             wrongCount++;
-            // Map questions to a weak topic categories for AI Mentor recommendation
-            // In a real app we might look at tags. Here we simulate weak categories based on part and content keywords
+            wrongItems.push({
+              questionText: dbQ.question_content,
+              correctAnswer: dbQ.correct_option,
+              userAnswer: ans.selectedOption,
+              part: dbQ.part
+            });
+            // Fallback heuristic (dùng khi AI không khả dụng): suy topic yếu từ từ khóa.
             if (dbQ.question_content.toLowerCase().includes('before') || dbQ.question_content.toLowerCase().includes('after')) {
               weakTopics.add('Mệnh đề trạng ngữ chỉ thời gian (Gerund after prepositions)');
             } else if (dbQ.question_content.toLowerCase().includes('highly') || dbQ.question_content.toLowerCase().includes('quickly')) {
@@ -268,8 +275,18 @@ router.post('/session/submit', authenticateToken, async (req, res) => {
       });
     }
 
-    // Limit to maximum 3 weak topics
-    const recommendations = Array.from(weakTopics).slice(0, 3);
+    // Ưu tiên phân tích AI thật (Claude). Nếu thiếu API key hoặc lỗi -> fallback heuristic.
+    let recommendations = [];
+    if (wrongItems.length > 0) {
+      try {
+        recommendations = await analyzeWeaknesses(wrongItems);
+      } catch (aiErr) {
+        console.warn('AI Mentor analysis fallback to heuristic:', aiErr.message);
+      }
+    }
+    if (recommendations.length === 0) {
+      recommendations = Array.from(weakTopics).slice(0, 3);
+    }
     if (recommendations.length === 0) {
       recommendations.push('Không có lỗi sai nghiêm trọng. Cú pháp của bạn rất vững chắc!');
     }

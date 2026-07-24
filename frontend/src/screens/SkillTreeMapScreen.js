@@ -7,11 +7,33 @@ import {
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
+  Modal,
   Platform,
 } from 'react-native';
 
 import SecureStore from '../utils/storage';
 import { BACKEND_URL } from '../config';
+
+// Mô tả nội dung học của từng node (client-side, khớp seed migration 11).
+// Backend chỉ trả label/branch/status; phần mô tả gợi ý học đặt ở đây cho gọn.
+const NODE_DETAILS = {
+  START: 'Điểm khởi đầu hành trình TOEIC. Hoàn thành bài kiểm tra đầu vào để mở khóa 2 nhánh Nghe và Đọc.',
+  'R-01': 'Nền tảng ngữ pháp Part 5: thì động từ, giới từ, liên từ. Xây móng vững trước khi vào từ vựng.',
+  'L-01': 'Nền tảng nghe hiểu Part 1: mô tả tranh, nhận diện âm và từ khóa cơ bản.',
+  'R-02': 'Mở rộng vốn từ vựng Part 5-6: từ đồng nghĩa, cụm từ cố định (collocations) hay gặp.',
+  'L-02': 'Luyện nghe câu hỏi - đáp Part 2: nhận diện dạng câu hỏi Wh-, Yes/No và bẫy đồng âm.',
+  'R-03': 'Đọc hiểu đoạn văn Part 7: kỹ thuật scan, skim và tìm ý chính, suy luận.',
+  'L-03': 'Nghe hội thoại và bài nói Part 3-4: bắt ý chính, chi tiết và mục đích người nói.',
+  'R-STAR': 'Thử thách trùm nhánh Đọc: bài test tổng hợp Part 5-7 áp lực thời gian.',
+  'L-STAR': 'Thử thách trùm nhánh Nghe: bài test tổng hợp Part 1-4 tốc độ cao.',
+  BOSS: 'Trận chiến cuối: full mock test mô phỏng kỳ thi TOEIC thật để chinh phục danh hiệu Champion.',
+};
+
+const STATUS_LABEL = {
+  completed: 'Đã hoàn thành',
+  active: 'Đang mở khóa',
+  locked: 'Chưa mở khóa',
+};
 
 /**
  * SkillTreeMapScreen — Lộ Trình Kỹ Năng (IA §10.2)
@@ -49,13 +71,19 @@ const STATUS_STYLE = {
   },
 };
 
-function SkillNode({ node }) {
+function SkillNode({ node, onPress }) {
   const s = STATUS_STYLE[node.status] || STATUS_STYLE.locked;
   const isBoss = node.nodeType === 'boss' || node.nodeType === 'final_boss';
   const size = node.nodeType === 'final_boss' ? 76 : isBoss ? 60 : 54;
 
   return (
-    <View style={styles.nodeWrap}>
+    <TouchableOpacity
+      style={styles.nodeWrap}
+      onPress={() => onPress(node)}
+      activeOpacity={0.7}
+      accessibilityRole="button"
+      accessibilityLabel={`${node.label}, ${STATUS_LABEL[node.status] || ''}`}
+    >
       <View
         style={[
           styles.node,
@@ -81,7 +109,7 @@ function SkillNode({ node }) {
       >
         {node.label}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -89,6 +117,7 @@ export default function SkillTreeMapScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [tree, setTree] = useState(null);
+  const [selectedNode, setSelectedNode] = useState(null);
 
   useEffect(() => {
     fetchSkillTree();
@@ -138,7 +167,7 @@ export default function SkillTreeMapScreen({ navigation }) {
         return (
           <View key={tier} style={styles.rowCenter}>
             {core.map((n) => (
-              <SkillNode key={n.id} node={n} />
+              <SkillNode key={n.id} node={n} onPress={setSelectedNode} />
             ))}
           </View>
         );
@@ -149,12 +178,12 @@ export default function SkillTreeMapScreen({ navigation }) {
         <View key={tier} style={styles.rowSplit}>
           <View style={styles.branchCol}>
             {listening.map((n) => (
-              <SkillNode key={n.id} node={n} />
+              <SkillNode key={n.id} node={n} onPress={setSelectedNode} />
             ))}
           </View>
           <View style={styles.branchCol}>
             {reading.map((n) => (
-              <SkillNode key={n.id} node={n} />
+              <SkillNode key={n.id} node={n} onPress={setSelectedNode} />
             ))}
           </View>
         </View>
@@ -210,6 +239,75 @@ export default function SkillTreeMapScreen({ navigation }) {
           </ScrollView>
         </>
       )}
+
+      {/* Node detail modal */}
+      <Modal
+        visible={!!selectedNode}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setSelectedNode(null)}
+      >
+        <TouchableOpacity
+          style={styles.modalOverlay}
+          activeOpacity={1}
+          onPress={() => setSelectedNode(null)}
+        >
+          <TouchableOpacity style={styles.modalCard} activeOpacity={1}>
+            {selectedNode && (
+              <>
+                <View
+                  style={[
+                    styles.modalBadge,
+                    { borderColor: (STATUS_STYLE[selectedNode.status] || STATUS_STYLE.locked).border },
+                  ]}
+                >
+                  <Text style={styles.modalBadgeSymbol}>
+                    {(STATUS_STYLE[selectedNode.status] || STATUS_STYLE.locked).symbol}
+                  </Text>
+                </View>
+                <Text style={styles.modalTitle}>{selectedNode.label}</Text>
+                <Text
+                  style={[
+                    styles.modalStatus,
+                    { color: (STATUS_STYLE[selectedNode.status] || STATUS_STYLE.locked).border },
+                  ]}
+                >
+                  {STATUS_LABEL[selectedNode.status] || 'Chưa mở khóa'}
+                </Text>
+                <Text style={styles.modalDesc}>
+                  {NODE_DETAILS[selectedNode.id] || 'Nội dung học của node này sẽ sớm được cập nhật.'}
+                </Text>
+                <Text style={styles.modalMeta}>
+                  Yêu cầu mở khóa: Rank {selectedNode.unlockRank}
+                </Text>
+                {selectedNode.status === 'locked' ? (
+                  <View style={[styles.modalActionBtn, styles.modalActionBtnLocked]}>
+                    <Text style={styles.modalActionTextLocked}>
+                      🔒 Đạt Rank {selectedNode.unlockRank} để mở khóa
+                    </Text>
+                  </View>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.modalActionBtn}
+                    onPress={() => {
+                      setSelectedNode(null);
+                      navigation.navigate('HomeDashboard');
+                    }}
+                  >
+                    <Text style={styles.modalActionText}>Bắt đầu học nhiệm vụ hôm nay</Text>
+                  </TouchableOpacity>
+                )}
+                <TouchableOpacity
+                  style={styles.modalCloseBtn}
+                  onPress={() => setSelectedNode(null)}
+                >
+                  <Text style={styles.modalCloseText}>Đóng</Text>
+                </TouchableOpacity>
+              </>
+            )}
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
 
       {/* Bottom Bar Navigation — Skill Tree active */}
       <View style={styles.bottomBar}>
@@ -429,5 +527,92 @@ const styles = StyleSheet.create({
     textShadowColor: 'rgba(210, 187, 255, 0.5)',
     textShadowOffset: { width: 0, height: 0 },
     textShadowRadius: 8,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 32,
+  },
+  modalCard: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: '#1c1c2b',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.12)',
+    padding: 24,
+    alignItems: 'center',
+  },
+  modalBadge: {
+    width: 64,
+    height: 64,
+    borderRadius: 32,
+    borderWidth: 2,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 14,
+  },
+  modalBadgeSymbol: {
+    fontSize: 26,
+    color: '#f8fafc',
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#F1F5F9',
+    textAlign: 'center',
+  },
+  modalStatus: {
+    fontSize: 12,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginTop: 6,
+  },
+  modalDesc: {
+    fontSize: 14,
+    lineHeight: 22,
+    color: '#CBD5E1',
+    textAlign: 'center',
+    marginTop: 14,
+  },
+  modalMeta: {
+    fontSize: 12,
+    color: '#94A3B8',
+    marginTop: 12,
+  },
+  modalActionBtn: {
+    marginTop: 20,
+    backgroundColor: '#7c3aed',
+    borderRadius: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    width: '100%',
+    alignItems: 'center',
+  },
+  modalActionBtnLocked: {
+    backgroundColor: 'rgba(255, 255, 255, 0.06)',
+  },
+  modalActionText: {
+    color: '#fff',
+    fontWeight: '800',
+    fontSize: 14,
+  },
+  modalActionTextLocked: {
+    color: '#94A3B8',
+    fontWeight: '700',
+    fontSize: 13,
+  },
+  modalCloseBtn: {
+    marginTop: 10,
+    paddingVertical: 8,
+  },
+  modalCloseText: {
+    color: '#94A3B8',
+    fontSize: 13,
+    fontWeight: '600',
   },
 });

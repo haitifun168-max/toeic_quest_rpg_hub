@@ -1,7 +1,14 @@
 /**
  * AudioPlayer.js
  * Component trình phát âm thanh cho các bài nghe TOEIC Listening (Part 1 - 4).
- * Thiết kế Glassmorphism hiện đại, hỗ trợ Play/Pause, tua thời gian và điều chỉnh tốc độ đọc.
+ *
+ * Phát audio THẬT bằng Text-To-Speech (không cần file audio đi kèm):
+ *   - Web  : Web Speech API (window.speechSynthesis) — có sẵn trình duyệt.
+ *   - Native: expo-speech nếu cài đặt được; nếu không, nút phát bị vô hiệu hóa
+ *             kèm thông báo thay vì giả lập.
+ *
+ * Ưu tiên đọc `text` (transcript câu nghe). Hỗ trợ Play/Pause, Replay và đổi
+ * tốc độ đọc (1x / 1.25x / 1.5x) đúng FR-5.
  */
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -10,83 +17,99 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ActivityIndicator,
+  Platform,
 } from 'react-native';
 
-export default function AudioPlayer({ audioUrl, title = 'Nội dung bài nghe TOEIC' }) {
+// Nạp expo-speech (native) một cách an toàn — không vỡ nếu chưa cài.
+let ExpoSpeech = null;
+if (Platform.OS !== 'web') {
+  try {
+    ExpoSpeech = require('expo-speech');
+  } catch (e) {
+    ExpoSpeech = null;
+  }
+}
+
+const SPEEDS = [1.0, 1.25, 1.5];
+
+export default function AudioPlayer({ text, title = 'Nội dung bài nghe TOEIC' }) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [position, setPosition] = useState(0); // in seconds
-  const [duration, setDuration] = useState(45); // default mock 45s
   const [playbackSpeed, setPlaybackSpeed] = useState(1.0);
-  const [isLoading, setIsLoading] = useState(false);
 
-  const timerRef = useRef(null);
+  const speedRef = useRef(playbackSpeed);
+  speedRef.current = playbackSpeed;
 
-  useEffect(() => {
-    // Reset state when audioUrl changes
+  const webUtteranceRef = useRef(null);
+
+  // Web Speech khả dụng?
+  const webSpeechAvailable =
+    Platform.OS === 'web' &&
+    typeof window !== 'undefined' &&
+    typeof window.speechSynthesis !== 'undefined';
+
+  const canPlay = !!text && (webSpeechAvailable || !!ExpoSpeech);
+
+  const stop = () => {
+    if (webSpeechAvailable) {
+      window.speechSynthesis.cancel();
+    } else if (ExpoSpeech) {
+      ExpoSpeech.stop();
+    }
     setIsPlaying(false);
-    setPosition(0);
-    if (timerRef.current) clearInterval(timerRef.current);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [audioUrl]);
+  };
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
-      pauseAudio();
-    } else {
-      playAudio();
+  // Dừng đọc khi đổi câu (text thay đổi) hoặc unmount.
+  useEffect(() => {
+    return () => stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [text]);
+
+  const play = () => {
+    if (!canPlay) return;
+
+    if (webSpeechAvailable) {
+      window.speechSynthesis.cancel();
+      const utterance = new window.SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = speedRef.current;
+      utterance.onend = () => setIsPlaying(false);
+      utterance.onerror = () => setIsPlaying(false);
+      webUtteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+      setIsPlaying(true);
+    } else if (ExpoSpeech) {
+      ExpoSpeech.stop();
+      ExpoSpeech.speak(text, {
+        language: 'en-US',
+        rate: speedRef.current,
+        onDone: () => setIsPlaying(false),
+        onStopped: () => setIsPlaying(false),
+        onError: () => setIsPlaying(false),
+      });
+      setIsPlaying(true);
     }
   };
 
-  const playAudio = () => {
-    setIsPlaying(true);
-    timerRef.current = setInterval(() => {
-      setPosition((prev) => {
-        if (prev >= duration) {
-          clearInterval(timerRef.current);
-          setIsPlaying(false);
-          return 0;
-        }
-        return prev + 1;
-      });
-    }, 1000 / playbackSpeed);
-  };
-
-  const pauseAudio = () => {
-    setIsPlaying(false);
-    if (timerRef.current) clearInterval(timerRef.current);
+  const togglePlay = () => {
+    if (isPlaying) {
+      stop();
+    } else {
+      play();
+    }
   };
 
   const changeSpeed = () => {
-    const speeds = [1.0, 1.25, 1.5];
-    const nextIndex = (speeds.indexOf(playbackSpeed) + 1) % speeds.length;
-    const newSpeed = speeds[nextIndex];
+    const nextIndex = (SPEEDS.indexOf(playbackSpeed) + 1) % SPEEDS.length;
+    const newSpeed = SPEEDS[nextIndex];
     setPlaybackSpeed(newSpeed);
-
+    // Nếu đang đọc, phát lại với tốc độ mới.
     if (isPlaying) {
-      if (timerRef.current) clearInterval(timerRef.current);
-      timerRef.current = setInterval(() => {
-        setPosition((prev) => {
-          if (prev >= duration) {
-            clearInterval(timerRef.current);
-            setIsPlaying(false);
-            return 0;
-          }
-          return prev + 1;
-        });
-      }, 1000 / newSpeed);
+      stop();
+      // speedRef cập nhật ở lần render kế; dùng giá trị mới trực tiếp.
+      speedRef.current = newSpeed;
+      setTimeout(play, 50);
     }
   };
-
-  const formatTime = (secs) => {
-    const minutes = Math.floor(secs / 60);
-    const seconds = Math.floor(secs % 60);
-    return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  };
-
-  const progressPercentage = (position / duration) * 100;
 
   return (
     <View style={styles.card}>
@@ -97,48 +120,41 @@ export default function AudioPlayer({ audioUrl, title = 'Nội dung bài nghe TO
         <View style={styles.titleContainer}>
           <Text style={styles.title} numberOfLines={1}>{title}</Text>
           <Text style={styles.subtitle}>
-            {isPlaying ? `Đang phát (${playbackSpeed}x)` : 'Sẵn sàng phát'}
+            {!canPlay
+              ? 'Trình phát âm thanh không khả dụng trên thiết bị này'
+              : isPlaying
+              ? `Đang phát (${playbackSpeed}x)`
+              : 'Nhấn để nghe'}
           </Text>
         </View>
-        <TouchableOpacity style={styles.speedBtn} onPress={changeSpeed}>
+        <TouchableOpacity
+          style={[styles.speedBtn, !canPlay && styles.disabled]}
+          onPress={changeSpeed}
+          disabled={!canPlay}
+        >
           <Text style={styles.speedText}>{playbackSpeed}x</Text>
         </TouchableOpacity>
-      </View>
-
-      {/* Progress Bar */}
-      <View style={styles.progressContainer}>
-        <View style={styles.progressBarBackground}>
-          <View style={[styles.progressBarFill, { width: `${progressPercentage}%` }]} />
-        </View>
-        <View style={styles.timeRow}>
-          <Text style={styles.timeText}>{formatTime(position)}</Text>
-          <Text style={styles.timeText}>{formatTime(duration)}</Text>
-        </View>
       </View>
 
       {/* Controls */}
       <View style={styles.controlsRow}>
         <TouchableOpacity
-          style={styles.seekBtn}
-          onPress={() => setPosition((prev) => Math.max(0, prev - 5))}
+          style={[styles.replayBtn, !canPlay && styles.disabled]}
+          onPress={play}
+          disabled={!canPlay}
         >
-          <Text style={styles.seekBtnText}>-5s</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.playBtn} onPress={togglePlayPause}>
-          {isLoading ? (
-            <ActivityIndicator color="#FFFFFF" size="small" />
-          ) : (
-            <Text style={styles.playIcon}>{isPlaying ? '⏸' : '▶'}</Text>
-          )}
+          <Text style={styles.replayBtnText}>↻ Nghe lại</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.seekBtn}
-          onPress={() => setPosition((prev) => Math.min(duration, prev + 5))}
+          style={[styles.playBtn, !canPlay && styles.disabled]}
+          onPress={togglePlay}
+          disabled={!canPlay}
         >
-          <Text style={styles.seekBtnText}>+5s</Text>
+          <Text style={styles.playIcon}>{isPlaying ? '⏸' : '▶'}</Text>
         </TouchableOpacity>
+
+        <View style={styles.replayBtn} />
       </View>
     </View>
   );
@@ -200,58 +216,39 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '700',
   },
-  progressContainer: {
-    marginVertical: 6,
-  },
-  progressBarBackground: {
-    height: 6,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
-    borderRadius: 3,
-    overflow: 'hidden',
-  },
-  progressBarFill: {
-    height: '100%',
-    backgroundColor: '#6366F1',
-    borderRadius: 3,
-  },
-  timeRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 4,
-  },
-  timeText: {
-    color: '#64748B',
-    fontSize: 11,
+  disabled: {
+    opacity: 0.4,
   },
   controlsRow: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 8,
-    gap: 16,
   },
-  seekBtn: {
+  replayBtn: {
+    minWidth: 90,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 8,
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    alignItems: 'center',
   },
-  seekBtnText: {
+  replayBtnText: {
     color: '#CBD5E1',
     fontSize: 12,
-    fontWeight: '500',
+    fontWeight: '600',
   },
   playBtn: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     backgroundColor: '#6366F1',
     justifyContent: 'center',
     alignItems: 'center',
   },
   playIcon: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
   },
 });

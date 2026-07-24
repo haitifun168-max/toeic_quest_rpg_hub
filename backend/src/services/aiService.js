@@ -86,8 +86,56 @@ Trả về ngắn gọn tiếng Việt:
   return await callClaude(messages, 256);
 }
 
+/**
+ * Phân tích các câu trả lời sai và trả về tối đa 3 chủ điểm yếu (tiếng Việt)
+ * để AI Mentor gợi ý ôn tập ở màn Session Summary.
+ *
+ * wrongItems: [{ questionText, correctAnswer, userAnswer, part }]
+ * Trả về mảng string. Ném lỗi nếu thiếu key/parse fail để caller fallback.
+ */
+async function analyzeWeaknesses(wrongItems) {
+  if (!Array.isArray(wrongItems) || wrongItems.length === 0) {
+    return [];
+  }
+
+  // Trong test: không gọi network, để caller dùng fallback heuristic (deterministic).
+  if (process.env.NODE_ENV === 'test') {
+    throw new Error('AI disabled in test environment');
+  }
+
+  const itemsText = wrongItems
+    .map(
+      (it, i) =>
+        `${i + 1}. [Part ${it.part || '?'}] "${it.questionText}" | Đáp án đúng: ${it.correctAnswer} | Người học chọn: ${it.userAnswer}`
+    )
+    .join('\n');
+
+  const prompt = `Bạn là AI Mentor trong game TOEIC Quest RPG. Dưới đây là các câu người học trả lời SAI:
+${itemsText}
+
+Phân tích và rút ra tối đa 3 chủ điểm ngữ pháp/kỹ năng người học cần ôn tập.
+Chỉ trả về JSON array các chuỗi tiếng Việt ngắn gọn (mỗi chuỗi <= 90 ký tự), không thêm giải thích.
+Ví dụ: ["Thì hiện tại hoàn thành", "Giới từ chỉ thời gian", "Từ vựng thương mại"]`;
+
+  const raw = await callClaude([{ role: 'user', content: prompt }], 256);
+
+  // Trích JSON array từ output (phòng khi model bọc thêm text).
+  const match = raw.match(/\[[\s\S]*\]/);
+  if (!match) {
+    throw new Error('AI weakness analysis: no JSON array in response');
+  }
+  const parsed = JSON.parse(match[0]);
+  if (!Array.isArray(parsed)) {
+    throw new Error('AI weakness analysis: parsed value is not an array');
+  }
+  return parsed
+    .filter((s) => typeof s === 'string' && s.trim().length > 0)
+    .slice(0, 3);
+}
+
 module.exports = {
   callClaude,
   generateDiagnosticReport,
-  explainQuestion
+  explainQuestion,
+  analyzeWeaknesses
 };

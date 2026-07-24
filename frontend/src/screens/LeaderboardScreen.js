@@ -22,6 +22,7 @@ export default function LeaderboardScreen() {
   const [tab, setTab] = useState('elo'); // 'elo', 'kp', 'streak'
   const [leaderboard, setLeaderboard] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetchLeaderboard(tab);
@@ -29,14 +30,20 @@ export default function LeaderboardScreen() {
 
   const fetchLeaderboard = async (selectedTab) => {
     setLoading(true);
+    setError(false);
     try {
       const res = await fetch(`${BACKEND_URL}/api/leaderboard?type=${selectedTab}`);
       const data = await res.json();
-      if (data.ok && data.data && data.data.leaderboard) {
+      if (data.ok && data.data && Array.isArray(data.data.leaderboard)) {
         setLeaderboard(data.data.leaderboard);
+      } else {
+        setLeaderboard([]);
+        setError(true);
       }
     } catch (e) {
       console.warn('Failed to fetch leaderboard:', e);
+      setLeaderboard([]);
+      setError(true);
     } finally {
       setLoading(false);
     }
@@ -97,7 +104,27 @@ export default function LeaderboardScreen() {
         <FlatList
           data={leaderboard}
           keyExtractor={(item, index) => item.user_id || index.toString()}
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={
+            leaderboard.length === 0 ? styles.emptyListContent : styles.listContent
+          }
+          ListEmptyComponent={
+            <View style={styles.emptyState}>
+              <Text style={styles.emptyIcon}>{error ? '📡' : '🏆'}</Text>
+              <Text style={styles.emptyTitle}>
+                {error ? 'Không tải được bảng xếp hạng' : 'Chưa có ai trên bảng xếp hạng'}
+              </Text>
+              <Text style={styles.emptySubtitle}>
+                {error
+                  ? 'Kiểm tra kết nối mạng và thử lại.'
+                  : 'Hãy là người đầu tiên leo hạng bằng cách học và thi đấu!'}
+              </Text>
+              {error && (
+                <TouchableOpacity style={styles.retryBtn} onPress={() => fetchLeaderboard(tab)}>
+                  <Text style={styles.retryText}>Thử lại</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          }
           renderItem={({ item }) => (
             <View style={[styles.itemCard, item.rank <= 3 && styles.topItemCard]}>
               <View style={styles.rankContainer}>
@@ -178,6 +205,44 @@ const styles = StyleSheet.create({
   listContent: {
     paddingHorizontal: 16,
     paddingBottom: 24,
+  },
+  emptyListContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  emptyState: {
+    alignItems: 'center',
+    paddingHorizontal: 32,
+  },
+  emptyIcon: {
+    fontSize: 48,
+    marginBottom: 16,
+  },
+  emptyTitle: {
+    color: '#F8FAFC',
+    fontSize: 16,
+    fontWeight: '700',
+    textAlign: 'center',
+  },
+  emptySubtitle: {
+    color: '#94A3B8',
+    fontSize: 13,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginTop: 8,
+  },
+  retryBtn: {
+    marginTop: 20,
+    backgroundColor: 'rgba(99, 102, 241, 0.15)',
+    borderWidth: 1,
+    borderColor: '#6366F1',
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
+  },
+  retryText: {
+    color: '#818CF8',
+    fontWeight: '700',
   },
   itemCard: {
     flexDirection: 'row',
