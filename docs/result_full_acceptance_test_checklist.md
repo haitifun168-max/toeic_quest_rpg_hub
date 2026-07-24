@@ -29,7 +29,7 @@
 | Leaderboard | Bảng xếp hạng tải và sắp xếp đúng | Dana | **Pass** | 0 | |
 | Security | Token, rate limit, quyền truy cập dữ liệu | Vex | **Pass** | 0 | Chặn spoofed X-Forwarded-For |
 | UI/UX | Không màn trắng, không loading vô hạn, responsive | Dana | **Pass** | 0 | |
-| Automation | Unit/integration/export/smoke scripts | Dana | **Pass** | 0 | 107 Jest tests & Playwright E2E smoke tests passed on Prod |
+| Automation | Unit/integration/export/smoke scripts | Dana | **Pass** | 0 | 107 Jest tests & Playwright E2E smoke (auth, onboarding & placement) passed |
 
 ### Tổng kết quyết định
 
@@ -85,7 +85,7 @@
 - [x] Không có màn trắng, crash, hoặc loading vô hạn.
 
 ### 4. Placement test
-- [x] User mới thấy luồng làm placement test.
+- [x] User mới thấy luồng làm placement test (Tự động ép buộc chuyển hướng sang GoalSetting -> PlacementTest -> PlacementResult nếu character_name là null).
 - [x] Tải câu hỏi placement thành công.
 - [x] Có thể chọn đáp án và chuyển câu.
 - [x] Không cho submit rỗng ngoài quy định thiết kế (`/submit` kiểm tra và chặn nếu mảng rỗng).
