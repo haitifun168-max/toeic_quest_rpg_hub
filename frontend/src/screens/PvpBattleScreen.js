@@ -81,6 +81,7 @@ export default function PvpBattleScreen() {
   const roundTimerRef = useRef(null);
   const preMatchTimerRef = useRef(null);
   const questionStartTimeRef = useRef(Date.now());
+  const userIdRef = useRef('');
 
   useEffect(() => {
     // 1. Khởi chạy 5 giây Pre-match
@@ -116,6 +117,7 @@ export default function PvpBattleScreen() {
       let currentUserId = '';
       if (cachedProfileStr) {
         currentUserId = JSON.parse(cachedProfileStr).id;
+        userIdRef.current = currentUserId;
       }
 
       const socket = existingSocket || io(BACKEND_URL, {
@@ -173,7 +175,7 @@ export default function PvpBattleScreen() {
         setShowRoundResult(true);
 
         // Update scores
-        const isPlayerA = players.playerA.id === currentUserId;
+        const isPlayerA = players.playerA.id === userIdRef.current;
         const myResult = isPlayerA ? data.playerAResult : data.playerBResult;
         const oppResult = isPlayerA ? data.playerBResult : data.playerAResult;
 
@@ -188,7 +190,7 @@ export default function PvpBattleScreen() {
         // Navigate to final result page
         navigation.navigate('PvpResult', {
           resultData: data,
-          isWinner: data.winnerId === socket.userId
+          isWinner: data.winnerId === userIdRef.current
         });
       });
 
