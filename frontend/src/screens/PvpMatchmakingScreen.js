@@ -76,7 +76,7 @@ export default function PvpMatchmakingScreen() {
       
       // Establish Socket connection
       const socket = io(BACKEND_URL, {
-        transports: ['websocket'],
+        transports: ['polling', 'websocket'],
         forceNew: true
       });
 

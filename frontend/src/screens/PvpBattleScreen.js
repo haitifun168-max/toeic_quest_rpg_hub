@@ -113,7 +113,7 @@ export default function PvpBattleScreen() {
     try {
       const token = await SecureStore.getItemAsync('user_token');
       const socket = existingSocket || io(BACKEND_URL, {
-        transports: ['websocket'],
+        transports: ['polling', 'websocket'],
         forceNew: true
       });
 
