@@ -9,7 +9,8 @@ import {
   Image,
   ActivityIndicator,
   Platform,
-  Dimensions
+  Dimensions,
+  Modal
 } from 'react-native';
 import QuestSelectionSheet from '../components/QuestSelectionSheet';
 
@@ -46,6 +47,7 @@ export default function HomeDashboardScreen({ navigation }) {
   const [maxStamina, setMaxStamina] = useState(15);
   const [loading, setLoading] = useState(true);
   const [isQuestSheetVisible, setIsQuestSheetVisible] = useState(false);
+  const [isAiMentorModalVisible, setIsAiMentorModalVisible] = useState(false);
   useEffect(() => {
     fetchDashboardData();
   }, []);
@@ -324,23 +326,23 @@ export default function HomeDashboardScreen({ navigation }) {
         <View style={styles.aiMentorCard}>
           <TouchableOpacity
             style={styles.aiTextContainer}
-            onPress={() => navigation.navigate('DungeonSelection')}
+            onPress={() => setIsAiMentorModalVisible(true)}
             activeOpacity={0.85}
             accessibilityRole="button"
-            accessibilityLabel="AI Mentor, bắt đầu bài luyện nhanh"
+            accessibilityLabel="AI Mentor, xem gợi ý học tập"
           >
             <View style={styles.aiHeader}>
               <Text style={styles.aiHeaderTag}>AI MENTOR</Text>
             </View>
             <Text style={styles.aiMessage}>"Bạn đang gặp khó ở Part 5, hãy thử một bài luyện nhanh?"</Text>
             <View style={styles.aiStartBtn}>
-              <Text style={styles.aiStartBtnText}>Bắt đầu ngay ⚡</Text>
+              <Text style={styles.aiStartBtnText}>Xem gợi ý ⚡</Text>
             </View>
           </TouchableOpacity>
           
           <TouchableOpacity
             style={styles.orbWrapper}
-            onPress={() => navigation.navigate('DungeonSelection')}
+            onPress={() => setIsAiMentorModalVisible(true)}
             activeOpacity={0.85}
             accessibilityRole="button"
             accessibilityLabel="Mở AI Mentor"
@@ -357,6 +359,44 @@ export default function HomeDashboardScreen({ navigation }) {
         </View>
 
       </ScrollView>
+
+      <Modal
+        visible={isAiMentorModalVisible}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setIsAiMentorModalVisible(false)}
+      >
+        <View style={styles.aiModalOverlay}>
+          <View style={styles.aiModalCard}>
+            <View style={styles.aiModalBadge}>
+              <Text style={styles.aiModalBadgeText}>AI</Text>
+            </View>
+            <Text style={styles.aiModalTitle}>AI Mentor gợi ý hôm nay</Text>
+            <Text style={styles.aiModalBody}>
+              AI Mentor sẽ gợi ý lộ trình học và phân tích lỗi bằng văn bản sau mỗi phiên học. Hôm nay bạn nên ưu tiên hoàn thành Daily Quest để hệ thống ghi nhận tiến độ, giữ Streak và tạo dữ liệu phân tích chính xác hơn.
+            </Text>
+            <View style={styles.aiModalTipBox}>
+              <Text style={styles.aiModalTipTitle}>Gợi ý nhanh</Text>
+              <Text style={styles.aiModalTipText}>Bắt đầu với nhiệm vụ Từ vựng hoặc Ngữ pháp Part 5 nếu bạn chưa biết học gì trước.</Text>
+            </View>
+            <TouchableOpacity
+              style={styles.aiModalPrimaryBtn}
+              onPress={() => {
+                setIsAiMentorModalVisible(false);
+                setTimeout(() => setIsQuestSheetVisible(true), 120);
+              }}
+            >
+              <Text style={styles.aiModalPrimaryText}>Xem Daily Quests</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.aiModalCloseBtn}
+              onPress={() => setIsAiMentorModalVisible(false)}
+            >
+              <Text style={styles.aiModalCloseText}>Đóng</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
       {/* Bottom Bar Navigation */}
       <View style={styles.bottomBar}>
@@ -846,6 +886,97 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: '#4c1d95',
     fontWeight: '900',
+  },
+  aiModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.72)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 24,
+  },
+  aiModalCard: {
+    width: '100%',
+    maxWidth: 380,
+    backgroundColor: '#1c1c2b',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(210, 187, 255, 0.28)',
+    padding: 22,
+    alignItems: 'center',
+  },
+  aiModalBadge: {
+    width: 58,
+    height: 58,
+    borderRadius: 29,
+    backgroundColor: '#7c3aed',
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.35)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 14,
+  },
+  aiModalBadgeText: {
+    color: '#fff',
+    fontSize: 20,
+    fontWeight: '900',
+    letterSpacing: 0.6,
+  },
+  aiModalTitle: {
+    fontSize: 18,
+    fontWeight: '900',
+    color: '#F1F5F9',
+    textAlign: 'center',
+  },
+  aiModalBody: {
+    fontSize: 13,
+    lineHeight: 20,
+    color: '#CBD5E1',
+    textAlign: 'center',
+    marginTop: 12,
+  },
+  aiModalTipBox: {
+    width: '100%',
+    marginTop: 16,
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: 'rgba(124, 58, 237, 0.12)',
+    borderWidth: 1,
+    borderColor: 'rgba(124, 58, 237, 0.28)',
+  },
+  aiModalTipTitle: {
+    fontSize: 11,
+    color: '#d2bbff',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+  },
+  aiModalTipText: {
+    marginTop: 6,
+    fontSize: 12,
+    lineHeight: 18,
+    color: '#E2E8F0',
+  },
+  aiModalPrimaryBtn: {
+    width: '100%',
+    marginTop: 18,
+    backgroundColor: '#7c3aed',
+    borderRadius: 12,
+    paddingVertical: 13,
+    alignItems: 'center',
+  },
+  aiModalPrimaryText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: '900',
+  },
+  aiModalCloseBtn: {
+    paddingVertical: 10,
+    marginTop: 6,
+  },
+  aiModalCloseText: {
+    color: '#94A3B8',
+    fontSize: 13,
+    fontWeight: '700',
   },
   bottomBar: {
     position: 'absolute',
