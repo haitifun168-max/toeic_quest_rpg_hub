@@ -187,6 +187,7 @@
 - [x] `npm test` hoặc `npx jest --runInBand --silent` pass (107/107 tests pass).
 - [x] `npx expo export --platform web --output-dir dist-web-smoke` pass.
 - [x] Chạy Playwright smoke script (`email-release-gate.js`) vượt qua toàn bộ luồng Auth, Dashboard, Skill Tree, Guild, PvP locked check, và Hồ Sơ trên môi trường Production thành công.
+- [x] Chạy Playwright onboarding smoke script (`onboarding-smoke.js`) vượt qua toàn bộ luồng Đăng ký -> Chọn mục tiêu -> Làm bài test đầu vào -> Kết quả & Đặt tên nhân vật -> Vào Dashboard thành công 100% không còn đóng băng thông báo trên Web.
 
 ---
 
