@@ -79,7 +79,13 @@ export default function HomeDashboardScreen({ navigation }) {
       const profileResult = await profileResponse.json();
 
       if (profileResponse.ok && profileResult.ok) {
-        setProfile(profileResult.data.user);
+        const user = profileResult.data.user;
+        setProfile(user);
+
+        if (!user.target_score) {
+          navigation.replace('GoalSetting');
+          return;
+        }
 
         // Check rank up trigger asynchronously
         try {
