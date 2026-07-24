@@ -3,11 +3,12 @@
 // It follows the glassmorphism dark theme and integrates with the existing navigation.
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, SafeAreaView, ActivityIndicator, Alert, ScrollView, Image, TouchableOpacity, Platform } from 'react-native';
+import { StyleSheet, View, Text, SafeAreaView, ActivityIndicator, ScrollView, Image, TouchableOpacity, Platform } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 
 // Fallback secure store (same as HomeDashboardScreen)
 import SecureStore from '../utils/storage';
+import { showAlert } from '../utils/alertHelper';
 
 import { BACKEND_URL } from '../config';
 
@@ -50,7 +51,7 @@ export default function QuestDetailScreen() {
         setStamina(profileResult.data.user.current_stamina);
       }
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      showAlert('Thất bại', err.message);
     } finally {
       setLoading(false);
     }
@@ -104,7 +105,7 @@ export default function QuestDetailScreen() {
           style={styles.startBtn} 
           onPress={() => {
             if (stamina <= 0) {
-              Alert.alert('Không đủ Stamina', 'Năng lượng học tập (Stamina) của bạn đã hết. Vui lòng nghỉ ngơi để phục hồi.');
+              showAlert('Không đủ Stamina', 'Năng lượng học tập (Stamina) của bạn đã hết. Vui lòng nghỉ ngơi để phục hồi.');
               return;
             }
             navigation.navigate('Quiz', { questId });

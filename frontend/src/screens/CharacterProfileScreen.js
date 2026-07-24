@@ -8,11 +8,11 @@ import {
   SafeAreaView,
   Image,
   ActivityIndicator,
-  Alert,
   Platform
 } from 'react-native';
 
 import SecureStore from '../utils/storage';
+import { showAlert } from '../utils/alertHelper';
 import { RANK_NAMES } from '../constants/ranks';
 
 // Fallback SVG rendering logic to avoid crash if react-native-svg is not installed
@@ -93,7 +93,7 @@ export default function CharacterProfileScreen({ navigation }) {
 
       setUser(result.data.user);
     } catch (err) {
-      Alert.alert('Thất bại', err.message);
+      showAlert('Thất bại', err.message);
     } finally {
       setLoading(false);
     }
@@ -167,7 +167,7 @@ export default function CharacterProfileScreen({ navigation }) {
           <Text style={styles.backBtnText}>◀ Dashboard</Text>
         </TouchableOpacity>
         <Text style={styles.appBarTitle}>PROFILE</Text>
-        <TouchableOpacity style={styles.iconButton} onPress={() => Alert.alert('Cài đặt', 'Cài đặt sẽ được cập nhật ở các phase sau.')}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => showAlert('Cài đặt', 'Cài đặt sẽ được cập nhật ở các phase sau.')}>
           <Text style={styles.menuIcon}>⚙️</Text>
         </TouchableOpacity>
       </View>
@@ -311,7 +311,7 @@ export default function CharacterProfileScreen({ navigation }) {
           <Text style={styles.navIcon}>🏰</Text>
           <Text style={styles.navLabel}>Dungeon</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem} onPress={() => Alert.alert('Đang phát triển', 'Cửa hàng Armory sẽ được mở ở Phase tiếp theo.')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => showAlert('Đang phát triển', 'Cửa hàng Armory sẽ được mở ở Phase tiếp theo.')}>
           <Text style={styles.navIcon}>🛍️</Text>
           <Text style={styles.navLabel}>Armory</Text>
         </TouchableOpacity>

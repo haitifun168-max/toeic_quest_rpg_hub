@@ -13,12 +13,11 @@ import {
   ScrollView,
   SafeAreaView,
   ActivityIndicator,
-  Alert,
   Platform,
 } from 'react-native';
-import { useNavigation, useIsFocused } from '@react-navigation/native';
 
 import SecureStore from '../utils/storage';
+import { showAlert } from '../utils/alertHelper';
 
 import { BACKEND_URL } from '../config';
 
@@ -61,7 +60,7 @@ export default function PvpLobbyScreen() {
       }
     } catch (err) {
       console.log('PvPLobby error:', err.message);
-      Alert.alert('Không thể tải sảnh đấu PvP', err.message);
+      showAlert('Không thể tải sảnh đấu PvP', err.message);
       setLobbyData(null);
     } finally {
       setLoading(false);
@@ -71,7 +70,7 @@ export default function PvpLobbyScreen() {
   const handleStartMatchmaking = () => {
     if (!lobbyData) return;
     if (lobbyData.stamina <= 0) {
-      Alert.alert('Hết năng lượng', 'Bạn đã sử dụng hết Stamina đấu PvP hôm nay. Hãy đợi Stamina hồi phục lúc 00h00.');
+      showAlert('Hết năng lượng', 'Bạn đã sử dụng hết Stamina đấu PvP hôm nay. Hãy đợi Stamina hồi phục lúc 00h00.');
       return;
     }
 

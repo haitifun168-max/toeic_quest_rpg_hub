@@ -13,13 +13,13 @@ import {
   SafeAreaView,
   Animated,
   Easing,
-  Alert,
   Platform,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { io } from 'socket.io-client';
 
 import SecureStore from '../utils/storage';
+import { showAlert } from '../utils/alertHelper';
 
 import { BACKEND_URL } from '../config';
 
@@ -92,8 +92,9 @@ export default function PvpMatchmakingScreen() {
       });
 
       socket.on('matchmakingError', (data) => {
-        Alert.alert('Lỗi ghép trận', data.message);
-        navigation.goBack();
+        showAlert('Lỗi ghép trận', data.message, () => {
+          navigation.goBack();
+        });
       });
 
       socket.on('matchFound', (data) => {

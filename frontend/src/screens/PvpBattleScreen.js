@@ -12,13 +12,13 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Animated,
-  Alert,
   Platform,
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { io } from 'socket.io-client';
 
 import SecureStore from '../utils/storage';
+import { showAlert, showConfirm } from '../utils/alertHelper';
 
 import { BACKEND_URL } from '../config';
 
@@ -325,20 +325,13 @@ export default function PvpBattleScreen() {
   };
 
   const handleQuitPrompt = () => {
-    Alert.alert(
+    showConfirm(
       'Rời trận đấu?',
       'Thoát giữa chừng sẽ tính là Thua Cuộc và trừ ELO xếp hạng của bạn. Bạn vẫn muốn thoát?',
-      [
-        { text: 'Tiếp tục đấu', style: 'cancel' },
-        {
-          text: 'Thoát',
-          style: 'destructive',
-          onPress: () => {
-            if (socketRef.current) socketRef.current.disconnect();
-            navigation.navigate('PvpLobby');
-          }
-        }
-      ]
+      () => {
+        if (socketRef.current) socketRef.current.disconnect();
+        navigation.navigate('PvpLobby');
+      }
     );
   };
 
