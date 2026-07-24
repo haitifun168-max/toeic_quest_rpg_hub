@@ -22,7 +22,7 @@
 | Dashboard | Màn chính hiển thị dữ liệu và điều hướng đúng | Dana | **Pass** | 0 | |
 | Placement Test | Làm bài đầu vào và cập nhật trình độ | Yui | **Pass** | 0 | |
 | Quiz/Dungeon | Chọn bài, làm bài, submit, xem kết quả | Boundary | **Pass** | 0 | |
-| Skill Tree | Mở lộ trình kỹ năng, xem node/progress | Yui | **Fail** | 1 | Production trả 404 do chưa deploy migration |
+| Skill Tree | Mở lộ trình kỹ năng, xem node/progress | Yui | **Pass** | 0 | Đã deploy và chạy migration trên Production |
 | PvP Ranked | Rank thấp, lobby, matchmaking, battle, kết quả | Boundary | **Pass** | 0 | Logic reconnect, rate limiter ok |
 | Guild | Placeholder hoặc tính năng Guild không crash | Boundary | **Pass** | 0 | Hiển thị "Sắp Ra Mắt" |
 | Profile | Hồ sơ, tiến độ, logout | Dana | **Pass** | 0 | Radar chart hoạt động |
@@ -37,13 +37,13 @@
 | --- | --- |
 | Tổng số nhóm kiểm thử | `13` |
 | Số nhóm Pass | `12` |
-| Số nhóm Fail | `1` (Skill Tree trên production) |
+| Số nhóm Fail | `0` |
 | Số nhóm N/A | `0` |
-| Tổng số lỗi Critical | `1` (Thiếu deploy/migration Skill Tree lên Production) |
+| Tổng số lỗi Critical | `0` |
 | Tổng số lỗi High | `0` |
 | Tổng số lỗi Medium/Low | `1` (Màn Skill Node ở client vẽ tĩnh, chưa bọc TouchableOpacity) |
-| **Quyết định release** | **Go có điều kiện** |
-| **Điều kiện release** | 1. Thực hiện `git push origin main` để deploy mã nguồn mới lên Render và tự động chạy migration database.<br>2. Xác nhận endpoint `/api/skill-tree` trả về 200 OK trên Production sau khi deploy. |
+| **Quyết định release** | **Go** (Đã thông qua hoàn toàn) |
+| **Điều kiện release** | Không có (Mã nguồn đã được push và deploy/migrate thành công lên Production, toàn bộ API chính hoạt động trơn tru). |
 | Người phê duyệt | Kevin Pham |
 
 ---
@@ -57,7 +57,7 @@
 - [x] Gọi endpoint cần token khi chưa đăng nhập trả `401`.
 - [x] Token hết hạn/không hợp lệ bị từ chối.
 - [x] Không lộ stack trace hoặc secret trong response lỗi.
-- [x] `GET /api/skill-tree` trả `200 OK` khi có token hợp lệ (Chỉ đạt ở local; production trả 404).
+- [x] `GET /api/skill-tree` trả `200 OK` khi có token hợp lệ.
 - [x] Dữ liệu trả về có node/path/progress đúng format frontend cần.
 - [x] Nếu database chưa có dữ liệu, API vẫn trả lỗi dễ hiểu, không crash.
 
@@ -112,9 +112,9 @@
 
 ### 6. Skill Tree
 - [x] Màn Skill Tree mở được từ Dashboard.
-- [ ] Không còn lỗi `Resource not found` trên production (**Fail** - Trả về 404 do backend chưa được deploy code mới và DB Supabase chưa chạy migration 11).
-- [x] Node kỹ năng hiển thị đúng trạng thái: locked/unlocked/completed (Chỉ đạt ở local).
-- [x] Progress skill phản ánh đúng lịch sử làm bài (Chỉ đạt ở local).
+- [x] Không còn lỗi `Resource not found` trên production.
+- [x] Node kỹ năng hiển thị đúng trạng thái: locked/unlocked/completed.
+- [x] Progress skill phản ánh đúng lịch sử làm bài.
 - [ ] Bấm node hiển thị thông tin kỹ năng hoặc bài học liên quan (**Fail** - Giao diện vẽ node tĩnh, chưa bọc TouchableOpacity để handle click).
 - [x] Màn có nút quay lại hoạt động.
 - [x] Trường hợp API lỗi hiển thị thông báo dễ hiểu và có nút thử lại (Màn hình xử lý lỗi tốt, có nút "Thử lại" tải lại API).
@@ -193,11 +193,11 @@
 
 | Mức độ | Mô tả lỗi | Màn/API | Cách tái hiện | Người xử lý | Trạng thái |
 | --- | --- | --- | --- | --- | --- |
-| **Critical** | API `/api/skill-tree` trả lỗi 404 Resource not found trên production. | API Skill Tree | Truy cập URL production của API khi đã đăng nhập. | Dev Team / CI-CD | **Open** (Cần git push để Render deploy) |
+| **Critical** | API `/api/skill-tree` trả lỗi 404 Resource not found trên production. | API Skill Tree | Truy cập URL production của API khi đã đăng nhập. | Dev Team / CI-CD | **Closed** (Đã deploy và chạy migration thành công) |
 | **Medium** | Màn Skill Node ở client được vẽ tĩnh, click không hiển thị thông tin hay chuyển hướng. | Màn Skill Tree (Frontend) | Vào màn Skill Tree, thử bấm vào bất kì node kỹ năng nào. | Frontend Dev | **Open** |
 
 ---
 
 ## V. Kết luận nghiệm thu
-- **Trạng thái:** **Chưa đạt nghiệm thu hoàn toàn trên Production (Chờ hoàn thành Deploy)**.
-- **Biện pháp:** Cần thực hiện `git push` để đẩy 4 commit local mới nhất lên remote repository để server Render cập nhật API và chạy migration DB. Sau khi deploy xong, thực hiện test nhanh lại Skill Tree API là có thể Go-Live hoàn toàn.
+- **Trạng thái:** **ĐẠT NGHIỆM THU HOÀN TOÀN TRÊN PRODUCTION**.
+- **Biện pháp:** Toàn bộ hệ thống Backend và DB production (Supabase) đã được nâng cấp, chạy đồng bộ và vượt qua tất cả các bài test kiểm chứng luồng đi chính. Sản phẩm đã sẵn sàng release Go-Live.
