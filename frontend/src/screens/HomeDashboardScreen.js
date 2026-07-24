@@ -322,22 +322,34 @@ export default function HomeDashboardScreen({ navigation }) {
 
         {/* AI Mentor Recommendation Widget */}
         <View style={styles.aiMentorCard}>
-          <View style={styles.aiTextContainer}>
+          <TouchableOpacity
+            style={styles.aiTextContainer}
+            onPress={() => navigation.navigate('DungeonSelection')}
+            activeOpacity={0.85}
+            accessibilityRole="button"
+            accessibilityLabel="AI Mentor, bắt đầu bài luyện nhanh"
+          >
             <View style={styles.aiHeader}>
               <Text style={styles.aiHeaderTag}>AI MENTOR</Text>
             </View>
             <Text style={styles.aiMessage}>"Bạn đang gặp khó ở Part 5, hãy thử một bài luyện nhanh?"</Text>
-            <TouchableOpacity style={styles.aiStartBtn} onPress={() => navigation.navigate('DungeonSelection')}>
+            <View style={styles.aiStartBtn}>
               <Text style={styles.aiStartBtnText}>Bắt đầu ngay ⚡</Text>
-            </TouchableOpacity>
-          </View>
+            </View>
+          </TouchableOpacity>
           
-          <View style={styles.orbWrapper}>
-            <View style={styles.orbGlow} />
-            <View style={styles.orbCore}>
+          <TouchableOpacity
+            style={styles.orbWrapper}
+            onPress={() => navigation.navigate('DungeonSelection')}
+            activeOpacity={0.85}
+            accessibilityRole="button"
+            accessibilityLabel="Mở AI Mentor"
+          >
+            <View style={styles.orbGlow} pointerEvents="none" />
+            <View style={styles.orbCore} pointerEvents="none">
               <Text style={styles.brainIcon}>🧠</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         </View>
 
       </ScrollView>
@@ -726,7 +738,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     position: 'relative',
-    overflow: 'hidden',
+    overflow: 'visible',
   },
   aiTextContainer: {
     flex: 1,
@@ -767,12 +779,14 @@ const styles = StyleSheet.create({
   },
   orbWrapper: {
     position: 'absolute',
-    right: -10,
-    bottom: -10,
-    width: 100,
-    height: 100,
+    right: 0,
+    bottom: 0,
+    width: 96,
+    height: 96,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
+    elevation: 8,
   },
   orbGlow: {
     position: 'absolute',
