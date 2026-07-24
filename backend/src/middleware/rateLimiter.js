@@ -24,8 +24,7 @@ function rateLimiter({ windowMs = 60 * 1000, max = 10 } = {}) {
   }
 
   const middleware = (req, res, next) => {
-    // Resolve client IP address supporting reverse proxies
-    const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress || req.ip;
+    const ip = req.ip || req.socket.remoteAddress;
     const now = Date.now();
 
     let record = recordMap.get(ip);

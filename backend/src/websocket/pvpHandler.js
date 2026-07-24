@@ -57,9 +57,47 @@ function setupPvpWebsocket(io) {
     console.log(`[WebSocket] Client connected: ${socket.id}`);
 
     // 1. Join Matchmaking
-    socket.on('joinMatchmaking', async (data) => {
+    socket.on('joinMatchmaking', async (data = {}) => {
       try {
-        const { token } = data;
+        const { token, roomId } = data;
+
+        if (roomId) {
+          if (!token) {
+            return socket.emit('matchmakingError', { message: 'Missing authentication token' });
+          }
+
+          let decoded;
+          try {
+            decoded = jwt.verify(token, config.JWT_SECRET);
+          } catch (e) {
+            return socket.emit('matchmakingError', { message: 'Phiên đăng nhập hết hạn.' });
+          }
+
+          const battle = activeBattles.get(roomId);
+          if (!battle) {
+            return socket.emit('matchmakingError', { message: 'Không tìm thấy phòng đấu.' });
+          }
+
+          const existingPlayer = [battle.playerA, battle.playerB].find(player => player.id === decoded.id);
+          if (!existingPlayer) {
+            return socket.emit('matchmakingError', { message: 'Bạn không thuộc phòng đấu này.' });
+          }
+
+          socket.userId = decoded.id;
+          socket.displayName = existingPlayer.displayName;
+          socket.avatarId = existingPlayer.avatarId;
+          socket.elo = existingPlayer.elo;
+          existingPlayer.socketId = socket.id;
+
+          if (battle.disconnectTimeout) {
+            clearTimeout(battle.disconnectTimeout);
+            battle.disconnectTimeout = null;
+          }
+
+          socket.join(roomId);
+          return socket.emit('matchmakingJoined', { roomId });
+        }
+
         if (!token) {
           return socket.emit('matchmakingError', { message: 'Missing authentication token' });
         }
@@ -123,19 +161,23 @@ function setupPvpWebsocket(io) {
     });
 
     // 3. Submit PvP Answer
-    socket.on('submitAnswer', (data) => {
+    socket.on('submitAnswer', (data = {}) => {
       const { roomId, selectedOption, timeSpentMs } = data;
       const userId = socket.userId;
 
-      if (!roomId || !userId) return;
+      if (!roomId || !userId || !['A', 'B', 'C', 'D'].includes(selectedOption)) return;
 
       const battle = activeBattles.get(roomId);
       if (!battle) return;
 
+      const isParticipant = battle.playerA.id === userId || battle.playerB.id === userId;
+      const joinedRoom = socket.rooms && socket.rooms.has(roomId);
+      if (!isParticipant || !joinedRoom) return;
+
       const roundIndex = battle.currentRoundIndex;
       const currentQuestion = battle.questions[roundIndex];
 
-      if (!currentQuestion) return;
+      if (!currentQuestion || battle.finishingRound === roundIndex) return;
 
       // Check if player has already answered this round
       if (!battle.answers[roundIndex]) {
@@ -352,6 +394,8 @@ function startRound(io, roomId, roundIndex) {
     timeLimitSeconds: 20
   });
 
+  battle.finishingRound = null;
+
   // Setup round timeout timer (20 seconds)
   battle.roundTimer = setTimeout(() => {
     finishRound(io, roomId);
@@ -419,7 +463,16 @@ async function finishRound(io, roomId) {
   if (!battle) return;
 
   const roundIndex = battle.currentRoundIndex;
+  if (battle.finishingRound === roundIndex) return;
+  battle.finishingRound = roundIndex;
+
+  if (battle.roundTimer) {
+    clearTimeout(battle.roundTimer);
+    battle.roundTimer = null;
+  }
+
   const question = battle.questions[roundIndex];
+  if (!question) return;
   const roundAnswers = battle.answers[roundIndex] || {};
 
   // Extract player metrics

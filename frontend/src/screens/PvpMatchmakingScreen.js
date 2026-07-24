@@ -100,15 +100,14 @@ export default function PvpMatchmakingScreen() {
         // Match found!
         if (timerRef.current) clearInterval(timerRef.current);
         
-        // Disconnect from matchmaking socket to avoid duplicate events
+        // Navigate to Battle Screen with the active socket still joined to the room
+        const battleSocket = socketRef.current;
         socketRef.current = null;
-        socket.disconnect();
-
-        // Navigate to Battle Screen
         navigation.navigate('PvpBattle', {
           roomId: data.roomId,
           isBotMatch: data.isBotMatch,
-          players: data.players
+          players: data.players,
+          existingSocket: battleSocket
         });
       });
 

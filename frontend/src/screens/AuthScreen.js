@@ -143,47 +143,11 @@ export default function AuthScreen({ navigation }) {
     }
   };
 
-  const handleOAuth = async (provider) => {
-    setLoading(true);
-    try {
-      // Simulate mobile local OAuth login returning user info
-      const mockEmail = `${provider}.user@gmail.com`;
-      const mockName = `${provider === 'google' ? 'Google' : 'Facebook'} Challenger`;
-
-      const response = await fetch(`${BACKEND_URL}/api/auth/oauth`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: mockEmail,
-          displayName: mockName,
-          provider
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok || !result.ok) {
-        throw new Error(result.error?.message || 'OAuth2 authentication failed');
-      }
-
-      const { token, user } = result.data;
-      await SecureStore.setItemAsync('user_token', token);
-      await SecureStore.setItemAsync('user_profile', JSON.stringify(user));
-
-      showAlert(
-        'Liên kết thành công',
-        `Đăng nhập qua ${provider === 'google' ? 'Google' : 'Facebook'} thành công!`,
-        [
-          { text: 'Bắt đầu', onPress: () => navigation?.replace('MainHub') }
-        ]
-      );
-    } catch (error) {
-      showAlert('Thất bại', error.message);
-    } finally {
-      setLoading(false);
-    }
+  const handleOAuth = (provider) => {
+    showAlert(
+      'Chưa hỗ trợ',
+      `Đăng nhập qua ${provider === 'google' ? 'Google' : 'Facebook'} chưa khả dụng trên phiên bản web. Vui lòng đăng nhập bằng email và mật khẩu.`
+    );
   };
 
   return (

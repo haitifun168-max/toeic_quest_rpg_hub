@@ -76,21 +76,21 @@ describe('Rate Limiter Middleware', () => {
     limiter.cleanup();
   });
 
-  it('should support reverse proxies using X-Forwarded-For header', () => {
+  it('should ignore spoofed X-Forwarded-For header values', () => {
     const limiter = rateLimiter({ windowMs: 1000, max: 1 });
     
     req.headers['x-forwarded-for'] = '192.168.1.1';
     limiter(req, res, next);
     expect(next).toHaveBeenCalledTimes(1);
 
-    // Different IP
     const req2 = {
       headers: { 'x-forwarded-for': '192.168.1.2' },
-      socket: {},
+      socket: { remoteAddress: '127.0.0.1' },
       ip: '127.0.0.1'
     };
     limiter(req2, res, next);
-    expect(next).toHaveBeenCalledTimes(2);
+    expect(next).toHaveBeenCalledTimes(1);
+    expect(res.status).toHaveBeenCalledWith(429);
 
     limiter.cleanup();
   });

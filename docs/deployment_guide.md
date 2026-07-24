@@ -20,8 +20,8 @@ Chúng ta sử dụng **Supabase** cho cơ sở dữ liệu PostgreSQL và **Ups
 
 ### 1.3 Triển khai Backend (Ví dụ trên Render/Fly.io)
 1. Tạo một Web Service mới trỏ tới repository GitHub của bạn.
-2. Root Directory: `backend/`
-3. Build Command: `npm install`
+2. Root Directory: để trống, dùng root của repository.
+3. Build Command: `npm install && npm run migrate`
 4. Start Command: `npm start`
 5. Khai báo các **Environment Variables**:
    - `DATABASE_URL`: (Supabase Connection String)

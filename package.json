@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node backend/src/server.js",
     "dev": "expo start",
-    "test": "jest"
+    "test": "jest",
+    "migrate": "node backend/src/db/migrate.js"
   },
   "jest": {
     "setupFiles": [

@@ -257,6 +257,25 @@ describe('Authentication and Cryptography Tests', () => {
       expect(res.body.data.token).toBeDefined();
     });
 
+    it('should reject mock OAuth tokens outside test environment', async () => {
+      const originalNodeEnv = process.env.NODE_ENV;
+      process.env.NODE_ENV = 'production';
+
+      const res = await request(app)
+        .post('/api/auth/oauth')
+        .send({
+          provider: 'google',
+          token: 'mock-google-token'
+        });
+
+      process.env.NODE_ENV = originalNodeEnv;
+
+      expect(res.status).toBe(400);
+      expect(res.body.ok).toBe(false);
+      expect(res.body.error.code).toBe('INVALID_TOKEN');
+      expect(db.query).not.toHaveBeenCalled();
+    });
+
     it('should fail to authenticate if provider or token is missing', async () => {
       const res = await request(app)
         .post('/api/auth/oauth')

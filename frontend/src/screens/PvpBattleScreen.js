@@ -48,7 +48,7 @@ const MOCK_QUESTIONS = [
 export default function PvpBattleScreen() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { roomId, isBotMatch, players } = route.params || {
+  const { roomId, isBotMatch, players, existingSocket } = route.params || {
     roomId: 'mock_room',
     isBotMatch: true,
     players: {
@@ -112,7 +112,7 @@ export default function PvpBattleScreen() {
   const connectToBattleSocket = async () => {
     try {
       const token = await SecureStore.getItemAsync('user_token');
-      const socket = io(BACKEND_URL, {
+      const socket = existingSocket || io(BACKEND_URL, {
         transports: ['websocket'],
         forceNew: true
       });
@@ -121,9 +121,12 @@ export default function PvpBattleScreen() {
 
       socket.on('connect', () => {
         console.log('[Battle] Socket connected to room', roomId);
-        // Authenticate inside the room context
-        socket.emit('joinMatchmaking', { token });
+        socket.emit('joinMatchmaking', { token, roomId });
       });
+
+      if (existingSocket?.connected) {
+        socket.emit('joinMatchmaking', { token, roomId });
+      }
 
       socket.on('newQuestion', (data) => {
         // Reset states for a new question round

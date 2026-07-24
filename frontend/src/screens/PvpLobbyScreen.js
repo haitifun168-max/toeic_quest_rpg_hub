@@ -27,6 +27,7 @@ export default function PvpLobbyScreen() {
   const isFocused = useIsFocused();
   const [loading, setLoading] = useState(true);
   const [lobbyData, setLobbyData] = useState(null);
+  const [lockedMessage, setLockedMessage] = useState(null);
 
   useEffect(() => {
     if (isFocused) {
@@ -48,29 +49,20 @@ export default function PvpLobbyScreen() {
 
       const result = await response.json();
       if (response.ok && result.ok) {
+        setLockedMessage(null);
         setLobbyData(result.data);
       } else {
-        // Fallback for Rank 1 users during tests
         if (result.error?.code === 'RANK_TOO_LOW') {
-          Alert.alert('Không đủ điều kiện', 'Bạn cần đạt tối thiểu Rank 2 (Học việc) để tham gia đấu PvP Ranked.');
-          navigation.navigate('HomeDashboard');
+          setLobbyData(null);
+          setLockedMessage(result.error.message || 'Bạn cần đạt tối thiểu Rank 2 (Học việc) để tham gia đấu PvP Ranked.');
           return;
         }
         throw new Error(result.error?.message || 'Không thể tải sảnh đấu PvP');
       }
     } catch (err) {
-      console.log('PvPLobby error fallback:', err.message);
-      // Fallback dummy data for offline/mock visual checks
-      setLobbyData({
-        elo: 1120,
-        stamina: 14,
-        wins: 12,
-        losses: 8,
-        history: [
-          { id: 'h1', is_bot_match: true, score_a: 8, score_b: 5, elo_change_a: 24, played_at: new Date().toISOString(), player_a_name: 'Người học', player_b_name: 'BOT Dễ' },
-          { id: 'h2', is_bot_match: false, score_a: 6, score_b: 8, elo_change_a: -8, played_at: new Date().toISOString(), player_a_name: 'Người học', player_b_name: 'AnhTu99' }
-        ]
-      });
+      console.log('PvPLobby error:', err.message);
+      Alert.alert('Không thể tải sảnh đấu PvP', err.message);
+      setLobbyData(null);
     } finally {
       setLoading(false);
     }
@@ -86,11 +78,34 @@ export default function PvpLobbyScreen() {
     navigation.navigate('PvpMatchmaking', { elo: lobbyData.elo });
   };
 
-  if (loading || !lobbyData) {
+  if (loading) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="#7c3aed" />
         <Text style={styles.loadingText}>Đang vào sảnh đấu...</Text>
+      </SafeAreaView>
+    );
+  }
+
+  if (lockedMessage) {
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <Text style={styles.lockedTitle}>Chưa đủ điều kiện PvP Ranked</Text>
+        <Text style={styles.lockedText}>{lockedMessage}</Text>
+        <TouchableOpacity style={styles.backBtn} onPress={() => navigation.navigate('HomeDashboard')}>
+          <Text style={styles.backBtnText}>Về Dashboard</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
+  }
+
+  if (!lobbyData) {
+    return (
+      <SafeAreaView style={styles.loadingContainer}>
+        <Text style={styles.lockedTitle}>Không thể tải sảnh đấu PvP</Text>
+        <TouchableOpacity style={styles.backBtn} onPress={fetchLobbyData}>
+          <Text style={styles.backBtnText}>Thử lại</Text>
+        </TouchableOpacity>
       </SafeAreaView>
     );
   }
@@ -191,6 +206,20 @@ const styles = StyleSheet.create({
     color: '#94a3b8',
     fontSize: 14,
     fontWeight: '600',
+  },
+  lockedTitle: {
+    color: '#f8fafc',
+    fontSize: 18,
+    fontWeight: '900',
+    textAlign: 'center',
+  },
+  lockedText: {
+    color: '#94a3b8',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 20,
+    maxWidth: 320,
+    textAlign: 'center',
   },
   appBar: {
     flexDirection: 'row',

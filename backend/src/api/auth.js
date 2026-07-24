@@ -190,8 +190,8 @@ router.post('/oauth', async (req, res) => {
     }
 
     let profile;
-    // Dev/Test Mock bypass:
-    if (process.env.NODE_ENV === 'test' || token.startsWith('mock-')) {
+    // Test-only mock bypass:
+    if (process.env.NODE_ENV === 'test' && token.startsWith('mock-')) {
       if (provider === 'google') {
         profile = { email: 'google.user@gmail.com', displayName: 'Google User' };
       } else if (provider === 'facebook') {
