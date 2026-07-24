@@ -87,6 +87,11 @@ export default function HomeDashboardScreen({ navigation }) {
           return;
         }
 
+        if (!user.character_name) {
+          navigation.replace('PlacementTest');
+          return;
+        }
+
         // Check rank up trigger asynchronously
         try {
           const rankUpResponse = await fetch(`${BACKEND_URL}/api/users/check-rank`, {
